@@ -1,0 +1,21 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Tournament extends Model
+{
+    public function scoreboards(){
+        return $this->hasMany('App\Scoreboard');
+    }
+
+    public function fixtures(){
+        return $this->hasMany('App\Fixture');
+    }
+
+    public function type(){
+        return $this->belongsTo('App\TournamentType');
+    }
+    public $timestamps = false;
+}
