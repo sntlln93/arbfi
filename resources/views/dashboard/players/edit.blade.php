@@ -44,17 +44,6 @@
                   <input name="dni" type="text" class="span11" value="{{ $player->dni }}"  />
                 </div>
               </div>
-              <div class="control-group">
-                <label class="control-label">Grupo Sanguíneo</label>
-                <div class="controls">
-                  <select class="span11" name="blood_id">
-                    <option></option>
-                      @foreach($bloodtypes as $blood)
-                      <option value="{{ $blood->id }}" @if($blood->id==$player->blood_id)  selected @endif>{{ $blood->name }}</option>
-                      @endforeach
-                  </select>
-                </div>
-              </div>
 
               <div class="control-group">
                 <label class="control-label">Institución</label>

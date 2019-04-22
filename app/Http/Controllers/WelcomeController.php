@@ -13,7 +13,7 @@ class WelcomeController extends Controller
 {
     public function index(){
         
-        $data = Fixture::all()->where('state', '<>', 'no jugado');
+        $data = DB::table('fixtures')->where('state', '<>', 'no jugado')->get();
         $scoreboard = Scoreboard::all()->sortByDesc('points');
         $institutions = Institution::all();
         $scores = array();
@@ -32,22 +32,9 @@ class WelcomeController extends Controller
             $i++;
         }
 
-        $fixture = array();
-        $i = 0;
-        foreach ($data as $match){
-            $fixture[$i][0] = $match->tournament->name;
-            $fixture[$i][1] = $match->local->category->name;
-            $fixture[$i][2] = $match->date;
-            $fixture[$i][3] = $match->local->club->name;
-            $fixture[$i][4] = $match->local_score;
-            $fixture[$i][5] = $match->visiting->club->name;
-            $fixture[$i][6] = $match->visiting_score;
-            if($i++ >3) break;
-
-        }
-
         
-        return view('website.home')->with('fixture', $fixture)
+
+        return view('website.home')->with('fixture', $data)
                            ->with('scores', $scores);
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBloodsTable extends Migration
+class CreateGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateBloodsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bloods', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('groups', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->String('name');
+            $table->integer('tournament_id');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateBloodsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bloods');
+        Schema::dropIfExists('groups');
     }
 }

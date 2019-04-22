@@ -10,4 +10,5 @@ class Category extends Model
     public function teams(){
         return $this->hasMany('App\Team');
     }
+    public $timestamps = false;
 }

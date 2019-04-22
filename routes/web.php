@@ -23,13 +23,16 @@ Route::get('/', 'WelcomeController@index');
 Route::resources([
 	'/users' => 'UserController',
 	'/players' => 'PlayerController',
+	'/categories' => 'CategoryController',
+	'/types' => 'TournamentTypeController',
 	'/teams' => 'TeamController',
 	'/institutions' => 'InstitutionController',
 	'/tournaments' => 'TournamentController',
 	'/fixtures' => 'FixtureController',
 ]);
 
+//tournaments
+Route::put('/tournaments/playoffs/{id}', 'TournamentController@playoffMaker');
+Route::put('/tournaments/group/{id}', 'TournamentController@faseGroupMaker');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

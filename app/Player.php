@@ -18,10 +18,6 @@ class Player extends Model
         return $this->hasMany('App\Event');
     }
 
-    public function blood(){
-        return $this->belongsTo('App\Blood');
-    }
-
     protected $dates = ['birth_date'];
     public $timestamps = false;
 }

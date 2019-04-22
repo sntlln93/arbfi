@@ -17,7 +17,6 @@ class CreateTournamentsTable extends Migration
             $table->increments('id');
             $table->String('name');
             $table->integer('type_id');
-            $table->integer('number_teams');
             $table->timestamps();
         });
     }

@@ -5,7 +5,7 @@
     <div id="breadcrumb">
       <a href="{{ url('/inicio') }}" title="Ir a inicio" class="tip-bottom"><i class="icon-home"></i> Dashboard</a>
       <a class="breadcrumb-item"><i class="icon-arrow-right"></i></a>
-      <a href="#" class="current">Jugadores</i></a></div>
+      <a href="#" class="current">Tipos de torneos</i></a></div>
     </div>
     
     <div class="container-fluid">
@@ -19,44 +19,33 @@
           <div class="input-append">
               
           </div>
-          <div class="input-append">
-              <span><a class="btn btn-success" href="{{ '/players/create' }}"><i class="icon-plus"></i></a></span>
-          </div>
         </div>
       </div>
 
       <div class="widget-box">
           <div class="widget-content nopadding">
+              
             <table class="table table-bordered data-table table-responsive-lg">
               <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Apellido y Nombre</th>
-                    <th>DNI</th>
-                    <th>Club</th>
-                    <th>Categoría</th>
-                    <th><i class="icon-pencil"></i></th>
-                    <th><i class="icon-trash"></i></th>
+                    <th>Tipo</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach($players as $player)
+                @foreach($types as $type)
                   <tr>
-                    <th> {{ $player->id }} </th>
-                    <th> {{ $player->last_name }} {{$player->first_name }} </th>
-                    <th> {{ $player->dni }} </th>
-                    <th> {{ $player->team->club->name }} </th>
-                    <th> {{ $player->team->category->name }} </th>
-                    <th>
-                      <a href="{{ url('/players/'.$player->id.'/edit') }}" class="btn btn-mini btn-warning"><i class="icon-pencil"></i></a>
-                    </th>
+                    <th> {{ $type->id }} </th>
                     <th> 
-                      <form class="form-group" action="{{ '/players/'.$player->id }}" method="post">
-                        {{ @csrf_field() }}
-                        {{ method_field('DELETE') }}
-                        <button type="submit" class="btn btn-mini btn-danger"><i class="icon-trash"></i></button> 
-                      </form>
+                        @if($type->type == "AAA") Todos contra Todos
+                        @elseif($type->type == "GF") Fase de Grupos
+                        @elseif($type->type == "PVP") Llaves
+                        @endif | 
+                        @if($type->round_trip) Ida y vuelta
+                        @else Partido único
+                        @endif
                     </th>
+                    
                   </tr>
                 @endforeach
               </tbody>

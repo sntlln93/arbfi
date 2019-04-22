@@ -32,12 +32,10 @@ class PlayerController extends Controller
         if(!(Session::has('userSession'))){
             return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');
         }
-        $bloodtypes = Blood::all();
         $clubs = Institution::all();
         $categories = Category::all();
 
-        return view('dashboard.players.create')->with('bloodtypes',$bloodtypes)
-                                               ->with('categories',$categories)
+        return view('dashboard.players.create')->with('categories',$categories)
                                                ->with('clubs', $clubs);
     }
 
@@ -49,7 +47,6 @@ class PlayerController extends Controller
                 'first_name' => 'required',
                 'dni' => 'required',
                 'date_birth' => 'required',
-                'blood_id' => 'required',
                 'institution_id' => 'required',
                 'category_name' => 'required',
             ]);
@@ -57,7 +54,6 @@ class PlayerController extends Controller
             $player->first_name = mb_strToUpper($request->first_name);
             $player->dni = $request->dni;
             $player->birth_date = $request->date_birth;
-            $player->blood_id = $request->blood_id; //Cambiar por $player->school = $request->school
 
             $birth = new DateTime($request->date_birth);
             $daymonth = substr($request->date_birth, 4, 6);
@@ -97,13 +93,11 @@ class PlayerController extends Controller
     public function edit($id){
         if(Session::has('userSession')){
             $player = Player::find($id);
-            $bloodtypes = Blood::all();
             $clubs = Institution::all();
         }else{
             return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');
         }
         return view('dashboard/players/edit')->with('player',$player)
-                                             ->with('bloodtypes',$bloodtypes)
                                              ->with('clubs', $clubs);
     }
 
@@ -115,16 +109,12 @@ class PlayerController extends Controller
                 'first_name' => 'required',
                 'dni' => 'required',
                 'date_birth' => 'required',
-                'blood_id' => 'required',
                 'institution_id' => 'required',
             ]);
             $player->last_name = mb_strToUpper($request->last_name);
             $player->first_name = mb_strToUpper($request->first_name);
             $player->dni = $request->dni;
-            $player->birth_date = $request->date_birth;
-            $player->blood_id = $request->blood_id;
-            
-            
+            $player->birth_date = $request->date_birth;            
             
             $category = DB::table('categories')->select('id')->where(
                 'name', '2002')->get();

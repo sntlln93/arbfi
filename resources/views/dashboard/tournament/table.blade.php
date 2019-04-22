@@ -44,8 +44,14 @@
                   <tr>
                     <th> {{ $tournament->id }} </th>
                     <th> {{ $tournament->name }}</th>
-                    <th> {{ $tournament->type->type }} | @if($tournament->type->round_trip) Ida y vuelta @else Partido único @endif </th>
-                    
+                    <th> @if($tournament->type->type == "AAA") Todos contra Todos
+                        @elseif($tournament->type->type == "GF") Fase de Grupos
+                        @elseif($tournament->type->type == "PVP") Llaves
+                        @endif | 
+                        @if($tournament->type->round_trip) Ida y vuelta
+                        @else Partido único
+                        @endif
+                    </th>
                     <th>
                       <a href="{{ url('/tournaments/'.$tournament->id.'/edit') }}" class="btn btn-mini btn-warning"><i class="icon-pencil"></i></a>
                     </th>

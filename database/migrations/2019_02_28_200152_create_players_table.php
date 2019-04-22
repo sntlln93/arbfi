@@ -20,7 +20,6 @@ class CreatePlayersTable extends Migration
             $table->String('dni');
             $table->date('birth_date');
             $table->integer('team_id');
-            $table->integer('blood_id');
         });
     }
 

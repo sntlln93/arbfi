@@ -7,7 +7,7 @@
       <a class="breadcrumb-item"><i class="icon-arrow-right"></i></a>
       <a href="{{ url('/tournaments') }}" class="tip-bottom">Torneos</a>
       <a class="breadcrumb-item"><i class="icon-arrow-right"></i></a>
-      <a href="#" class="current">Nuevo torneo</i></a></div>
+      <a href="#" class="current">Nuevo Torneo por llaves</i></a></div>
   </div>
   <div class="container-fluid">
     <div class="row-fluid">
@@ -22,29 +22,9 @@
               <div class="control-group">
                 <label class="control-label">Nombre</label>
                 <div class="controls">
-                  <input name="name" type="text"  class="span11" placeholder="Nombre" />
+                  <input name="name" type="text"  class="span11" value="{{ $tournament->name }}" />
               </div>
               
-              <div class="control-group">
-                <label class="control-label">Tipos</label>
-                <div class="controls">
-                  <select class="span11" name="type_id">
-                    <option></option>
-                    @foreach($types as $type)
-                        <option value="{{ $type->id }}">
-                          @if($type->type == "AAA") Todos contra Todos
-                          @elseif($type->type == "GF") Fase de Grupos
-                          @elseif($type->type == "PVP") Llaves
-                          @endif | 
-                          @if($type->round_trip) Ida y vuelta
-                          @else Partido único
-                          @endif
-                        </option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-
               <div class="control-group">
                 <label class="control-label">Categorías participantes</label>
                 <div class="controls">

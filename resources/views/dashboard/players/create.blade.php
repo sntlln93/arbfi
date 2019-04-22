@@ -19,7 +19,7 @@
           <div class="widget-content nopadding">
               @if(Session::has('flash_message_error'))
               <div class="alert alert-danger alert-block">
-                  <button type="button" class="close" data-dismiss="alert">x</button>
+                  <button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>
                   <strong>{!! session('flash_message_error') !!}</strong>
               </div>
           @endif
@@ -34,16 +34,6 @@
                 <label class="control-label">Nombres</label>
                 <div class="controls">
                   <input name="first_name" type="text"  class="span11" placeholder="Nombres" />
-              </div>
-              <div class="control-group">
-                <label class="control-label">Grupo sanguíneo</label>
-                <div class="controls">
-                  <select class="span11" name="blood_id">
-                    <option></option>
-                    @foreach($bloodtypes as $blood)
-                    <option value="{{ $blood->id }}">{{ $blood->name }}</option>
-                    @endforeach
-                  </select>
                 </div>
               </div>
 
@@ -62,7 +52,7 @@
               <div class="control-group">
                 <label class="control-label">Fecha de nacimiento</label>
                 <div class="controls">
-                  <input name="date_birth" type="text"  class="span11" placeholder="AAAA/MM/DD" />
+                  <input name="date_birth" type="text"  class="span11" placeholder="AAAA-MM-DD ej: 2005-05-24" />
                 </div>
               </div>  
 

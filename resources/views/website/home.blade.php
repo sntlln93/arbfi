@@ -71,7 +71,7 @@
                 <!-- end recent-results -->
 
                 <!-- Fair Play -->
-                <div class="col-lg-4">
+                <!--<div class="col-lg-4">
                     <div class="player-ranking">
                         <h5><a href="group-list.html">Fair Play</a></h5>
                         <div class="info-player">
@@ -182,7 +182,7 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!-- End Top player -->
             </div>
         </div>

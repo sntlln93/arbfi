@@ -18,7 +18,7 @@ class CreateFixturesTable extends Migration
             $table->integer('tournament_id');
             $table->integer('local_team_id');
             $table->integer('visiting_team_id');
-            $table->date('date');
+            $table->date('date')->nullable();
             $table->String('fixture_day');
             $table->String('location');
             $table->integer('local_score');

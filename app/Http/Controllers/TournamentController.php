@@ -10,6 +10,7 @@ use App\Category;
 use DB;
 use App\Fixture;
 use Carbon\Carbon;
+use App\Institution;
 
 class TournamentController extends Controller
 {
@@ -40,7 +41,9 @@ class TournamentController extends Controller
             return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');
         }
         $types = TournamentType::all();
-        return view('dashboard.tournament.create')->with('types',$types);
+        $categories = Category::all();
+        return view('dashboard.tournament.create')->with('types',$types)
+                                                  ->with('categories',$categories);
     }
 
     /**
@@ -58,42 +61,62 @@ class TournamentController extends Controller
                 'type_id' => 'required',
             ]);
             $tournament->name = mb_strToUpper($request->name);
-            $tournament->number_teams = 0;
             $tournament->type_id = $request->type_id;
             $tournament->save();
-            
-            $categories = Category::all();
-            foreach($categories as $category){
-                $teams = DB::table('teams')->where('category_id', $category->id)->get();
-                
-                for($i = 0; $i< $teams->count(); $i++){
-                    
-                    for($j = $i+1; $j < $teams->count(); $j++){
-                        $match = new Fixture;
-                        $match->local_team_id = $teams[$i]->id;
-                        $match->visiting_team_id = $teams[$j]->id;
-                        $match->tournament_id = $tournament->id;
-                        $match->local_score = 0;
-                        $match->visiting_score = 0;
-                        $match->location ="random";
-                        $match->date = Carbon::now();
-                        $match->fixture_day = 0;
-                        $match->save();
 
-                        if($tournament->type->round_trip){
+            $categories = array();
+
+            for($i = 0; $i < sizeof($request->categories); $i++){
+                $category = Category::find($request->categories[$i]);
+                array_push($categories, $category->name, $category->id);
+            }
+            
+            
+            
+            if($tournament->type->type == "AAA"){
+                foreach($request->categories as $category){
+                    $teams = DB::table('teams')->where('category_id', $category)->get();
+                    
+                    for($i = 0; $i< $teams->count(); $i++){
+                        $total = $teams->count();
+                        for($j = $i+1; $j < $total; $j++){
                             $match = new Fixture;
-                            $match->local_team_id = $teams[$j]->id;
-                            $match->visiting_team_id = $teams[$i]->id;
+                            $match->local_team_id = $teams[$i]->id;
+                            $match->visiting_team_id = $teams[$j]->id;
+                            $match->state = "no jugado";
                             $match->tournament_id = $tournament->id;
                             $match->local_score = 0;
                             $match->visiting_score = 0;
-                            $match->location ="random";
-                            $match->date = Carbon::now();
-                            $match->fixture_day = 0;
+                            $match->location ="A definir";
+                            $match->date = null;
+                            $match->fixture_day = $i+1;
                             $match->save();
+        
+                            if($tournament->type->round_trip){
+                                $match = new Fixture;
+                                $match->local_team_id = $teams[$j]->id;
+                                $match->visiting_team_id = $teams[$i]->id;
+                                $match->state = "no jugado";
+                                $match->tournament_id = $tournament->id;
+                                $match->local_score = 0;
+                                $match->visiting_score = 0;
+                                $match->location ="A definir";
+                                $match->date = null;
+                                $match->fixture_day = $total;
+                                $match->save();
+                            }
                         }
+                        $total++;
                     }
                 }
+                
+            }elseif($tournament->type->type == "PVP"){
+                $teams = Institution::all();
+                return view('dashboard.tournament.playoffs')->with('tournament',$tournament)
+                                                            ->with('teams',$teams)
+                                                            ->with('categories',$categories);
+            }elseif($tournament->type->type == "GF"){
+                return view('dashboard.tournament.group');//->with(,);
             }
             
 
@@ -103,6 +126,43 @@ class TournamentController extends Controller
         return redirect('/tournaments');
     }
 
+    public function playoffMaker(Request $request, $id){
+        if(!(Session::has('userSession'))){
+            return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');
+        }
+        $tournament = Tournament::find($id);
+        dd($tournament);
+        for ($i = 0; $i < count($request->teams)-1; $i++){
+            $match = new Fixture;
+            $match->tournament_id = $tournament->id;
+            $match->local_team_id = $request->teams[$i];
+            $match->visiting_team_id = $request->teams[$i+1];
+            $match->state = "no jugado";
+            $match->local_score = 0;
+            $match->visiting_score = 0;
+            $match->location ="A definir";
+            $match->date = null;
+            if($tournament->roundtrip) $match->fixture_day = "Primera fase | Ida";
+            else $match->fixture_day = "Primera fase | Partido único";
+            $match->save();
+
+            if($tournament->roundtrip){
+                $match = new Fixture;
+                $match->tournament_id = $tournament->id;
+                $match->local_team_id = $request->teams[$i+1];
+                $match->visiting_team_id = $request->teams[$i];
+                $match->state = "no jugado";
+                $match->local_score = 0;
+                $match->visiting_score = 0;
+                $match->location ="A definir";
+                $match->date = null;
+                $match->fixture_day = "Primera fase | Partido único";
+                $match->save(); 
+            }
+        }
+
+        return redirect('/tournaments');
+    }
     /**
      * Display the specified resource.
      *
