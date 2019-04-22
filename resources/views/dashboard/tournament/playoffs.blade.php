@@ -36,9 +36,10 @@
               <div class="control-group">
                 <label class="control-label">Categorías</label>
                 <div class="controls">
-                  @foreach($categories as $id=>$name)
-                      <input name="names[]" type="text" disabled="true" class="span1" value="{{ $name }}"/>  
-                  @endforeach
+                  @for($i=0; $i< sizeof($categories); $i++)
+                    <input name="names[]" type="text" disabled="true" class="span1" value="{{ $categories[$i][1] }}"/>  
+                    <input name="categories[]" type="hidden" value="{{ $categories[$i][0] }}"/>  
+                  @endfor
                 </div>
               </div>
                     
