@@ -34,6 +34,11 @@
                 <div class="controls">
                   <input name="stadium" type="text"  class="span11" placeholder="Cancha" />
               </div>
+              <div class="control-group">
+                <label class="control-label">Escudo</label>
+                <div class="controls">
+                  <input name="path_file" type="text"  class="span11" placeholder="Cancha" />
+              </div>
               
               <div class="form-actions">
                 <button type="submit" class="btn btn-success">Guardar</button>

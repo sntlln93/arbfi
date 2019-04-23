@@ -63,7 +63,6 @@ class TournamentController extends Controller
             $tournament->name = mb_strToUpper($request->name);
             $tournament->type_id = $request->type_id;
             $tournament->save();
-
             $categories = array();
 
             for($i = 0; $i < sizeof($request->categories); $i++){
@@ -76,9 +75,9 @@ class TournamentController extends Controller
                 foreach($request->categories as $category){
                     $teams = DB::table('teams')->where('category_id', $category)->get();
                     
-                    for($i = 0; $i< $teams->count(); $i++){
-                        $total = $teams->count();
-                        for($j = $i+1; $j < $total; $j++){
+                    for($i = 0; $i< $teams->count(); $i++){ //fixture_day
+                        
+                        for($j = $i+1; $j < $teams->count(); $j++){
                             $match = new Fixture;
                             $match->local_team_id = $teams[$i]->id;
                             $match->visiting_team_id = $teams[$j]->id;
@@ -88,25 +87,28 @@ class TournamentController extends Controller
                             $match->visiting_score = 0;
                             $match->location ="A definir";
                             $match->date = null;
-                            $match->fixture_day = $i+1;
+                            $match->fixture_day = 0;
                             $match->save();
-        
-                            if($tournament->type->round_trip){
+                        }
+
+                        if($tournament->type->round_trip){
+                            for($j = $teams->count()-1; $j > 0; $j--){
                                 $match = new Fixture;
-                                $match->local_team_id = $teams[$j]->id;
-                                $match->visiting_team_id = $teams[$i]->id;
+                                $match->local_team_id = $teams[$i]->id;
+                                $match->visiting_team_id = $teams[$j]->id;
                                 $match->state = "no jugado";
                                 $match->tournament_id = $tournament->id;
                                 $match->local_score = 0;
                                 $match->visiting_score = 0;
                                 $match->location ="A definir";
                                 $match->date = null;
-                                $match->fixture_day = $total;
+                                $match->fixture_day = 0;
                                 $match->save();
                             }
                         }
-                        $total++;
+                        
                     }
+                    
                 }
                 
             }elseif($tournament->type->type == "PVP"){
@@ -134,10 +136,9 @@ class TournamentController extends Controller
         for($j = 0; $j < sizeof($request->categories); $j++){
             for ($i = 0; $i < count($request->teams)-1; $i++){
                 $match = new Fixture;
-                dd($request->categories[$j], $request->teams);
                 $match->tournament_id = $tournament->id;
-                $match->local_team_id = DB::table('teams')->select('id')->where('club_id', $request->teams[$i])->where('category_id', $request->categories[$j])->get();
-                $match->visiting_team_id = DB::table('teams')->select('id')->where('club_id', $request->teams[$i+1])->where('category_id', $request->categories[$j])->get();
+                $match->local_team_id = DB::table('teams')->select('id')->where('club_id', $request->teams[$i])->where('category_id', $request->categories[$j])->get()[0]->id;
+                $match->visiting_team_id = DB::table('teams')->select('id')->where('club_id', $request->teams[$i+1])->where('category_id', $request->categories[$j])->get()[0]->id;
                 $match->state = "no jugado";
                 $match->local_score = 0;
                 $match->visiting_score = 0;
@@ -147,11 +148,11 @@ class TournamentController extends Controller
                 else $match->fixture_day = "Primera fase | Partido único";
                 $match->save();
     
-                if($tournament->roundtrip){
+                if($tournament->type->round_trip){
                     $match = new Fixture;
                     $match->tournament_id = $tournament->id;
-                    $match->local_team_id = DB::table('teams')->select('id')->where('club_id', $request->teams[$i+1])->where('category_id', $request->categories[$j])->get();
-                    $match->visiting_team_id = DB::table('teams')->select('id')->where('club_id', $request->teams[$i])->where('category_id', $request->categories[$j])->get();
+                    $match->local_team_id = DB::table('teams')->select('id')->where('club_id', $request->teams[$i+1])->where('category_id', $request->categories[$j])->get()[0]->id;
+                    $match->visiting_team_id = DB::table('teams')->select('id')->where('club_id', $request->teams[$i])->where('category_id', $request->categories[$j])->get()[0]->id;
                     $match->state = "no jugado";
                     $match->local_score = 0;
                     $match->visiting_score = 0;

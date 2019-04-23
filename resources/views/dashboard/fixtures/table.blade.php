@@ -49,7 +49,7 @@
                     <th> {{ $match->local->club->name }} @if($match->state == 'JUGADO')({{ $match->local_score }})@endif </th>
                     <th> {{ $match->visiting->club->name }} @if($match->state == 'JUGADO')({{ $match->visiting_score }})@endif </th>
                     <th> {{ $match->date }} </th>
-                    <th> {{ $match->fixture_day }} </th>
+                    <th> #{{ $match->fixture_day }} </th>
                     <th> {{ $match->location }} </th>
                     <th> {{ mb_strToUpper($match->state) }} </th>
 

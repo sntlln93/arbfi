@@ -5,7 +5,7 @@
             <!-- Logo Footer-->
         <div class="col-lg-12">
                 <div class="logo-footer">
-                    <h2>Sports Cup</h2>
+                    <h2>Asociación Riojana de Baby Fútbol Infantil</h2>
                 </div>
         </div>
             <!-- End Logo Footer-->

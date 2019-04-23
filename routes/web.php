@@ -11,15 +11,25 @@
 |
 */
 
+//auth
 Route::match(['get', 'post'], '/user', 'AuthController@login');
 Route::get('/logout', 'AuthController@logout');
 Route::get('/dashboard', 'AuthController@index');
 Route::get('/change','AuthController@change');
 
-
+//web
 Route::get('/', 'WelcomeController@index');
+Route::get('/web/galery', 'WelcomeController@galery');
+Route::get('/web/teams', 'WelcomeController@teams');
+Route::get('/web/teams/{id}', 'WelcomeController@team');
+//Route::get('/web/categories', 'WelcomeController@categories'); la necesito??
+Route::get('/web/fixtures', 'WelcomeController@fixtures');
+Route::get('/web/contact', 'WelcomeController@contact');
+Route::get('/web/regulation', 'WelcomeController@regulation');
+Route::get('/web/partners', 'WelcomeController@partners');
+Route::get('/web/board', 'WelcomeController@board');
 
-
+//CRUDS
 Route::resources([
 	'/users' => 'UserController',
 	'/players' => 'PlayerController',

@@ -23,23 +23,23 @@
               <div class="control-group">
                 <label class="control-label">Nombre</label>
                 <div class="controls">
-                  <input name="name" type="text"  class="span11" placeholder="Nombre" value={{ $club->name }} />
+                  <input name="name" type="text"  class="span11" value={{ $club->name }} />
               </div>
               <div class="control-group">
                 <label class="control-label">Responsable</label>
                 <div class="controls">
-                  <input name="responsable" type="text"  class="span11" placeholder="Responsable" value={{ $club->responsable }}>
+                  <input name="responsable" type="text"  class="span11" value={{ $club->responsable }} />
               </div>
               <div class="control-group">
                 <label class="control-label">Cancha</label>
                 <div class="controls">
-                  <input name="stadium" type="text"  class="span11" placeholder="Cancha" value={{ $club->stadium }} />
+                  <input name="stadium" type="text"  class="span11" value={{ $club->stadium }} />
               </div>
-
-              
-
-              
-              
+              <div class="control-group">
+                <label class="control-label">Escudo</label>
+                <div class="controls">
+                  <input name="path_file" type="text"  class="span11" value="{{ $club->path_file }}" />
+              </div>
               <div class="form-actions">
                 <button type="submit" class="btn btn-success">Guardar</button>
               </div>

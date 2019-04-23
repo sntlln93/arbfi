@@ -102,7 +102,6 @@ class InstitutionController extends Controller
     {
         if(Session::has('userSession')){
             $club = Institution::find($id);
-            return view('dashboard.institutions.edit')->with('club', $club);
         }else{
             return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');
         }
@@ -119,6 +118,7 @@ class InstitutionController extends Controller
     public function update(Request $request, $id)
     {
         if(Session::has('userSession')){
+            
             $club = Institution::find($id);
             $this->validate($request,[
                 'name' => 'required',
@@ -127,7 +127,8 @@ class InstitutionController extends Controller
             ]);
             $club->name = mb_strToUpper($request->name);
             $club->responsable = mb_strToUpper($request->responsable);
-            $club->stadium = mb_strToUpper($request->stadium);            
+            $club->stadium = mb_strToUpper($request->stadium);  
+            $club->path_file = $request->path_file;
 
             $club->save();
             

@@ -38,151 +38,84 @@
                 <!-- recent-results -->
                 <div class="col-lg-4">
                     <div class="recent-results">
-                        <h5><a href="group-list.html">Partidos Recientes</a></h5>
+                        <h5><a href="group-list.html">Próximos partidos</a></h5>
                         <div class="info-results">
                             <ul>
-                                @for($i = 0; $i < 3; $i++)
-                                    <li>
-                                        <span class="head">
-                                            {{ $fixture[$i][0] }} (CAT. {{ $fixture[$i][1] }}) <span class="date">{{ $fixture[$i][2] }}</span>
-                                        </span>
-    
-                                        <div class="goals-result">
-                                            <a href="single-team.html">
-                                                <img src="img/clubs-logos/por.png" alt="">
-                                                {{ $fixture[$i][3] }}
-                                            </a>
-    
-                                            <span class="goals">
-                                                <b>{{ $fixture[$i][4] }}</b> - <b>{{ $fixture[$i][6] }}</b>
+                                @if(count($recents))
+                                    @php($i=0)
+                                    @foreach($recents as $recent)
+                                    
+                                        <li>
+                                            <span class="head">
+                                                {{ $recent->tournament->name}} (CAT. {{ $recent->local->category->name }}) <span class="date">{{ $recent->date }}</span>
                                             </span>
-    
-                                            <a href="single-team.html">
-                                                <img src="img/clubs-logos/esp.png" alt="">
-                                                {{ $fixture[$i][5] }}
-                                            </a>
-                                        </div>
-                                    </li>
-                                @endfor
+
+                                            <div class="goals-result">
+                                                <a href="single-team.html">
+                                                    <img src="img/clubs-logos/por.png" alt="">
+                                                    {{ $recent->local->club->name }}
+                                                </a>
+
+                                                <span class="goals">
+                                                    <b style="color:red">0</b> - <b style="color:red">0</b>
+                                                </span>
+
+                                                <a href="single-team.html">
+                                                    <img src="img/clubs-logos/esp.png" alt="">
+                                                    {{ $recent->visiting->club->name }}
+                                                </a>
+                                            </div>
+                                        </li>
+                                        @php($i++)
+                                        @if($i == 3) @break;
+                                        @endif
+                                    @endforeach
+                                @endif
                             </ul>
                         </div>
                     </div>
                 </div>
                 <!-- end recent-results -->
 
-                <!-- Fair Play -->
-                <!--<div class="col-lg-4">
-                    <div class="player-ranking">
-                        <h5><a href="group-list.html">Fair Play</a></h5>
-                        <div class="info-player">
+                <!-- Próximos partidos -->
+                <div class="col-lg-4">
+                    <div class="recent-results">
+                        <h5><a href="group-list.html">Partidos recientes</a></h5>
+                        <div class="info-results">
                             <ul>
-                                <li>
-                                    <span class="position">
-                                        1
-                                    </span>
-                                    <a href="single-team.html">
-                                        <img src="img/players/1.jpg" alt="">
-                                        Cristiano R.
-                                    </a>
-                                    <span class="points">
-                                        90
-                                    </span>
-                                </li>
+                                @if(count($next))
+                                    @php($i=0)
+                                    @foreach($next as $tocome)
+                                        <li>
+                                            <span class="head">
+                                                {{ $tocome->tournament->name }} (CAT. {{ $tocome->local->category->name }}) <span class="date">{{ $tocome->date }}</span>
+                                            </span>
 
-                                <li>
-                                    <span class="position">
-                                        2
-                                    </span>
-                                    <a href="single-team.html">
-                                        <img src="img/players/2.jpg" alt="">
-                                        Lionel Messi
-                                    </a>
-                                    <span class="points">
-                                        88
-                                    </span>
-                                </li>
+                                            <div class="goals-result">
+                                                <a href="single-team.html">
+                                                    <img src="img/clubs-logos/por.png" alt="">
+                                                    {{ $tocome->local->club->name }}
+                                                </a>
 
-                                <li>
-                                    <span class="position">
-                                        3
-                                    </span>
-                                    <a href="single-team.html">
-                                        <img src="img/players/3.jpg" alt="">
-                                        Neymar
-                                    </a>
-                                    <span class="points">
-                                        86
-                                    </span>
-                                </li>
+                                                <span class="goals">
+                                                    <b style="color:green">{{ $tocome->local_score}}</b> - <b style="color:green">{{ $tocome->visiting_score }}</b>
+                                                </span>
 
-                                <li>
-                                    <span class="position">
-                                        4
-                                    </span>
-                                    <a href="single-team.html">
-                                        <img src="img/players/4.jpg" alt="">
-                                        Luis Suárez
-                                    </a>
-                                    <span class="points">
-                                        80
-                                    </span>
-                                </li>
-
-                                <li>
-                                    <span class="position">
-                                        5
-                                    </span>
-                                    <a href="single-team.html">
-                                        <img src="img/players/5.jpg" alt="">
-                                        Gareth Bale
-                                    </a>
-                                    <span class="points">
-                                        76
-                                    </span>
-                                </li>
-
-                                <li>
-                                    <span class="position">
-                                        6
-                                    </span>
-                                    <a href="single-team.html">
-                                        <img src="img/players/6.jpg" alt="">
-                                        Sergio Agüero
-                                    </a>
-                                    <span class="points">
-                                        74
-                                    </span>
-                                </li>
-
-                                <li>
-                                    <span class="position">
-                                        7
-                                    </span>
-                                    <a href="single-team.html">
-                                        <img src="img/players/2.jpg" alt="">
-                                        Jamez R.
-                                    </a>
-                                    <span class="points">
-                                        70
-                                    </span>
-                                </li>
-
-                                <li>
-                                    <span class="position">
-                                        8
-                                    </span>
-                                    <a href="single-team.html">
-                                        <img src="img/players/1.jpg" alt="">
-                                            Falcao Garcia
-                                    </a>
-                                    <span class="points">
-                                        65
-                                    </span>
-                                </li>
+                                                <a href="single-team.html">
+                                                    <img src="img/clubs-logos/esp.png" alt="">
+                                                    {{ $tocome->visiting->club->name }}
+                                                </a>
+                                            </div>
+                                        </li>
+                                    @php($i++)
+                                    @if($i == 3) @break;
+                                    @endif
+                                    @endforeach
+                                @endif
                             </ul>
                         </div>
                     </div>
-                </div>-->
+                </div>
                 <!-- End Top player -->
             </div>
         </div>
