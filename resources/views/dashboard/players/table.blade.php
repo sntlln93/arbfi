@@ -27,7 +27,7 @@
 
       <div class="widget-box">
           <div class="widget-content nopadding">
-            <table class="table table-bordered data-table table-responsive-lg">
+            <table class="table table-bordered data-table"><!--table-responsive-lg-->
               <thead>
                 <tr>
                     <th>ID</th>
@@ -35,6 +35,9 @@
                     <th>DNI</th>
                     <th>Club</th>
                     <th>Categoría</th>
+                    <th>Posición</th>
+                    <th>Escuela</th>
+                    <th>Obra Social</th>
                     <th><i class="icon-pencil"></i></th>
                     <th><i class="icon-trash"></i></th>
                 </tr>
@@ -47,6 +50,9 @@
                     <th> {{ $player->dni }} </th>
                     <th> {{ $player->team->club->name }} </th>
                     <th> {{ $player->team->category->name }} </th>
+                    <th> {{ $player->position }} </th>
+                    <th> {{ $player->school }} </th>
+                    <th> {{ $player->prepaid }}</th>
                     <th>
                       <a href="{{ url('/players/'.$player->id.'/edit') }}" class="btn btn-mini btn-warning"><i class="icon-pencil"></i></a>
                     </th>

@@ -31,7 +31,7 @@
                   <input name="responsable" type="text"  class="span11" value={{ $club->responsable }} />
               </div>
               <div class="control-group">
-                <label class="control-label">Cancha</label>
+                <label class="control-label">Ubicación</label>
                 <div class="controls">
                   <input name="stadium" type="text"  class="span11" value={{ $club->stadium }} />
               </div>

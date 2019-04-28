@@ -7,14 +7,14 @@
       <a class="breadcrumb-item"><i class="icon-arrow-right"></i></a>
       <a href="{{ url('/tournaments') }}" class="tip-bottom">Torneos</a>
       <a class="breadcrumb-item"><i class="icon-arrow-right"></i></a>
-      <a href="#" class="current">Nuevo Torneo por llaves</i></a></div>
+      <a href="#" class="current">Nuevo torneo todos contra todos</i></a></div>
   </div>
   <div class="container-fluid">
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-            <h5>{{$fase}}° Fase - {{ $tournament->name }} (
+            <h5>FECHA {{$fixture_day}}° - {{ $tournament->name }} (
                         @if($tournament->type->type == "AAA") Todos contra Todos
                         @elseif($tournament->type->type == "GF") Fase de Grupos
                         @elseif($tournament->type->type == "PVP") Llaves
@@ -25,40 +25,37 @@
             )</h5>
           </div> <!--widget-title-->
           <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="{{ '/tournaments/playoffs/'.$tournament->id }}">
+            <form class="form-horizontal" method="post" action="{{ '/tournaments/league/'.$tournament->id }}">
               {{ csrf_field() }}
               {{ method_field('PUT') }}
               @php
                 if($teams->count()%2 == 0) $limit = $teams->count()/2;
                 else $limit = ($teams->count() - 1) / 2;
               @endphp
-              
               <div class="control-group">
-                @if($fase == 1)
-                  <label class="control-label">Categorías participantes</label>
-                  <div class="controls">
-                      <select multiple="true" class="e1 span10" name="categories[]">
-                        @for($i = 0; $i < sizeof($categories); $i++)
-                          <option value="{{ $categories[$i]->id }}">{{ $categories[$i]->name }}</option>
-                        @endfor
-                      </select>
-                    <input name="fase" type="hidden" value="{{$fase}}"/>
-                  </div>
-                @else
-                  <div class="controls">
-                        @for($i = 0; $i < sizeof($categories); $i++)
-                          <input type="hidden" name="categories[]" value="{{ $categories[$i]->id }}"/>
-                        @endfor
-                      </select>
-                      <input name="fase" type="hidden" value="{{$fase}}"/>
-                  </div>
-                @endif 
-              </div>
-                    
+                  @if($fixture_day == 1)
+                    <label class="control-label">Categorías participantes</label>
+                    <div class="controls">
+                        <select multiple="true" class="e1 span10" name="categories[]">
+                          @for($i = 0; $i < sizeof($categories); $i++)
+                            <option value="{{ $categories[$i]->id }}">{{ $categories[$i]->name }}</option>
+                          @endfor
+                        </select>
+                      <input name="fixture_day" type="hidden" value="{{$fixture_day}}"/>
+                    </div>
+                  @else
+                    <div class="controls">
+                          @for($i = 0; $i < sizeof($categories); $i++)
+                            <input type="hidden" name="categories[]" value="{{ $categories[$i]->id }}"/>
+                          @endfor
+                        </select>
+                        <input name="fixture_day" type="hidden" value="{{$fixture_day}}"/>
+                      </div>
+                      @endif 
+                </div>                     
                 
               <div class="control-group">
                 @for($index = 0; $index < $limit; $index++)
-                <label class="control-label">{{$index+1}}° Llave</label>
                 <div id="uno" class="controls">
                       <select class="sel span5" name="teams[]">
                         <option></option>
@@ -75,10 +72,37 @@
                       </select>
                 </div>
                 @endfor
+                @if($free)
+                    <div class="control-group">
+                        <label class="control-label">Fecha libre</label>
+                        <div id="uno" class="controls">
+                            <select class="sel span5" name="teams[]">
+                              <option></option>
+                              @for($i = 0; $i < $teams->count(); $i++)
+                                  <option value="{{ $teams[$i]->id }}">{{ $teams[$i]->name }}</option>
+                              @endfor
+                            </select>
+                      </div>
+                    </div>
+                @endif
               </div>
               
               <div class="form-actions">
-                <button type="submit" class="btn btn-success">Guardar</button>
+                <button type="submit" class="btn btn-success">
+                    @if($teams->count()%2 == 0)
+                        @if($fixture_day == $teams->count()-1)
+                            Terminar carga
+                        @else
+                            Siguiente fecha
+                        @endif
+                    @else
+                        @if($fixture_day == $teams->count())
+                            Terminar carga
+                        @else
+                            Siguiente fecha
+                        @endif
+                    @endif
+                </button>
               </div>
             </form>
 
@@ -114,11 +138,10 @@
     }
   }
 </script>
-
 <script>
-  $(document).ready(function() {
-    $('.e1').select2();
-  });
+    $(document).ready(function() {
+      $('.e1').select2();
+    });
 </script>
 
 @endsection

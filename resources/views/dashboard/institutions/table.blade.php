@@ -27,13 +27,13 @@
 
       <div class="widget-box">
           <div class="widget-content nopadding">
-            <table class="table table-bordered data-table table-responsive-lg">
+            <table class="table table-bordered data-table"> <!--table-responsive-lg-->
               <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Responsable</th>
-                    <th>Cancha</th>
+                    <th>Ubicación</th>
                     
                     <th><i class="icon-pencil"></i></th>
                     <th><i class="icon-trash"></i></th>

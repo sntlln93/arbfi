@@ -45,17 +45,6 @@
                 </div>
               </div>
 
-              <div class="control-group">
-                <label class="control-label">Categorías participantes</label>
-                <div class="controls">
-                  <select multiple="true" class="e1 span11" name="categories[]">
-                    @foreach($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div> 
-              
               <div class="form-actions">
                 <button type="submit" class="btn btn-success">Guardar</button>
               </div>
@@ -75,9 +64,4 @@
   </div> <!--container-fluid-->
 </div> <!--content-->
 
-<script>
-    $(document).ready(function() {
-      $('.e1').select2();
-    });
-</script>
 @endsection

@@ -11,6 +11,7 @@
             <!--{{--<li><a href="{{ url('/web/categories') }}">Categorías</a></li>--}}-->
             <li><a href="{{ url('/web/regulation') }}">Reglamento</a></li>
             <li><a href="{{ url('/web/contact') }}">Contacto</a></li>
+            <li><a href="https://www.dropbox.com/s/2rce5yq7rmf51nd/Lista_de_buena_fe.pdf?dl=0">Lista de buena fe<i class="cloud-download-alt"></i></a></li>
             <li><a href="{{ url('/user') }}"><i class="fa fa-sign-in"></i></a></li>
         </ul>
         <!-- End Menu-->

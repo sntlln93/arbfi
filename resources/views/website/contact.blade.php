@@ -11,7 +11,7 @@
                     </div>
                     <div class="info-panel">
                         <address>
-                          <strong>Sports Cup, Inc.</strong><br>
+                          <strong>ARBFI</strong><br>
                           <i class="fa fa-map-marker"></i><strong>Dirección: </strong> Coronel montes y Cesar Arias M.1253 C.36<br>
                           <i class="fa fa-plane"></i><strong>Ciudad: </strong>La Rioja, CP 5300<br>
                           <i class="fa fa-phone"></i> <abbr title="Phone">Cel:</abbr> (380) 154 200931 - Presidente<br>
@@ -23,7 +23,7 @@
 
                 <aside class="panel-box">
                     <div class="titles no-margin">
-                        <h4>Profesionales</h4>
+                        <h4>Correo electrónico</h4>
                     </div>
                     <div class="info-panel">
                         <address>

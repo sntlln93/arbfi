@@ -75,6 +75,34 @@
                 </div>
               </div>
               
+              <div class="control-group">
+                <label class="control-label">Posición</label>
+                <div class="controls">
+                  <input name="position" type="text"  class="span11" placeholder="Posición dentro del campo de juego" />
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Obra Social</label>
+                <div class="controls">
+                  <input name="prepaid" type="text"  class="span11" placeholder="Obra Social del jugador" />
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Colegio</label>
+                <div class="controls">
+                  <input name="school" type="text"  class="span11" placeholder="Colegio/escuela" />
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Foto</label>
+                <div class="controls">
+                  <input name="path_file" type="text"  class="span11" placeholder="URL de la imagen" />
+                </div>
+              </div>
+              
               <div class="form-actions">
                 <button type="submit" class="btn btn-success">Guardar</button>
               </div>

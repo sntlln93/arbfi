@@ -25,7 +25,7 @@
       <div class="widget-box">
           <div class="widget-content nopadding">
               
-            <table class="table table-bordered data-table table-responsive-lg">
+            <table class="table table-bordered data-table"><!--table-responsive-lg-->
               <thead>
                 <tr>
                     <th>ID</th>

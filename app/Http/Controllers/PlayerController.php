@@ -49,10 +49,15 @@ class PlayerController extends Controller
                 'date_birth' => 'required',
                 'institution_id' => 'required',
                 'category_name' => 'required',
+                'position' => 'required'
             ]);
             $player->last_name = mb_strToUpper($request->last_name);
             $player->first_name = mb_strToUpper($request->first_name);
+            $player->position = mb_strToUpper($request->position);
+            $player->school = mb_strToUpper($request->school);
+            $player->prepaid = mb_strToUpper($request->prepaid);
             $player->dni = $request->dni;
+            $player->path_file = $request->path_file;
             $player->birth_date = $request->date_birth;
 
             $birth = new DateTime($request->date_birth);
@@ -93,12 +98,10 @@ class PlayerController extends Controller
     public function edit($id){
         if(Session::has('userSession')){
             $player = Player::find($id);
-            $clubs = Institution::all();
         }else{
             return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');
         }
-        return view('dashboard/players/edit')->with('player',$player)
-                                             ->with('clubs', $clubs);
+        return view('dashboard/players/edit')->with('player',$player);
     }
 
     public function update(Request $request, $id){
@@ -109,24 +112,15 @@ class PlayerController extends Controller
                 'first_name' => 'required',
                 'dni' => 'required',
                 'date_birth' => 'required',
-                'institution_id' => 'required',
             ]);
             $player->last_name = mb_strToUpper($request->last_name);
             $player->first_name = mb_strToUpper($request->first_name);
+            $player->school = mb_strToUpper($request->school);
+            $player->position = mb_strToUpper($request->position);
+            $player->prepaid = mb_strToUpper($request->prepaid);
             $player->dni = $request->dni;
+            $player->path_file = $request->path_file;
             $player->birth_date = $request->date_birth;            
-            
-            $category = DB::table('categories')->select('id')->where(
-                'name', '2002')->get();
-
-                
-            $team = DB::table('teams')->select('id')->where('club_id', '=', $request->institution_id)
-                                                    ->where('category_id', '=', $category[0]->id)
-                                                     ->get();
-                                   
-            $player->team_id = $team[0]->id;
-
-
             $player->save();
             
 

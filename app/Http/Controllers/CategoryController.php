@@ -29,6 +29,14 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function enable($id){
+        $category = Category::find($id);
+        if($category->enabled) $category->enabled = false;
+        else $category->enabled = true;
+        $category->save();
+        return redirect('/categories');
+    }
     public function create()
     {
         if(!(Session::has('userSession'))){

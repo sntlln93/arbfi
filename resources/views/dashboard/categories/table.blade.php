@@ -28,11 +28,12 @@
       <div class="widget-box">
           <div class="widget-content nopadding">
               
-            <table class="table table-bordered data-table table-responsive-lg">
+            <table class="table table-bordered data-table"><!--table-responsive-lg-->
               <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
+                    <th><i class="icon-check"></i></th>
 
                     <th><i class="icon-pencil"></i></th>
                     <th><i class="icon-trash"></i></th>
@@ -43,6 +44,19 @@
                   <tr>
                     <th> {{ $category->id }} </th>
                     <th> {{ $category->name }} </th>
+                    <th> 
+                      
+                        @if(!$category->enabled)
+                          <a href="{{ url('/categories/'.$category->id.'/enable/') }}" class="btn btn-mini btn-warning">
+                            Habilitar <i class="icon-check-empty"></i>
+                          </a>
+                        @else
+                          <a href="{{ url('/categories/'.$category->id.'/enable/') }}" class="btn btn-mini btn-info">
+                            Deshabilitar <i class="icon-check"></i>
+                          </a>
+                        @endif
+                      
+                    </th>
                     
                     <th>
                       <a href="{{ url('/categories/'.$category->id.'/edit') }}" class="btn btn-mini btn-warning"><i class="icon-pencil"></i></a>

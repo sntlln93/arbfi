@@ -32,6 +32,17 @@
                   <input name="first_name" type="text" class="span11" value="{{ $player->first_name }}" />
                 </div>
               </div>
+
+              <div class="control-group">
+                <label class="control-label">Categoría</label>
+                <div class="controls">
+                  <select class="span11" name="category_name" disabled="">
+                    <option></option>
+                    <option value="{{ $player->team->category->name }}" selected="">{{ $player->team->category->name }}</option>
+                  </select>
+                </div>
+              </div>
+
               <div class="control-group">
                 <label class="control-label">Fecha de nacimiento</label>
                 <div class="controls">
@@ -48,16 +59,41 @@
               <div class="control-group">
                 <label class="control-label">Institución</label>
                 <div class="controls">
-                  <select class="span11" name="institution_id">
+                  <select disabled ="" class="span11" name="institution_id">
                     <option></option>
-                      @foreach($clubs as $club)
-                      <option value="{{ $club->id }}" @if($club->id==$player->team->club_id)  selected @endif>{{ $club->name }}</option>
-                      @endforeach
+                      <option value="{{ $player->team->club->id }}" selected>{{ $player->team->club->name }}</option>
                   </select>
                 </div>
               </div>
+              
 
+              <div class="control-group">
+                <label class="control-label">Posición</label>
+                <div class="controls">
+                  <input name="position" type="text"  class="span11" value="{{ $player->position }}" />
+                </div>
+              </div>
 
+              <div class="control-group">
+                <label class="control-label">Colegio</label>
+                <div class="controls">
+                  <input name="school" type="text"  class="span11" value="{{ $player->school }}" />
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Obra Social</label>
+                <div class="controls">
+                  <input name="prepaid" type="text"  class="span11" value="{{ $player->prepaid }}" />
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Foto</label>
+                <div class="controls">
+                  <input name="path_file" type="text"  class="span11" value="{{ $player->path_file }}" />
+                </div>
+              </div>
               
               
               <div class="form-actions">

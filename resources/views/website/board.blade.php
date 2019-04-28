@@ -7,11 +7,11 @@
             <div class="col-md-5">
                 <aside class="panel-box">
                     <div class="titles no-margin">
-                        <h4>Comisión Directiva</h4>
+                        <h4>Asociación Riojana de Baby Fútbol Infantil</h4>
                     </div>
                     <div class="info-panel">
                         <address>
-                          <strong>Asociación Riojana de Baby Fútbol Infantil</strong><br>
+                          <strong>Comisión Directiva</strong><br>
                           <i class="fa fa-user"></i><strong>Presidente: </strong>Peralta Nicolás<br>
                           <i class="fa fa-user"></i><strong>Secretario: </strong>García Juan Alberto<br>
                           <i class="fa fa-user"></i><strong>1° Vocal: </strong>Díaz Ricardo Daniel<br>
