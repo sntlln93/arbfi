@@ -129,33 +129,31 @@
             <!-- content Column Left -->
             <div class="col-lg-6 col-xl-10">
                 <!-- Recent Post -->
+                
                 <div class="panel-box">
-
                     <div class="titles">
                         <h4>Noticias recientes</h4>
                     </div>
-
                     <!-- Post Item -->
                     @foreach($posts as $post)
-                        <div class="panel-box">
-                            <div class="post-item">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="img-hover">
+                        <div class="post-item">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="img-hover">
                                         <img src="{{ $post->path_file }}" alt="" class="img-responsive">
-                                        <!--<div class="overlay"><a href="single-news.html">+</a></div>-->
-                                        </div>
+                                        <div class="overlay"><a href="{{ url('/posts/'.$post->id) }}">+</a></div>
                                     </div>
-                                    <div class="col-md-8">
-                                        <span><h5><a>{{ $post->title }}</a></h5> por {{ $post->user->username }} </span>
-                                        <span class="data-info">January 3, 2014
-                                        <p>{{ $post->body }}</p>
-                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h5><a href="{{ url('/posts/'.$post->id) }}">{{ $post->title }}</a></h5>
+                                    <span class="data-info">{{ $post->created_at->diffForHumans() }} </span>
+                                    <p>{{ str_limit($post->body, 350) }}<a href="{{ url('/posts/'.$post->id) }}">Leer más [+]</a></p>
                                 </div>
                             </div>
                         </div>
+                        <hr/>
                     @endforeach
-                     <!-- End Post Item -->
+                        <!-- End Post Item -->
                 </div>
                 <!-- End Recent Post -->
             </div>

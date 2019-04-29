@@ -74,7 +74,12 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        if(Session::has('userSession')){
+            $post = Post::find($id);
+        }else{
+            return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');
+        }
+        return view('website.post')->with('post',$post);
     }
 
     /**
