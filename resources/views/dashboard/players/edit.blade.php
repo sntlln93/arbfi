@@ -3,7 +3,7 @@
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb">
-      <a href="{{ url('/inicio') }}" title="Ir a inicio" class="tip-bottom"><i class="icon-home"></i> Dashboard</a>
+      <a href="{{ url('/dashboard') }}" title="Ir a inicio" class="tip-bottom"><i class="icon-home"></i> Panel de control</a>
       <a class="breadcrumb-item"><i class="icon-arrow-right"></i></a>
       <a href="{{ url('/players') }}" class="tip-bottom">Jugadores</a>
       <a class="breadcrumb-item"><i class="icon-arrow-right"></i></a>
