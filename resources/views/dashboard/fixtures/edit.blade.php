@@ -27,43 +27,43 @@
                         <th>Apellido y Nombre</th>
                         <th>DNI</th>
                         <th>Goles</th>
-                        <th>1° Amarilla</th>
-                        <th>2° Amarilla</th>
-                        <th>Roja Directa</th>                                                
+                        <th>Amarilla</th>
+                        <th>Verde</th>
+                        <th>Roja</th>                                                
                     </tr>
                   </thead>
                   <tbody>
                     @php($flag = true)
                     @foreach($match->local->players as $player)
-                    <tr>
-                      @if($flag)
-                        <th style="width: 20%" rowspan="{{ $match->local->players->count()}}"> {{ $match->local->club->name }}</th>
-                        @php($flag = false)
-                      @endif
-                        <th style="width: 30%"> {{ $player->last_name }} {{ $player->first_name }}</th>
-                        <th style="width: 10%"> {{ $player->dni }}</th>
-                        <th style="width: 20%"><input class="span2" name="local_score[{{$player->id}}]" type="text" value="0"></th>
-                        <th style="width: 5%"><input type="checkbox" name="local_yellow1[{{$player->id}}]"/></th>
-                        <th style="width: 5%"><input type="checkbox"  name="local_yellow2[{{$player->id}}]"/></th>
-                        <th style="width: 5%"><input type="checkbox" name="local_red[{{$player->id}}]"/></th>
-                    </tr>
+                      <tr>
+                        @if($flag)
+                          <th style="width: 15%" rowspan="{{ $match->local->players->count()}}"> {{ $match->local->club->name }}</th>
+                          @php($flag = false)
+                        @endif
+                          <th style="width: 20%"> {{ $player->last_name }} {{ $player->first_name }}</th>
+                          <th style="width: 10%"> {{ $player->dni }}</th>
+                          <th style="width: 30%"><input class="span2" name="local_score[{{$player->id}}]" type="number" value="0"></th>
+                          <th style="width: 5%"><input type="checkbox" name="local_yellow[{{$player->id}}]"/></th>
+                          <th style="width: 5%"><input type="checkbox"  name="local_green[{{$player->id}}]"/></th>
+                          <th style="width: 5%"><input type="checkbox" name="local_red[{{$player->id}}]"/></th>
+                      </tr>
                     @endforeach
                   </tbody>
                   <tfoot>
                     @php($flag = true)
                     @foreach($match->visiting->players as $player)
-                    <tr>
-                        @if($flag)
-                          <th style="width: 20%" rowspan="{{ $match->visiting->players->count()}}"> {{ $match->visiting->club->name }}</th>
-                          @php($flag = false)
-                        @endif
-                        <th style="width: 30%"> {{ $player->last_name }} {{ $player->first_name }}</th>
-                        <th style="width: 10%"> {{ $player->dni }}</th>
-                        <th style="width: 20%"><input class="span2" name="visiting_score[{{$player->id}}]" type="text" value="0"></th>
-                        <th style="width: 5%"><input type="checkbox" name="visiting_yellow1[{{$player->id}}]"/></th>
-                        <th style="width: 5%"><input type="checkbox"  name="visiting_yellow2[{{$player->id}}]"/></th>
-                        <th style="width: 5%"><input type="checkbox" name="visiting_red[{{$player->id}}]"/></th>
-                    </tr>
+                      <tr>
+                          @if($flag)
+                            <th style="width: 15%" rowspan="{{ $match->visiting->players->count()}}"> {{ $match->visiting->club->name }}</th>
+                            @php($flag = false)
+                          @endif
+                          <th style="width: 20%"> {{ $player->last_name }} {{ $player->first_name }}</th>
+                          <th style="width: 10%"> {{ $player->dni }}</th>
+                          <th style="width: 30%"><input class="span2" name="visiting_score[{{$player->id}}]" type="number" value="0"></th>
+                          <th style="width: 5%"><input type="checkbox" name="visiting_yellow[{{$player->id}}]"/></th>
+                          <th style="width: 5%"><input type="checkbox"  name="visiting_green[{{$player->id}}]"/></th>
+                          <th style="width: 5%"><input type="checkbox" name="visiting_red[{{$player->id}}]"/></th>
+                      </tr>
                     @endforeach
                   
                   </tfoot>

@@ -110,21 +110,21 @@ class FixtureController extends Controller
                     $event->type = "Roja";
                     $event->save();
                 }
-                if(isset($request->local_yellow1[$player->id])){
-                    if(isset($request->local_yellow2[$player->id])){
-                        $event = new Event;
-                        $event->fixture_id = $match->id;
-                        $event->player_id =  $player->id;
-                        $event->type = "Doble Amarilla";
-                        $event->save();
-                    }else{
-                        $event = new Event;
-                        $event->fixture_id = $match->id;
-                        $event->player_id =  $player->id;
-                        $event->type = "Amarilla";
-                        $event->save();
-                    }
-                }    
+                if(isset($request->local_yellow[$player->id])){
+                    $event = new Event;
+                    $event->fixture_id = $match->id;
+                    $event->player_id =  $player->id;
+                    $event->type = "Amarilla";
+                    $event->save();
+                }
+                if(isset($request->local_green[$player->id])){
+                    $event = new Event;
+                    $event->fixture_id = $match->id;
+                    $event->player_id =  $player->id;
+                    $event->type = "Verde";
+                    $event->save();
+                }
+                    
             }
             $match->local_score = $score;
             $score = 0;
@@ -147,22 +147,22 @@ class FixtureController extends Controller
                     $event->type = "Roja";
                     $event->save();
                 } 
-                if(isset($request->visiting_yellow1[$player->id])){
-                    if(isset($request->visiting_yellow2[$player->id])){
-                        $event = new Event;
-                        $event->fixture_id = $match->id;
-                        $event->player_id =  $player->id;
-                        $event->type = "Doble Amarilla";
-                        $event->save();
-                    }else{
-                        $event = new Event;
-                        $event->fixture_id = $match->id;
-                        $event->player_id =  $player->id;
-                        $event->type = "Amarilla";
-                        $event->save();
-                    }
+                if(isset($request->visiting_yellow[$player->id])){
+                    $event = new Event;
+                    $event->fixture_id = $match->id;
+                    $event->player_id =  $player->id;
+                    $event->type = "Amarilla";
+                    $event->save();
+                }
+                if(isset($request->visiting_green[$player->id])){
+                    $event = new Event;
+                    $event->fixture_id = $match->id;
+                    $event->player_id =  $player->id;
+                    $event->type = "Verde";
+                    $event->save();
                 }
             }
+            
 
             $match->visiting_score = $score;
             $match->state = "JUGADO";
