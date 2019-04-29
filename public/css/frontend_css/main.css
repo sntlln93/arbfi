@@ -17198,12 +17198,12 @@ footer .links-footer ul.columns {
   border: none;
   text-indent: 100%;
   z-index: 9999;
-  background: url("../../img/img-theme/ui.totop.png") no-repeat left top;
+  background: url("{{asset('img/frontend_img/img/img-theme/ui.totop.png')}}") no-repeat left top;
 }
 
 /* line 1873, ../sass/main.scss */
 #toTopHover {
-  background: url("../../img/img-theme/ui.totop.png") no-repeat left -51px;
+  background: url("{{asset('img/frontend_img/img/img-theme/ui.totop.png')}}") no-repeat left -51px;
   width: 51px;
   height: 51px;
   display: block;

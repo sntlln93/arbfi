@@ -39,6 +39,7 @@ Route::resources([
 	'/institutions' => 'InstitutionController',
 	'/tournaments' => 'TournamentController',
 	'/fixtures' => 'FixtureController',
+	'/posts' => 'PostController',
 ]);
 
 //tournaments

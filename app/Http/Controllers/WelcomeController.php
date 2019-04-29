@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Post;
 use App\Fixture;
 use App\Scoreboard;
 use App\Institution;
@@ -14,7 +15,7 @@ use App\Team;
 class WelcomeController extends Controller
 {
     public function index(){
-        
+        $posts = Post::all();
         $recents = Fixture::where('state', 'no jugado')->orderByDesc('id')->get();//DB::table('fixtures')->where('state', '<>', 'no jugado')->get();
         $tocome = Fixture::where('state', 'JUGADO')->orderBy('id')->get();
         $scoreboard = Scoreboard::all()->sortByDesc('points');
@@ -46,10 +47,11 @@ class WelcomeController extends Controller
                 }
             }
         }
-
+        
         return view('website.home')->with('recents', $recents)
                                    ->with('next', $tocome)
-                                   ->with('scores', $scores);
+                                   ->with('scores', $scores)
+                                   ->with('posts', $posts);
     }
 
     public function galery(){

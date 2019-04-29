@@ -46,7 +46,7 @@
               <div class="control-group">
                 <label class="control-label">Fecha de nacimiento</label>
                 <div class="controls">
-                  <input name="date_birth" type="text" class="span11" value="{{ $player->birth_date->format('Y-m-d') }}"  />
+                  <input name="date_birth" type="date" class="span11" min="2005-01-01" max="2019-01-01" value="{{ $player->birth_date->format('Y-m-d') }}"  />
                 </div>
               </div>
               <div class="control-group">
