@@ -11,6 +11,7 @@
     <li class="{{ request()->is('players') ? 'active' : '' }}" > <a href="{{ url('players') }}"><i class="icon icon-file"></i> <span>Jugadores</span></a></li>
     <li class="{{ request()->is('tournaments') ? 'active' : '' }}" > <a href="{{ url('tournaments') }}"><i class="icon icon-file"></i> <span>Torneos</span></a></li>
     <li class="{{ request()->is('fixtures') ? 'active' : '' }}" > <a href="{{ url('fixtures') }}"><i class="icon icon-file"></i> <span>Partidos</span></a></li>
+    <li class="{{ request()->is('posts') ? 'active' : '' }}" > <a href="{{ url('posts') }}"><i class="icon icon-file"></i> <span>Posts</span></a></li>
     
   </ul>
 </div>
