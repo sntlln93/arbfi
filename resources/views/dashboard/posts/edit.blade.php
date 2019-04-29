@@ -42,7 +42,7 @@
               <div class="control-group">
                 <label class="control-label">Foto</label>
                 <div class="controls">
-                  <input name="path_file" type="text"  class="span11" placeholder="URL de la imagen" value={{ $post->path_file }}/>
+                  <input name="path_file" type="text"  class="span11" placeholder="URL de la imagen" value="{{ $post->path_file }}"/>
                 </div>
               </div>
               
