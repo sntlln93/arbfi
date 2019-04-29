@@ -29,7 +29,7 @@
                                     <div class="col-xl-4 col-lg-6 col-md-6">
                                         <div class="item-player">
                                             <div class="head-player">
-                                                <img src="{{ asset( $player->path_file) }}" alt="location-team">
+                                                <img src="{{ $player->path_file }}" alt="{{ $player->last_name }}">
                                             </div>
                                             <div class="info-player">
                                                 <span class="number-player">
@@ -37,13 +37,13 @@
                                                 </span>
                                                 <h4>
                                                     {{ $player->last_name.' '.$player->first_name }}
-                                                    <span>Delantero</span>
+                                                    <span>{{ $player->position }}</span>
                                                 </h4>
                                                 <ul>
                                                     <li>
                                                         <strong>CATEGORIA</strong> <span><img src="{{ asset($team->club->path_file) }}" alt=""> {{ $player->team->category->name}} </span>
                                                     </li>
-                                                    <li><strong>PARTIDOS:</strong> <span>0 <!--{-- $player->team->fixture->count() --}}--></span></li>
+                                                    <li><strong>PARTIDOS:</strong> <span>{{$player->team->fixtureLocal->count()+$player->team->fixtureVisiting->count()}}</span></li>
                                                     <li><strong>EDAD:</strong> <span> {{ $player->birth_date->diffInYears() }}</span></li>
                                                 </ul>
                                             </div>
@@ -80,13 +80,14 @@
                                                             </td>
                                                             <td>
                                                                 {{ $match->date }}<br>
-                                                                <small class="meta-text">Cancha: {{ $match->location }}</small>
+                                                                <small class="meta-text">Ubicación: {{ $match->location }}</small>
                                                             </td>
                                                         </tr>
                                                     @endif
                                                 @endforeach
                                         </tbody>
                                     </table>
+                                    <hr>
                             </div>
                             
     
@@ -105,7 +106,7 @@
             
                                                             <div class="goals-result">
                                                                 <a href="{{ url('/web/teams/'.$match->local_team_id) }}">
-                                                                    <img src="{{ asset($match->local->club->path_file) }}" alt="">
+                                                                    <img src="{{ $match->local->club->path_file }}" alt="">
                                                                     {{ $match->local->club->name }}
                                                                 </a>
             
@@ -114,7 +115,7 @@
                                                                 </span>
             
                                                                 <a href="{{ url('/web/teams/'.$match->visiting_team_id) }}">
-                                                                    <img src="{{ asset($match->visiting->club->path_file) }}" alt="">
+                                                                    <img src="{{ $match->local->club->path_file }}" alt="">
                                                                     {{ $match->visiting->club->name }}
                                                                 </a>
                                                             </div>

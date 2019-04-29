@@ -66,7 +66,7 @@ class WelcomeController extends Controller
     public function team($id){
         $team = Team::find($id);
         $fixtures = Fixture::where('local_team_id', $id)->orWhere('visiting_team_id', $id)->get();
-
+        
         return view('website.team')->with('team', $team)->with('fixtures', $fixtures);
     }
 

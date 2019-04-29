@@ -14,35 +14,21 @@
             <ul class="social">
                 <li>
                     <div>
-                        <a href="#" class="facebook">
+                        <a href="https://www.facebook.com/profile.php?id=100009213152062" class="facebook">
                             <i class="fa fa-facebook"></i>
                         </a>
                     </div>
                 </li>
-                <li>
+                <!--<li>
                     <div>
                         <a href="#" class="twitter-icon">
                             <i class="fa fa-twitter"></i>
                         </a>
                     </div>
-                </li>
+                </li>-->
                 <li>
                     <div>
-                        <a href="#" class="vimeo">
-                            <i class="fa fa-vimeo-square"></i>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <a href="#" class="google-plus">
-                            <i class="fa fa-google-plus"></i>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <a href="#" class="youtube">
+                        <a href="https://www.youtube.com/channel/UCNiC8u4RNG4fOKwFI_sUWBw" class="youtube">
                             <i class="fa fa-youtube"></i>
                         </a>
                     </div>
