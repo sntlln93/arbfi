@@ -6,6 +6,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+<!--tab icon-->
+<link rel="icon" type="image/png" href="{{ asset('img/frontend_img/logo-light.png') }}" />
+
 <!-- MORRIS.JS [EL ORDEN IMPORTA!] -->
 <link rel="stylesheet" href="{{ asset('css/backend_css/morris.css') }}" />
 <script src="{{ asset('js/backend_js/jquery.js') }}"></script>
