@@ -15432,7 +15432,7 @@ header .adds img {
 @media (max-width: 1199px) {
   /* line 392, ../sass/main.scss */
   header .adds {
-    display: none;
+    display: inline; /*display: none;*/
   }
 }
 /* line 400, ../sass/main.scss */
@@ -15999,13 +15999,13 @@ iframe.big-video {
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
+  height: 100%;/*
   background: rgba(0, 0, 0, 0.4);
   background: -moz-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.85) 100%);
   background: -webkit-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.85) 100%);
   background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.85) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 );
-}
+*/}
 /* line 852, ../sass/main.scss */
 .section-title h1 {
   color: #fff;

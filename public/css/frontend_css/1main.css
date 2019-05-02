@@ -11909,7 +11909,7 @@ header .adds img {
 @media (max-width: 1199px) {
   /* line 178, ../sass/main.scss */
   header .adds {
-    display: none;
+    display: inline; /*display: none;*/
   }
 }
 /* line 186, ../sass/main.scss */

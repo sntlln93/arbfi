@@ -127,7 +127,7 @@
         <div class="row">
 
             <!-- content Column Left -->
-            <div class="col-lg-6 col-xl-10">
+            <div class="col-lg-6 col-xl-8">
                 <!-- Recent Post -->
                 
                 <div class="panel-box">
@@ -160,14 +160,15 @@
              <!-- End content Left -->
 
             <!-- content Sidebar Center -->
-            <aside class="col-sm-2 col-lg-2 col-xl-2">
+            <aside class="col-sm-5 col-lg-5 col-xl-4">
 
                 <!-- Widget img-->
                 <div class="panel-box">
                     <div class="titles no-margin">
                         <h4>Auspiciante</h4>
                     </div>
-                    <img src="{{ asset('img/frontend_img/adds/sidebar.png') }}" alt="">
+                    <a href="http://www.transportechilecito.com.ar" target="_blank">
+                    <img src="{{ asset('img/frontend_img/adds/chilecito_v.png') }}" alt="">
                 </div>
                 <!-- End Widget img-->
             </aside>

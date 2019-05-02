@@ -29,7 +29,11 @@
                                     <div class="col-xl-4 col-lg-6 col-md-6">
                                         <div class="item-player">
                                             <div class="head-player">
+                                                @if($player->path_file == '#' OR $player->path_file == NULL)
+                                                    <img class="object-fit: scale-down" src="{{ asset('/img/frontend_img/players/0.jpg') }}" alt="{{ $player->last_name }}">
+                                                @else
                                                 <img src="{{ $player->path_file }}" alt="{{ $player->last_name }}">
+                                                @endif
                                             </div>
                                             <div class="info-player">
                                                 <span class="number-player">
@@ -41,7 +45,7 @@
                                                 </h4>
                                                 <ul>
                                                     <li>
-                                                        <strong>CATEGORIA</strong> <span><img src="{{ asset($team->club->path_file) }}" alt=""> {{ $player->team->category->name}} </span>
+                                                        <strong>CATEGORIA</strong> <span><img src="{{ $team->club->path_file }}" alt=""> {{ $player->team->category->name}} </span>
                                                     </li>
                                                     <li><strong>PARTIDOS:</strong> <span>{{$player->team->fixtureLocal->count()+$player->team->fixtureVisiting->count()}}</span></li>
                                                     <li><strong>EDAD:</strong> <span> {{ $player->birth_date->diffInYears() }}</span></li>
