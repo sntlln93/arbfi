@@ -74,11 +74,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        if(Session::has('userSession')){
-            $post = Post::find($id);
-        }else{
-            return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');
-        }
+        $post = Post::find($id);
         return view('website.post')->with('post',$post);
     }
 
@@ -112,7 +108,7 @@ class PostController extends Controller
             $post = Post::find($id);
             $this->validate($request,[
                 'title' => 'required|max:60',
-                'body' => 'required|max:1000',
+                'body' => 'required|max:2000',
             ]);
             $post->title = $request->title;
             $post->body = $request->body;
