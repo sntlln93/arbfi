@@ -15,7 +15,7 @@ use App\Team;
 class WelcomeController extends Controller
 {
     public function index(){
-        $posts = Post::all();
+        $posts = DB::table('posts')->orderByDesc('created_at')->get();
         $recents = Fixture::where('state', 'no jugado')->orderByDesc('id')->get();//DB::table('fixtures')->where('state', '<>', 'no jugado')->get();
         $tocome = Fixture::where('state', 'JUGADO')->orderBy('id')->get();
         $scoreboard = Scoreboard::all()->sortByDesc('points');

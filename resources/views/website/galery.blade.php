@@ -9,7 +9,7 @@
     <div class="container padding-top">
         <div class="row portfolioContainer">
 
-                @for($i=1; $i<=19; $i++)
+                @for($i=1; $i<=20; $i++)
                     <div class="col-md-6 col-lg-4 col-xl-3">
                         <div class="item-team">
                             <div class="head-team">
