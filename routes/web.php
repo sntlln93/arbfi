@@ -50,3 +50,6 @@ Route::put('/tournaments/league/{id}', 'TournamentController@leagueMaker');
 //Helpers
 Route::get('/categories/{id}/enable', 'CategoryController@enable');
 Auth::routes();
+
+//pdf
+Route::get('/players/{id}/pdf', 'PlayerController@htmlToPdf');
