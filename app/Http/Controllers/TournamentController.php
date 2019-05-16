@@ -80,7 +80,7 @@ class TournamentController extends Controller
                                                             ->with('categories', $categories)
                                                             ->with('fase', 1);
             }elseif($tournament->type->type == "GF"){
-                return view('dashboard.tournament.group')->with('tournament', $tournament)
+                return view('dashboard.tournament.groups')->with('tournament', $tournament)
                                                          ->with('teams', $teams)
                                                          ->with('categories', $categories);                                                         
             }
@@ -142,7 +142,7 @@ class TournamentController extends Controller
 
             }
         }
-        if(!    $free){
+        if(!$free){
             if($fixture_day < sizeof($request->teams)-1){
                 $fixture_day++;
                 return view('dashboard.tournament.league')->with('tournament', $tournament)
@@ -218,6 +218,20 @@ class TournamentController extends Controller
 
         return redirect('/tournaments');
     }
+
+    public function faseGroupMaker(Request $request, $id){
+        if(!(Session::has('userSession'))){
+            return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');
+        }
+        
+        $tournament = Tournament::find($id);
+        $institutions = Institution::all();
+        return view('dashboard.tournament.group')->with('tournament', $tournament)
+                                                 ->with('quantity_teams', $request->quantity_teams)
+                                                 ->with('quantity_groups', $request->quantity_groups)
+                                                 ->with('clubs', $institutions);
+    }
+
     /**
      * Display the specified resource.
      *

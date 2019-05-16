@@ -15,48 +15,33 @@
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-            <h5>Nuevo torneo por fase de grupos</h5>
+            <h5>{{ $tournament->name }}</h5>
           </div> <!--widget-title-->
           <div class="widget-content nopadding">
             <form class="form-horizontal" method="post" action="{{ '/tournaments/groups/'.$tournament->id }}">
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}
-              <div class="control-group">
-                <label class="control-label">Nombre</label>
-                <div class="controls">
-                  <input name="name" type="text" disabled="" class="span11" value="{{ $tournament->name }}" />
+                <input type="hidden" name="quantity_teams" value="{{ $quantity_teams }}">
+                <input type="hidden" name="quantity_groups" value="{{ $quantity_groups }}">
+                @for($i = 0; $i < $quantity_groups; $i++)
+                  <div class="control-group">
+                    <label class="control-label">Grupo {{ chr(65+$i) }}</label>
+                    @for($j = 0; $j < $quantity_teams/2 ; $j++)
+                        <div id="uno" class="controls">
+                          <select class="sel span11" name="teams[]">
+                            <option></option>
+                            @foreach($clubs as $club)
+                                <option value="{{ $club->id }}">{{ $club->name }}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                    @endfor
+                  </div> 
+                @endfor
+                
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-success">Guardar</button>
                 </div>
-              </div>
-              
-              <div class="control-group">
-                <label class="control-label">Categorías participantes</label>
-                <div class="controls">
-                  <select multiple="true" class="e1 span11" name="categories[]">
-                    @foreach($categories as $category)
-                      <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-
-
-              <div class="control-group">
-                <label class="control-label">Cantidad de grupos</label>
-                <div class="controls">
-                  <input name="quantity_groups" type="number"  class="span11" min="2" />
-                </div>
-              </div> 
-
-              <div class="control-group">
-                <label class="control-label">Cantidad de equipos</label>
-                <div class="controls">
-                  <input name="quantity_teams" type="number"  class="span11" min="6" />
-                </div>
-              </div> 
-              
-              <div class="form-actions">
-                <button type="submit" class="btn btn-success">Guardar</button>
-              </div>
             </form>
 
           </div> <!--widget-content nopadding-->
@@ -72,6 +57,25 @@
     </div><!--row-fluid-->
   </div> <!--container-fluid-->
 </div> <!--content-->
+
+<script>
+  $(".sel").change(function(){cambiar();});
+
+  function cambiar(){
+    var array = [];
+    $(".sel :selected").each(function(){
+      array[$(this).val()]=(parseInt($(this).val()));
+    });
+    for(i=0;i<array.length;i++){
+    if(array[i]!=undefined){
+        $(".sel option[value=" + array[i] + "]").hide();
+      }
+      if(array[i]==undefined){
+        $(".sel option[value=" + i + "]").show();
+      }
+    }
+  }
+</script>
 
 <script>
     $(document).ready(function() {

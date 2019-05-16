@@ -21,5 +21,9 @@ class Fixture extends Model
     public function event(){
         return $this->hasMany('App\Event');
     }
+
+    public function group(){
+        return $this->belongsTo('App\Group');
+    }
     public $timestamps = false;
 }

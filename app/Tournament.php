@@ -17,5 +17,9 @@ class Tournament extends Model
     public function type(){
         return $this->belongsTo('App\TournamentType');
     }
+
+    public function groups(){
+        return $this->hasMany('App\Group');
+    }
     public $timestamps = false;
 }
