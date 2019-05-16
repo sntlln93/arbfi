@@ -18,17 +18,28 @@
             <h5>{{ $tournament->name }}</h5>
           </div> <!--widget-title-->
           <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="{{ '/tournaments/groups/'.$tournament->id }}">
+            <form class="form-horizontal" method="post" action="{{ '/tournaments/groups/'.$tournament->id.'/make' }}">
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}
                 <input type="hidden" name="quantity_teams" value="{{ $quantity_teams }}">
                 <input type="hidden" name="quantity_groups" value="{{ $quantity_groups }}">
+                <div class="control-group">
+                  <label class="control-label">Categorías participantes</label>
+                  <div class="controls">
+                      <select multiple="true" class="e1 span11" name="categories[]">
+                        @for($i = 0; $i < sizeof($categories); $i++)
+                          <option value="{{ $categories[$i]->id }}" selected="">{{ $categories[$i]->name }}</option>
+                        @endfor
+                      </select>
+                  </div>
+                </div> 
+                
                 @for($i = 0; $i < $quantity_groups; $i++)
                   <div class="control-group">
                     <label class="control-label">Grupo {{ chr(65+$i) }}</label>
                     @for($j = 0; $j < $quantity_teams/2 ; $j++)
                         <div id="uno" class="controls">
-                          <select class="sel span11" name="teams[]">
+                          <select class="sel span11" name={{ 'teams['.$i.'][]' }}>
                             <option></option>
                             @foreach($clubs as $club)
                                 <option value="{{ $club->id }}">{{ $club->name }}</option>

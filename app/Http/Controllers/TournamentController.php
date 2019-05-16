@@ -11,6 +11,7 @@ use DB;
 use App\Fixture;
 use Carbon\Carbon;
 use App\Institution;
+use App\Group;
 
 class TournamentController extends Controller
 {
@@ -223,13 +224,54 @@ class TournamentController extends Controller
         if(!(Session::has('userSession'))){
             return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');
         }
-        
+        $categories = DB::table('categories')->whereIn('id', $request->categories)->get();
         $tournament = Tournament::find($id);
         $institutions = Institution::all();
         return view('dashboard.tournament.group')->with('tournament', $tournament)
                                                  ->with('quantity_teams', $request->quantity_teams)
                                                  ->with('quantity_groups', $request->quantity_groups)
-                                                 ->with('clubs', $institutions);
+                                                 ->with('clubs', $institutions)
+                                                 ->with('categories', $categories);
+    }
+
+    public function groupMaker(Request $request, $id){
+        if(!(Session::has('userSession'))){
+            return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');
+        }
+        
+        $limit = $request->quantity_teams/$request->quantity_groups;
+        
+        for($cat = 0; $cat < sizeof($request->categories); $cat++){
+            
+            for($i = 0; $i < $request->quantity_groups; $i++){
+                $group = new Group;
+                $group->tournament_id = $id;
+                $group->name = chr(65+$i);
+                $group->save();
+                for($pivot = 0; $pivot < $limit; $pivot++){
+                    for($j = $pivot+1; $j < $limit; $j++){
+                        $match = new Fixture;
+                        $match->tournament_id = $group->id;
+                        $match->local_team_id = DB::table('teams')->select('id')->where('club_id', $request->teams[$i][$pivot])
+                                                                                ->where('category_id', $request->categories[$cat])
+                                                                                ->get()[0]->id;
+                        $match->visiting_team_id = DB::table('teams')->select('id')->where('club_id', $request->teams[$i][$j])
+                                                                                   ->where('category_id', $request->categories[$cat])
+                                                                                   ->get()[0]->id;
+                        $match->date = null;
+                        $match->fixture_day = 0;
+                        $match->location = "A definir";
+                        $match->local_score = 0;
+                        $match->visiting_score = 0;
+                        $match->state = "no jugado";
+                        $match->save();
+                    }
+                }
+            }
+        }
+
+
+        return redirect('/fixtures');
     }
 
     /**

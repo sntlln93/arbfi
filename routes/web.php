@@ -46,6 +46,7 @@ Route::resources([
 Route::put('/tournaments/playoffs/{id}', 'TournamentController@playoffMaker');
 Route::put('/tournaments/groups/{id}', 'TournamentController@faseGroupMaker');
 Route::put('/tournaments/league/{id}', 'TournamentController@leagueMaker');
+Route::put('/tournaments/groups/{id}/make', 'TournamentController@groupMaker');
 
 //Helpers
 Route::get('/categories/{id}/enable', 'CategoryController@enable');
