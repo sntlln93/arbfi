@@ -36,7 +36,7 @@
                     <th>Jornada</th>
                     <th>Cancha</th>
                     <th>Estado</th>
-                    
+                    <th>Planilla</th>
                     <th><i class="icon-pencil"></i></th>
                     
                 </tr>
@@ -53,7 +53,9 @@
                     <th> {{ $match->location }} </th>
                     <th> {{ mb_strToUpper($match->state) }} </th>
 
-                    
+                    <th>
+                        <a href="{{ url('/fixtures/'.$match->id.'/pdf') }}" class="btn btn-mini btn-info"><i class="icon-file"></i></a>  
+                    </th>
                     <th>
                       <a class="btn btn-mini btn-warning {{ $match->state == 'JUGADO' ? 'disabled' : '' }}" href="{{ url('/fixtures/'.$match->id.'/edit') }}"><i class="icon-pencil"></i></a>
                       

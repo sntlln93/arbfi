@@ -64,8 +64,7 @@
                           <th style="width: 5%"><input type="checkbox"  name="visiting_green[{{$player->id}}]"/></th>
                           <th style="width: 5%"><input type="checkbox" name="visiting_red[{{$player->id}}]"/></th>
                       </tr>
-                    @endforeach
-                  
+                    @endforeach                  
                   </tfoot>
                 </table>
               <div class="form-actions">

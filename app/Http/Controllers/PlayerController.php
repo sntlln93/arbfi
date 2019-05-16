@@ -32,22 +32,27 @@ class PlayerController extends Controller
     public function htmlToPdf($id){
         $player = Player::find($id);
         $pdf = App::make('dompdf.wrapper');
-        $pdf->loadHTML('
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row no-gutters">
-                <div class="col-md-4">
-                    <img src="'.$player->path_file.'" class="card-img">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">'.$player->last_name.' '.$player->first_name.'</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        ');
+        $pdf->loadHTML('<table style="border:1 black solid; border-collapse:collapse;" width="110mm" height="100mm">
+                            <tr style="text-align:center;">
+                                <td colspan="2"> <h3>Asociación Riojana de Baby Fútbol Infantil</h3> </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="4" style="text-align:center;"> FOTO </td>
+                                <td>Apellido y nombre: '.$player->last_name. ' '.$player->first_name.'</td>                                
+                            </tr>
+                            <tr>
+                                <td>Equipo: '.$player->team->club->name.'</td>
+                            </tr>
+                            <tr>
+                                <td>Categoría: '.$player->team->category->name.'</td>
+                            </tr>
+                            <tr>
+                                <td>Fecha de nacimiento: '.$player->birth_date->format('d/m/Y').'</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"> <br> </td>
+                            </tr>
+                        </table>');
         return $pdf->stream();
     }
 

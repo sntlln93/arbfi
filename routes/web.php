@@ -54,3 +54,4 @@ Auth::routes();
 
 //pdf
 Route::get('/players/{id}/pdf', 'PlayerController@htmlToPdf');
+Route::get('/fixtures/{id}/pdf', 'FixtureController@htmlToPdf');
