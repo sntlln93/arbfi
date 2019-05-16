@@ -149,6 +149,16 @@ class InstitutionController extends Controller
     {
         if(Session::has('userSession')){
             $item = Institution::find($id);
+            $teams = Team::all();
+            //$teams = DB::table('teams')->select('id')->where('club_id',$id)->get();
+            foreach($teams as $team){
+                if($team->club_id == $id){
+                    foreach($team->players as $player){
+                        $player->delete();
+                    }
+                    $team->delete();
+                }
+            }
             $item->delete();
             session()->flash('message','Eliminado correctamente');
         }else{
