@@ -8,6 +8,7 @@ use App\Tournament;
 use App\TournamentType;
 use App\Category;
 use DB;
+use App;
 use App\Fixture;
 use Carbon\Carbon;
 use App\Institution;
@@ -341,5 +342,27 @@ class TournamentController extends Controller
         return redirect('/tournaments');
     }
 
-    
+    public function htmlToPdf(Request $request, $id){
+        $tournament = Tournament::find($id);
+        $html = '<table border="1" style="border-collapse:collapse; text-align:center" width="267mm">
+                    <tr>
+                        <th colspan="9"><h1>Torneo: '.$tournament->name.'</h1></th>
+                    </tr>
+                    <tr>
+                        <td colspan="9"><h4>Fecha N° '.$request->fixture_day.'</h4></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><b>Local</b></td><td><b>vs</b></td><td colspan="4"><b>Visitante</b></td>
+                    </tr>';
+                    
+        foreach($tournament->fixtures as $match){
+            if($request->fixture_day == $match->fixture_day)
+                $html .= '<tr><td colspan="4">'.$match->local->club->name. ' ('.$match->local->category->name.')</td><td>vs</td><td colspan="4">'.$match->visiting->club->name.' ('.$match->visiting->category->name.')</td></tr>';
+        }
+        $html .= '</table>';
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML($html);
+        $pdf->setPaper('A4', 'landscape');
+        return $pdf->stream();
+    } 
 }

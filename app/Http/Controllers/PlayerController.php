@@ -85,9 +85,9 @@ class PlayerController extends Controller
             $player->school = mb_strToUpper($request->school);
             $player->prepaid = mb_strToUpper($request->prepaid);
             $player->dni = $request->dni;
-            $player->path_file = $request->path_file;
+            $player->path_file = 'img/frontend_img/players/0.jpg';
             $player->birth_date = $request->date_birth;
-
+            
             $birth = new DateTime($request->date_birth);
             $daymonth = substr($request->date_birth, 4, 6);
             $category = new DateTime($request->category_name.$daymonth);

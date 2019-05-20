@@ -33,7 +33,7 @@
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Tipo</th>
-                    
+                    <th>Imprimir fixture</th>
                     <th><i class="icon-pencil"></i></th>
                     <th><i class="icon-trash"></i></th>
                     
@@ -52,6 +52,7 @@
                         @else Partido único
                         @endif
                     </th>
+                    <th><button type="button" class="btn btn-mini btn-info" data-toggle="modal" data-target="#myModal"><i class="icon-file"></i></button></th>
                     <th>
                       <a href="{{ url('/tournaments/'.$tournament->id.'/edit') }}" class="btn btn-mini btn-warning"><i class="icon-pencil"></i></a>
                     </th>
@@ -70,6 +71,39 @@
           </div>
       </div>
     </div>
+</div>
+<!--modal-->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Elija la fecha a imprimir</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" method="get" action="{{ '/tournaments/'.$tournament->id.'/pdf' }}">
+          {{ csrf_field() }}
+          <div class="control-group">
+            <label class="control-label">Fecha</label>
+            <div class="controls">
+                <input name="fixture_day" type="number">
+            </div>
+          </div> 
+          
+          
+            <div class="form-actions">
+                <button type="btn btn-success" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-success">Imprimir</button>
+            </div>
+          
+          
+      </form>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <script>

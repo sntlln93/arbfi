@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Session;
 use App;
+use DB;
 use App\Team;
 use App\Fixture;
 use App\Event;
@@ -225,25 +226,31 @@ class FixtureController extends Controller
 
     public function htmlToPdf($id){
         $match = Fixture::find($id);
+        $local = DB::table('players')->select('last_name','first_name')->where('team_id',$match->local_team_id)->get();
+        $away = DB::table('players')->select('last_name','first_name')->where('team_id',$match->visiting_team_id)->get();
         
-        $local = $this->generatePlayersGrid($match->local_team_id);
-        $away = $this->generatePlayersGrid($match->visiting_team_id);
+        $size = sizeof($away);
+        if(sizeof($local) > sizeof($away)) $size = sizeof($local);
+        $colspan = 6+$size;
+        
+        $teamsGrid = $this->generatePlayersGrid($match->id);
+
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadHTML('<table border="1" style="border-collapse:collapse;" width="267mm">
                             <tr style="text-align:center">
-                                <th colspan="10">TORNEO: '.$match->group->tournament->name.'<br>'.$match->local->category->name.'</th>
-                                <th>GRUPO '.$match->group->name.'</th>
+                                <td colspan="15"><b>ARBFI<br>Asociación Riojana de Baby Fútbol Infantil</b></td>
+                            </tr>
+                            <tr style="text-align:center">
+                                <th colspan="11">TORNEO "'.$match->tournament->name.'" CATEGORÍA '.$match->local->category->name.'</th>
+                                
                                 <th colspan="4">Fecha '.$match->fixture_day.'°</th>
                             </tr>
                             <tr style="text-align:center">
-                            <td colspan="15"><h2>ARBFI<br>Asociación Riojana de Baby Fútbol Infantil</h2></td>
-                            </tr>
-                            <tr style="text-align:center">
                                 <td colspan="7">Local: '.$match->local->club->name.'</td>
-                                <td rowspan="8"></td>
+                                <td rowspan="20"></td>
                                 <td colspan="7">Visitante: '.$match->visiting->club->name.'</td>
                             </tr>
-                            <tr  style="text-align:center">
+                            <tr style="text-align:center">
                                 <td>N°</td>
                                 <td>Apellido y nombre</td>
                                 <td>Firma</td>
@@ -260,11 +267,9 @@ class FixtureController extends Controller
                                 <td>V</td>
                                 <td>G</td>
                             </tr>
-                            <tr style="text-align:center">
                                 '
-                                .$local.$away.
+                                .$teamsGrid.
                                 '
-                            </tr>
                             <tr>
                             <td colspan="3">Total</td>
                             <td></td>
@@ -309,20 +314,123 @@ class FixtureController extends Controller
                             </tr>
                         </table>');
         $pdf->setPaper('A4', 'landscape');
-        return $pdf->stream();
+        return $pdf->stream($match->tournament->name.'_fecha_'.$match->fixture_day.'.pdf');
     }
 
     public function generatePlayersGrid($id){
-        $team = Team::find($id);
+        $match = Fixture::find($id);
+        $local = DB::table('players')->select('last_name','first_name')->where('team_id',$match->local_team_id)->get();
+        $away = DB::table('players')->select('last_name','first_name')->where('team_id',$match->visiting_team_id)->get();
         $teamGrid = '';
-        foreach($team->players as $player){
-            $teamGrid .= '<td></td>
-            <td width="25%">'.$player->last_name.' '.$player->first_name.'</td>
-            <td width="15%">....................................</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>';
+        
+        $limit = sizeof($away);
+        if(sizeof($local) > sizeof($away)) $limit = sizeof($local);
+        
+        for($i = 0; $i < 15; $i++){
+            if($i < sizeof($local) AND $i < sizeof($away)){
+                
+                $teamGrid .= '
+                <tr style="text-align:center">
+                <td></td>
+                <td width="25%">'.$local[$i]->last_name.' '.$local[$i]->first_name.'</td>
+                <td width="10%">.....................</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td width="7%"></td>
+                
+                <td></td>
+
+                <td width="25%">'.$away[$i]->last_name.' '.$away[$i]->first_name.'</td>
+                <td width="10%">.....................</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td width="7%"></td>
+                </tr>';
+            }else if($i < sizeof($local) AND $i > sizeof($away) OR $i > sizeof($local) AND $i < sizeof($away)){
+                if($i >= sizeof($local)){
+                    $teamGrid .= '
+                                <tr style="text-align:center">
+                                <td></td>
+                                <td width="25%"></td>
+                                <td width="10%">.....................</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td width="7%"></td>
+                                
+                                <td></td>
+                                <td width="25%">'.$away[$i]->last_name.' '.$away[$i]->first_name.'</td>
+                                <td width="10%">.....................</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td width="7%"></td>
+                                </tr>';
+                }else if(!sizeof($local) AND !sizeof($away)){
+                    $teamGrid .= '
+                                <tr style="text-align:center">
+                                <td></td>
+                                <td width="25%"></td>
+                                <td width="10%">.....................</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td width="7%"></td>
+                                
+                                <td></td>
+                                <td width="25%"></td>
+                                <td width="10%">.....................</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td width="7%"></td>
+                                </tr>';
+                }else{
+                    $teamGrid .= '
+                                <tr style="text-align:center">
+                                <td></td>
+                                <td width="25%">'.$local[$i]->last_name.' '.$local[$i]->first_name.'</td>
+                                <td width="10%">.....................</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td width="7%"></td>
+                                
+                                <td></td>
+                                <td width="25%"></td>
+                                <td width="10%">.....................</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td width="7%"></td>
+                                </tr>';
+                }
+            }
+        }
+        if(sizeof($local)>sizeof($away)) $excess = 14 - sizeof($local);
+        else $excess = 14 - sizeof($away);
+        
+        for ($i = 0; $i < $excess; $i++) {
+            $teamGrid .= '
+                        <tr style="text-align:center">
+                        <td></td>
+                        <td width="25%"></td>
+                        <td width="10%">......................</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td width="7%"></td>
+                        
+                        <td></td>
+                        <td width="25%"></td>
+                        <td width="10%">.....................</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td width="7%"></td>
+                        </tr>';
         }
         return $teamGrid;
     }    
