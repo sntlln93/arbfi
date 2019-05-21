@@ -19,13 +19,20 @@
                         </a>
                     </div>
                 </li>
-                <!--<li>
+                <li>
                     <div>
-                        <a href="#" class="twitter-icon">
+                        <a href="https://www.instagram.com/p/BxptBNvHecW/">
+                            <i class=" fa fa-instagram"></i>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <a href="https://twitter.com/Babylarioja?lang=es" class="twitter-icon">
                             <i class="fa fa-twitter"></i>
                         </a>
                     </div>
-                </li>-->
+                </li>
                 <li>
                     <div>
                         <a href="https://www.youtube.com/channel/UCNiC8u4RNG4fOKwFI_sUWBw" class="youtube">
@@ -37,4 +44,7 @@
             <!-- End Social Icons-->
         </div>
         <!-- End Footer Top-->
+        <div>
+            <p></p>
+        </div>
     </footer>

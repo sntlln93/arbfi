@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Tournament;
 use App\Post;
 use App\Fixture;
 use App\Scoreboard;
@@ -20,6 +21,7 @@ class WelcomeController extends Controller
         $tocome = Fixture::where('state', 'JUGADO')->orderBy('id')->get();
         $scoreboard = Scoreboard::all()->sortByDesc('points');
         $institutions = Institution::all();
+        $tournaments = Tournament::all();
         $scores = array();
         $i = 0; 
 
@@ -51,7 +53,8 @@ class WelcomeController extends Controller
         return view('website.home')->with('recents', $recents)
                                    ->with('next', $tocome)
                                    ->with('scores', $scores)
-                                   ->with('posts', $posts);
+                                   ->with('posts', $posts)
+                                   ->with('tournaments', $tournaments);
     }
 
     public function galery(){

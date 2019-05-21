@@ -22,7 +22,7 @@ Route::get('/', 'WelcomeController@index');
 Route::get('/web/galery', 'WelcomeController@galery');
 Route::get('/web/teams', 'WelcomeController@teams');
 Route::get('/web/teams/{id}', 'WelcomeController@team');
-//Route::get('/web/categories', 'WelcomeController@categories'); la necesito??
+Route::get('/web/tournament/{id}', 'WelcomeController@tournament');
 Route::get('/web/fixtures', 'WelcomeController@fixtures');
 Route::get('/web/contact', 'WelcomeController@contact');
 Route::get('/web/regulation', 'WelcomeController@regulation');
