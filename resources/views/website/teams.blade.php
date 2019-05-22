@@ -8,7 +8,7 @@
             <h5><i class="fa fa-filter" aria-hidden="true"></i>Filtrar:</h5>
             <a href="#" data-filter="*" class="current">Mostrar todos</a>
             @foreach($categories as $category)
-                <a href="#" data-filter="{{'.'.$category->name}}">{{ '"'.$category->name }}</a>
+                <a href="#" data-filter="{{'.'.$category->name}}">{{ $category->name }}</a>
             @endforeach
         </div>
     </div>

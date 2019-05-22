@@ -51,7 +51,7 @@
                                             </span>
 
                                             <div class="goals-result">
-                                                <a href="single-team.html">
+                                                <a href="{{ url('/web/teams/'.$recent->local->id ) }}">
                                                     <img src="{{ asset($recent->local->club->path_file) }}" alt="">
                                                     {{ $recent->local->club->name }}
                                                 </a>
@@ -60,7 +60,7 @@
                                                     <b style="color:red">0</b> - <b style="color:red">0</b>
                                                 </span>
 
-                                                <a href="single-team.html">
+                                                <a href="{{ url('/web/teams/'.$recent->visiting->id ) }}">
                                                     <img src="{{ asset($recent->visiting->club->path_file) }}" alt="">
                                                     {{ $recent->visiting->club->name }}
                                                 </a>

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Team;
 
 class Scoreboard extends Model
 {
@@ -14,5 +15,6 @@ class Scoreboard extends Model
         return $this->belongsTo('App\Tournament');
     }
     public $timestamps = false;
+    
 
 }

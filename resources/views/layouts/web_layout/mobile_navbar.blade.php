@@ -7,6 +7,17 @@
             <li><a href="{{ url('/web/partners') }}">Afiliados y Socios</a></li>
             <li><a href="{{ url('/web/galery') }}">Galería de Imágenes</a></li>
             <li><a href="{{ url('/web/teams') }}">Equipos</a></li>
+            <li class="current">
+                <a href="">Torneos</a>
+                <ul class="sub-current">
+                    @php ($t = App\Tournament::all())
+                    @foreach($t as $tournament)
+                        <li>
+                            <a href="{{ url('/web/tournament/'.$tournament->id) }}">{{ $tournament->name }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </li>
             <li><a href="{{ url('/web/fixtures') }}">Fixture</a></li>
             <!--{{--<li><a href="{{ url('/web/categories') }}">Categorías</a></li>--}}-->
             <li><a href="{{ url('/web/regulation') }}">Reglamento</a></li>

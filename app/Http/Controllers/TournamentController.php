@@ -7,12 +7,14 @@ use Session;
 use App\Tournament;
 use App\TournamentType;
 use App\Category;
-use DB;
-use App;
+use App\Scoreboard;
 use App\Fixture;
 use Carbon\Carbon;
 use App\Institution;
 use App\Group;
+
+use DB;
+use App;
 
 class TournamentController extends Controller
 {
@@ -25,6 +27,7 @@ class TournamentController extends Controller
     {
         if(Session::has('userSession')){
             $tournaments = Tournament::all();
+            if($tournaments->count() < 1) return redirect('tournaments/create');
         }else{
             return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');
         }
@@ -163,6 +166,7 @@ class TournamentController extends Controller
                                                               ->with('free', $free);
             }
         }
+        
         
         
         

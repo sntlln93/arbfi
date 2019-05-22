@@ -1,50 +1,54 @@
 @extends('layouts.web_layout.front_design')
 @section('content')
 <section class="content-info">
+    
+    @foreach($categories as $category)<div class="container paddings-mini">
+        <div class="row">                
+            <div class="col-lg-12">
+                <table class="table-striped table-responsive table-hover result-point">
+                    <thead class="point-table-head">
+                        <tr><th class="text-center" colspan="8">Categoría {{ $category->name }}</th></tr>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-left">Equipo</th>
+                            <th class="text-center">PG</th>
+                            <th class="text-center">PE</th>
+                            <th class="text-center">PP</th>
+                            <th class="text-center">GF</th>
+                            <th class="text-center">GC</th>
+                            <th class="text-center">PTS</th>
+                        </tr>
+                    </thead>
 
-    <!-- Nav Filters -->
-    <div class="portfolioFilter">
-        <div class="container">
-            <h5><i class="fa fa-filter" aria-hidden="true"></i>Filtrar:</h5>
-            <a href="#" data-filter="*" class="current">Mostrar todos</a>
-            @foreach($categories as $category)
-                <a href="#" data-filter="{{'.'.$category->name}}">{{ '"'.$category->name }}</a>
-            @endforeach
+                    <tbody class="text-center">
+                        <tr>
+                            
+                                @php($n=0)
+                                @foreach($scoreboard as $score)
+                                    @if($category->id == $score->team->category_id)
+                                        <tr>
+                                            <td class="number">{{ $n+1 }}</td>
+                                            <td class="text-left">
+                                                <!--<img src="{{ $score->team->club->path_file }}" alt="{{ $score->team->club->name }}">-->
+                                                <span>{{ $score->team->club->name }} ( CAT. {{ $score->team->category->name }})</span>
+                                            </td>
+                                            <td>{{ $score->wins }}</td>
+                                            <td>{{ $score->ties }}</td>
+                                            <td>{{ $score->losses }}</td>
+                                            <td>{{ $score->goals_favor }}</td>
+                                            <td>{{ $score->goals_against }}</td>
+                                            <td>{{ $score->points }}</td>
+                                        </tr>
+                                        @php($n++)
+                                    @endif
+                                @endforeach
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-    <!-- End Nav Filters -->
-
-    <div class="container padding-top">
-        <div class="row portfolioContainer">
-
-            @foreach($categories as $category)
-                @foreach($category->teams as $team)
-                    <div class="col-md-6 col-lg-4 col-xl-3 {{ $category->name }}">
-                        <div class="item-team">
-                            <div class="head-team">
-                                <img src="{{ $team->club->path_file }}" alt="location-team">
-                                <div class="overlay"><a href="{{ url('/web/teams/'.$team->id ) }}">+</a></div>
-                            </div>
-                            <div class="info-team">
-                                <span class="logo-team">
-                                    <img src="{{ $team->club->path_file }}" alt="logo-team">
-                                </span>
-                                <h4>{{ $team->club->name }}</h4>
-                                <span class="location-team">
-                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                    {{ $team->club->stadium }}
-                                </span>
-                                <span class="group-team">
-                                    <i class="fa fa-trophy" aria-hidden="true"></i>
-                                    {{ '"'.$team->category->name }}
-                                </span>
-                            </div>
-                            <a href="{{ url('/web/teams/'.$team->id ) }}" class="btn">Ver equipo <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                        </div>
-                    </div>
-                @endforeach
-            @endforeach
-        </div>
-    </div>
+    @endforeach
 </section>
 @endsection

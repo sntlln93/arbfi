@@ -21,7 +21,6 @@ class WelcomeController extends Controller
         $tocome = Fixture::where('state', 'JUGADO')->orderBy('id')->get();
         $scoreboard = Scoreboard::all()->sortByDesc('points');
         $institutions = Institution::all();
-        $tournaments = Tournament::all();
         $scores = array();
         $i = 0; 
 
@@ -53,8 +52,7 @@ class WelcomeController extends Controller
         return view('website.home')->with('recents', $recents)
                                    ->with('next', $tocome)
                                    ->with('scores', $scores)
-                                   ->with('posts', $posts)
-                                   ->with('tournaments', $tournaments);
+                                   ->with('posts', $posts);
     }
 
     public function galery(){
@@ -91,5 +89,13 @@ class WelcomeController extends Controller
     }
     public function partners(){
         return view('website.partners');
+    }
+    public function tournament($id){
+        $scoreboard = tournament::find($id)->scoreboards;// DB::table('scoreboards')->select()->where('tournament_id', $id)->orderByDesc('points')->orderBy('goals_favor')->get();
+        $categories = Category::all();
+
+
+        return view('website.tournament')->with('scoreboard', $scoreboard)
+                                         ->with('categories', $categories);
     }
 }

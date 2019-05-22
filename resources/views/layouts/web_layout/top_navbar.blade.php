@@ -15,7 +15,8 @@
                     <li class="current">
                         <a href="">Torneos</a>
                         <ul class="sub-current">
-                            @foreach($tournaments as $tournament)
+                            @php ($t = App\Tournament::all())
+                            @foreach($t as $tournament)
                                 <li>
                                     <a href="{{ url('/web/tournament/'.$tournament->id) }}">{{ $tournament->name }}</a>
                                 </li>

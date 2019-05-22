@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tournament extends Model
 {
     public function scoreboards(){
-        return $this->hasMany('App\Scoreboard');
+        return $this->hasMany('App\Scoreboard')->orderByDesc('points');
     }
 
     public function fixtures(){
