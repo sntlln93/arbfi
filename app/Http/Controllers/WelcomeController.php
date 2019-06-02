@@ -49,7 +49,7 @@ class WelcomeController extends Controller
             }
         }
         
-        return view('website.home')->with('recents', $recents)
+        return view('website.homeTest')->with('recents', $recents)
                                    ->with('next', $tocome)
                                    ->with('scores', $scores)
                                    ->with('posts', $posts);
