@@ -10,7 +10,17 @@
                             <h4>Reglamento General</h4>
                         </div>
                         <div class="info-panel">
-                            @include('website.raw_regulation')
+                            @foreach($chapters as $chapter)
+                                <h5><a>CAPITULO {{ $chapter->name }}</a></h5>
+                                @foreach($chapter->articles as $article)
+                                    <span><b>Art. {{ $article->name }})</b> {{ $article->body }}<br></span>
+                                    @if($article->subsections)
+                                        @foreach($article->subsections as $subsection)
+                                        <p>&emsp;&emsp;&emsp;&emsp;Inc. {{ mb_strToLower($subsection->name).') '.$subsection->body }}</p>
+                                        @endforeach
+                                    @endif
+                                @endforeach
+                            @endforeach
                         </div>
                     </aside>
                 </div>

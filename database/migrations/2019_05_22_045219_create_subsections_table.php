@@ -16,7 +16,7 @@ class CreateSubsectionsTable extends Migration
         Schema::create('subsections', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->String('name');
-            $table->String('body');
+            $table->String('body', 500);
             $table->integer('article_id');
             $table->timestamps();
         });

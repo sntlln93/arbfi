@@ -2,15 +2,23 @@
 @section('content')
 <!-- Section Area - Content Central -->
 <section class="content-info">
-
+        <div class="portfolioFilter">
+                <div class="container">
+                    <h5><i class="fa fa-filter" aria-hidden="true"></i>Filtrar:</h5>
+                    <a onclick="myFunction(e)" href="#" data-filter=".general" class="current">Copa Challenger</a>
+                    @foreach($categories as $category)
+                        <a id="filter" onclick="myFunction(e)" href="#" data-filter="{{'.'.$category->name}}">Categoría {{ $category->name }}</a>
+                    @endforeach
+                </div>
+            </div>
     <!-- Dark Home -->
     <div class="dark-home paddings-50-50">
         <div class="container">
-            <div class="row">
-                <!-- Club Ranking -->
-                <div class="col-lg-4">
+            <div id="general" class="row portfolioContainer">
+                <!-- General table -->
+                <div class="col-lg-4 general">
                     <div class="club-ranking">
-                        <h5><a href="group-list.html">Tabla de Posiciones</a></h5>
+                        <h5><a>Tabla de Posiciones</a></h5>
                         <div class="info-ranking">
                             <ul>
                                 @php( $position = 1 )
@@ -19,7 +27,7 @@
                                         <span class="position">
                                             {{ $position }}
                                         </span>
-                                        <a href="single-team.html">
+                                        <a>
                                             <img src="{{--logo --}}" alt="">
                                             {{ $scoreboard[0] }}
                                         </a>
@@ -35,10 +43,10 @@
                 </div>
                 <!-- End Club Ranking -->
 
-                <!-- recent-results -->
-                <div class="col-lg-4">
+                <!-- next-matches -->
+                <div class="col-lg-4 general">
                     <div class="recent-results">
-                        <h5><a href="group-list.html">Próximos partidos</a></h5>
+                        <h5><a>Próximos partidos</a></h5>
                         <div class="info-results">
                             <ul>
                                 @if(count($recents))
@@ -75,12 +83,12 @@
                         </div>
                     </div>
                 </div>
-                <!-- end recent-results -->
+                <!-- end next-matches -->
 
-                <!-- Próximos partidos -->
-                <div class="col-lg-4">
+                <!-- recent-results -->
+                <div class="col-lg-4 general">
                     <div class="recent-results">
-                        <h5><a href="group-list.html">Partidos recientes</a></h5>
+                        <h5><a>Partidos recientes</a></h5>
                         <div class="info-results">
                             <ul>
                                 @if(count($next))
@@ -92,7 +100,7 @@
                                             </span>
 
                                             <div class="goals-result">
-                                                <a href="single-team.html">
+                                                <a>
                                                     <img src="{{ asset($tocome->local->club->path_file) }}" alt="">
                                                     {{ $tocome->local->club->name }}
                                                 </a>
@@ -101,7 +109,7 @@
                                                     <b style="color:green">{{ $tocome->local_score}}</b> - <b style="color:green">{{ $tocome->visiting_score }}</b>
                                                 </span>
 
-                                                <a href="single-team.html">
+                                                <a>
                                                     <img src="{{ asset($tocome->visiting->club->path_file) }}" alt="">
                                                     {{ $tocome->visiting->club->name }}
                                                 </a>
@@ -116,7 +124,124 @@
                         </div>
                     </div>
                 </div>
-                <!-- End Top player -->
+                <!-- end-recent-results -->
+                <!-- categories table -->
+                @foreach($categories as $category)
+                    <div class="col-lg-4 {{ $category->name }}" style="display:none">
+                        <div class="club-ranking">
+                            <h5><a>Categoría {{ $category->name }}</a></h5>
+                            <div class="info-ranking">
+                                <ul>
+                                    @php( $position = 1 )
+                                    @foreach($scoreboards as $row)
+                                        @if($category->id == $row->team->category_id)
+                                            <li>
+                                                <span class="position">
+                                                    {{ $position }}
+                                                </span>
+                                                <a>
+                                                    <img src="{{--logo --}}" alt="">
+                                                    {{ $row->team->club->name }}
+                                                </a>
+                                                <span class="points">
+                                                    {{ $row->points }}
+                                                </span>
+                                            </li>
+                                            @php( $position++ )
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Club Ranking -->
+    
+                    <!-- recent-results -->
+                    <div class="col-lg-4 {{ $category->name }}" style="display:none">
+                        <div class="recent-results">
+                            <h5><a>Próximos partidos</a></h5>
+                            <div class="info-results">
+                                <ul>
+                                    @if(count($recents))
+                                        @php($i=0)
+                                        @foreach($recents as $recent)
+                                            @if($recent->local->category_id == $category->id)
+                                                <li>
+                                                    <span class="head">
+                                                        {{ $recent->tournament->name}} (CAT. {{ $recent->local->category->name }}) <span class="date">{{ $recent->date }}</span>
+                                                    </span>
+        
+                                                    <div class="goals-result">
+                                                        <a href="{{ url('/web/teams/'.$recent->local->id ) }}">
+                                                            <img src="{{ asset($recent->local->club->path_file) }}" alt="">
+                                                            {{ $recent->local->club->name }}
+                                                        </a>
+        
+                                                        <span class="goals">
+                                                            <b style="color:red">0</b> - <b style="color:red">0</b>
+                                                        </span>
+        
+                                                        <a href="{{ url('/web/teams/'.$recent->visiting->id ) }}">
+                                                            <img src="{{ asset($recent->visiting->club->path_file) }}" alt="">
+                                                            {{ $recent->visiting->club->name }}
+                                                        </a>
+                                                    </div>
+                                                </li>
+                                                @php($i++)
+                                            @endif
+                                            @if($i == 3) @break;
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end recent-results -->
+    
+                    <!-- Próximos partidos -->
+                    <div class="col-lg-4 {{ $category->name }}" style="display:none">
+                        <div class="recent-results">
+                            <h5><a>Partidos recientes</a></h5>
+                            <div class="info-results">
+                                <ul>
+                                    @if(count($next))
+                                        @php($i=0)
+                                        @foreach($next as $tocome)
+                                            @if($tocome->local->category_id == $category->id)
+                                                <li>
+                                                    <span class="head">
+                                                        {{ $tocome->tournament->name }} (CAT. {{ $tocome->local->category->name }}) <span class="date">{{ $tocome->date }}</span>
+                                                    </span>
+        
+                                                    <div class="goals-result">
+                                                        <a href="{{ url('/teams/'.$tocome->local->id) }}">
+                                                            <img src="{{ asset($tocome->local->club->path_file) }}" alt="">
+                                                            {{ $tocome->local->club->name }}
+                                                        </a>
+        
+                                                        <span class="goals">
+                                                            <b style="color:green">{{ $tocome->local_score}}</b> - <b style="color:green">{{ $tocome->visiting_score }}</b>
+                                                        </span>
+        
+                                                        <a href="{{ url('/teams/'.$tocome->visiting->id) }}">
+                                                            <img src="{{ asset($tocome->visiting->club->path_file) }}" alt="">
+                                                            {{ $tocome->visiting->club->name }}
+                                                        </a>
+                                                    </div>
+                                                </li>
+                                                @php($i++)
+                                            @endif
+                                        @if($i == 3) @break;
+                                        @endif
+                                        @endforeach
+                                    @endif
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Top player -->
+                @endforeach
             </div>
         </div>
     </div>
@@ -147,7 +272,7 @@
                                 <div class="col-md-8">
                                     <h5><a href="{{ url('/posts/'.$post->id) }}">{{ $post->title }}</a></h5>
                                     <span class="data-info">{{ Carbon\Carbon::parse($post->created_at)->diffForHumans() }} </span>
-                                    <p>{{ str_limit($post->body, 350) }}<a href="{{ url('/posts/'.$post->id) }}">Leer más [+]</a></p>
+                                    <p>{{ Str_limit($post->body, 350) }}<a href="{{ url('/posts/'.$post->id) }}">Leer más [+]</a></p>
                                 </div>
                             </div>
                         </div>
@@ -180,4 +305,16 @@
     
 </section>
 <!-- End Section Area -  Content Central -->
+
+<script>
+    function myFunction(e){
+        var div, i;
+        /*for(i = 0; i < $categories.length(); i++){
+            div = document.getElementById("table_"+$category[i].name);
+            div.style.display = "";
+        }*/
+
+        e.target.style.display = "";
+    }
+</script>
 @endsection

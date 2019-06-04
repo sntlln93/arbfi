@@ -40,7 +40,13 @@ Route::resources([
 	'/tournaments' => 'TournamentController',
 	'/fixtures' => 'FixtureController',
 	'/posts' => 'PostController',
+	'/chapters' => 'ChapterController',
+	'/articles' => 'ArticleController',
+	'/subsections' => 'SubsectionController'
 ]);
+
+//regulation
+Route::get('/regulation', 'RegulationController@index');
 
 //tournaments
 Route::put('/tournaments/playoffs/{id}', 'TournamentController@playoffMaker');

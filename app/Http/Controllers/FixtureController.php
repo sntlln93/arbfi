@@ -188,7 +188,7 @@ class FixtureController extends Controller
 
 
             if($match->local_score > $match->visiting_score){
-                $local->points = $local->points + 3;
+                $local->points = $local->points + 2;
 
                 $local->wins = $local->wins + 1;
                 $visiting->losses = $local->losses + 1;
@@ -199,7 +199,7 @@ class FixtureController extends Controller
                 $local->ties = $local->ties + 1;
                 $visiting->ties = $visiting->ties + 1;
             }else{
-                $visiting->points = $visiting->points + 3;
+                $visiting->points = $visiting->points + 2;
 
                 $local->losses = $local->losses + 1;
                 $visiting->wins = $local->wins + 1;
