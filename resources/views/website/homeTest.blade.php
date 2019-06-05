@@ -250,7 +250,7 @@
     <!-- Content Central -->
     <div class="container padding-top">
         <div class="row">
-                <div class="col-lg-6 col-xl-12" style="padding-bottom: 1%">
+                <div class="col-lg-6 col-xl-12" style="padding-bottom: 2%">
                         <div class="adds">
                             <a href="http://www.andinalr.com.ar/" target="_blank">
                                 <img src="{{ asset('img/frontend_img/adds/banner.jpg') }}" alt="" class="img-responsive">

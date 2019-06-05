@@ -14,3 +14,14 @@
             grid-template-columns: 20% 80% 20%;
         }
     </style>
+
+<!-- escudos -->
+<style>  
+    .shield-container{
+        margin:auto;
+    }
+    .shields{
+        width:45px;
+        height:45px;
+    }       
+</style>

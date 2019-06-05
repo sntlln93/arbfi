@@ -19,6 +19,7 @@ use App\Team;
 class WelcomeController extends Controller
 {
     public function index(){
+        $clubs = Institution::all();
         $posts = DB::table('posts')->orderByDesc('created_at')->get();
         $recents = Fixture::where('state', 'no jugado')->orderByDesc('id')->get();//DB::table('fixtures')->where('state', '<>', 'no jugado')->get();
         $tocome = Fixture::where('state', 'JUGADO')->orderBy('id')->get();
@@ -26,12 +27,12 @@ class WelcomeController extends Controller
         $categories = Category::all();
         $scores = $this->challengerScoreboard();
         
-        return view('website.homeTest')->with('recents', $recents)
-                                   ->with('next', $tocome)
-                                   ->with('scores', $scores)
-                                   ->with('posts', $posts)
-                                   ->with('categories', $categories)
-                                   ->with('scoreboards', $scoreboard);
+        return view('website.homeTest') ->with('recents', $recents)
+                                        ->with('next', $tocome)
+                                        ->with('scores', $scores)
+                                        ->with('posts', $posts)
+                                        ->with('categories', $categories)
+                                        ->with('scoreboards', $scoreboard);
     }
 
     public function galery(){

@@ -170,9 +170,19 @@ class FixtureController extends Controller
             $match->visiting_score = $score;
             $match->state = "JUGADO";
             $match->save();
+            
+            $local_aux = DB::table('scoreboards')->select()->where('tournament_id', $match->tournament_id)
+                                                           ->Where('team_id', $match->local_team_id)
+                                                           ->get();
+            $visiting_aux = DB::table('scoreboards')->select()->where('tournament_id', $match->tournament_id)
+                                                              ->Where('team_id', $match->local_team_id)
+                                                              ->get();
+            
+            if(sizeof($local_aux)>0) $local = Scoreboard::find($local_aux[0]->id);
+            else $local = new Scoreboard;
 
-            $local = new Scoreboard;
-            $visiting = new Scoreboard;
+            if(sizeof($visiting_aux) > 0) $visiting = Scoreboard::find($visiting_aux[0]->id);
+            else $visiting = new Scoreboard;
 
             $local->tournament_id = $match->tournament_id;
             $visiting->tournament_id = $match->tournament_id;
