@@ -250,11 +250,16 @@
     <!-- Content Central -->
     <div class="container padding-top">
         <div class="row">
-
+                <div class="col-lg-6 col-xl-12" style="padding-bottom: 1%">
+                        <div class="adds">
+                            <a href="http://www.andinalr.com.ar/" target="_blank">
+                                <img src="{{ asset('img/frontend_img/adds/banner.jpg') }}" alt="" class="img-responsive">
+                            </a>
+                        </div>
+                </div>
             <!-- content Column Left -->
             <div class="col-lg-6 col-xl-8">
                 <!-- Recent Post -->
-                
                 <div class="panel-box">
                     <div class="titles">
                         <h4>Noticias recientes</h4>

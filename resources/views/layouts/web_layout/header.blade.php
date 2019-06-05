@@ -16,16 +16,6 @@
                     </div>
                 </div>
             </div>
-            <div class="container">
-                <div class="col">
-                    <div class="adds">
-                        <br>
-                        <a href="http://www.andinalr.com.ar/" target="_blank">
-                            <img src="{{ asset('img/frontend_img/adds/banner.jpg') }}" alt="" class="img-responsive">
-                        </a>
-                    </div>
-                </div>
-            </div>
         </div>
         <!-- End headerbox-->
     </header>
