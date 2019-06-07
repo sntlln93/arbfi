@@ -133,22 +133,24 @@
                             <div class="info-ranking">
                                 <ul>
                                     @php( $position = 1 )
-                                    @foreach($scoreboards as $row)
-                                        @if($category->id == $row->team->category_id)
-                                            <li>
-                                                <span class="position">
-                                                    {{ $position }}
-                                                </span>
-                                                <a>
-                                                    <img src="{{--logo --}}" alt="">
-                                                    {{ $row->team->club->name }}
-                                                </a>
-                                                <span class="points">
-                                                    {{ $row->points }}
-                                                </span>
-                                            </li>
-                                            @php( $position++ )
-                                        @endif
+                                    @foreach($scoreboards as $categories)
+                                        @foreach($categories as $row)
+                                            @if($category->id == $row['category'])
+                                                <li>
+                                                    <span class="position">
+                                                        {{ $position }}
+                                                    </span>
+                                                    <a>
+                                                        <img src="{{--logo --}}" alt="">
+                                                        {{ $row['name'] }}
+                                                    </a>
+                                                    <span class="points">
+                                                        {{ $row['points'] }}
+                                                    </span>
+                                                </li>
+                                                @php( $position++)
+                                            @endif
+                                        @endforeach
                                     @endforeach
                                 </ul>
                             </div>

@@ -89,8 +89,8 @@
                             <tr>
                                 @php($n=0)
                                 @foreach($tables as $categories)
-                                    @if(key($categories) == $category->id)
-                                        @foreach($categories as $row)
+                                    @foreach($categories as $row)
+                                        @if($category->id == $row['category'])
                                             <tr>
                                                 <td class="number">{{ $n+1 }}</td>
                                                 <td class="text-left">
@@ -106,8 +106,8 @@
                                                 <td><b>{{ $row['points'] }}<b></td>
                                             </tr>
                                             @php($n++)
-                                        @endforeach
-                                    @endif
+                                        @endif
+                                    @endforeach
                                 @endforeach
                             </tr>
                         </tbody>

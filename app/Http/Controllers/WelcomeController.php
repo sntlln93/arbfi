@@ -23,13 +23,15 @@ class WelcomeController extends Controller
         $posts = DB::table('posts')->orderByDesc('created_at')->get();
         $recents = Fixture::where('state', 'no jugado')->orderByDesc('id')->get();//DB::table('fixtures')->where('state', '<>', 'no jugado')->get();
         $tocome = Fixture::where('state', 'JUGADO')->orderBy('id')->get();
-        $scoreboard = Scoreboard::all()->sortByDesc('points');
         $categories = Category::all();
-        $scores = $this->challengerScoreboard();
+        $tables = $this->categoriesScoreboards();
+        $scoreboard = $this->sort_tables($tables); 
+        $general = $this->challengerScoreboard($scoreboard);
         
+
         return view('website.homeTest') ->with('recents', $recents)
                                         ->with('next', $tocome)
-                                        ->with('scores', $scores)
+                                        ->with('scores', $general)
                                         ->with('posts', $posts)
                                         ->with('categories', $categories)
                                         ->with('scoreboards', $scoreboard);
@@ -72,23 +74,20 @@ class WelcomeController extends Controller
         return view('website.partners');
     }
     public function tournament($id){
+        $categories = Category::all();
+        $tables = $this->categoriesScoreboards();
+        $scoreboard = $this->sort_tables($tables); 
+        $general = $this->challengerScoreboard($scoreboard);
+
+        return view('website.tournament')->with('tables', $scoreboard)
+                                         ->with('categories', $categories)
+                                         ->with('general', $general);
+    }
+
+    public function categoriesScoreboards(){
         $teams = Team::all();
         $tables = array();
-        $list_teams = array();
-        $list_categories = array();
-        $categories = Category::all();
-        $general = $this->challengerScoreboard();
-        $rows = DB::table('fixtures')->select('local_team_id', 'visiting_team_id')->where('state', 'JUGADO')->get();
-        $j = 0;
-        foreach($rows as $row){
-            $list_teams[$j] = $row->local_team_id;
-            $list_teams[$j+1] = $row->visiting_team_id;
-            $list_categories[$j] = Team::find($row->local_team_id)->category->id;
-            $list_categories[$j+1] = Team::find($row->visiting_team_id)->category->id;
-            $j += 2;
-        }
-        $categories_available = array_unique($list_categories);
-        $teams_available = array_unique($list_teams);
+        
         foreach($teams as $team){//make scoreboard
             $row = DB::table('fixtures')->select()->where(function ($query) use ($team){
                                                       $query->where('local_team_id', $team->id)
@@ -107,6 +106,7 @@ class WelcomeController extends Controller
                     $tables[$team->category_id][$team->id]['ties'] = 0;
                     $tables[$team->category_id][$team->id]['losses'] = 0;
                     $tables[$team->category_id][$team->id]['points'] = 0;
+                    $tables[$team->category_id][$team->id]['category'] = $team->category_id;
                 }
                 if($team->id == $match->local_team_id){
                     if($match->local_score > $match->visiting_score){
@@ -141,23 +141,14 @@ class WelcomeController extends Controller
                         $tables[$team->category_id][$team->id]['points']++;
                     }
                 }
-            }
-            
+            }  
         } 
-        
-        $scoreboard = $this->sort_tables($tables); 
-
-        return view('website.tournament')->with('tables', $scoreboard)
-                                         ->with('teams_available', $teams_available)
-                                         ->with('categories_available', $categories_available)
-                                         ->with('categories', $categories)
-                                         ->with('general', $general);
+        return $tables;
     }
 
-    public function challengerScoreboard(){
+    public function challengerScoreboard($score){
         $institutions = Institution::all();
         $scores = array();
-        $scoreboard = Scoreboard::all()->sortByDesc('points');
         $i = 0; 
         
         //making it
@@ -168,15 +159,18 @@ class WelcomeController extends Controller
             $ties = 0;
             $losses = 0;
             $points = 0;
-            foreach($scoreboard as $score){
-                if($club->name == $score->team->club->name){ //aca deberia sólo debería traer los equipos de la institución para no iterar y comparar tanto
-                    $points = $points + $score->points;
-                    $wins = $wins + $score->wins;
-                    $ties = $ties + $score->ties;
-                    $losses = $losses + $score->losses;
-                    $goals_favor = $goals_favor + $score->goals_favor;
-                    $goals_against = $goals_against + $score->goals_against;
+            foreach($score as $categories){
+                foreach($categories as $row){
+                    if($club->name == $row['name']){ //aca deberia sólo debería traer los equipos de la institución para no iterar y comparar tanto
+                        $points = $points + $row['points'];
+                        $wins = $wins + $row['wins'];
+                        $ties = $ties + $row['ties'];
+                        $losses = $losses + $row['losses'];
+                        $goals_favor = $goals_favor + $row['goals_favor'];
+                        $goals_against = $goals_against + $row['goals_against'];
+                    }
                 }
+                
             }
             $scores[$i][0] = $club->name;
             $scores[$i][1] = $points;
@@ -220,6 +214,6 @@ class WelcomeController extends Controller
         foreach($b as $key=>$val){
             $c[] = $categories[$key];
         } 
-        return $c;
+        return $c; 
     }
 }

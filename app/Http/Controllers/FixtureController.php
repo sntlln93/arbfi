@@ -171,33 +171,10 @@ class FixtureController extends Controller
             $match->state = "JUGADO";
             $match->save();
             
-            $local_aux = DB::table('scoreboards')->select()->where('tournament_id', $match->tournament_id)
-                                                           ->Where('team_id', $match->local_team_id)
-                                                           ->get();
-            $visiting_aux = DB::table('scoreboards')->select()->where('tournament_id', $match->tournament_id)
-                                                              ->Where('team_id', $match->local_team_id)
-                                                              ->get();
-            if(sizeof($local_aux) > 0){
-                if(sizeof($visiting_aux) > 0){
-                    $this->makeScoreboard($match, true, true);
-                }else{
-                    $this->makeScoreboard($match, true, false);
-                }
-            }else{
-                if(sizeof($visiting_aux) > 0){
-                    $this->makeScoreboard($match, false, true);
-                }else{
-                    $this->makeScoreboard($match, false, false);
-                }
-            }
         }else{
             return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');
         }
         return redirect('/fixtures');
-    }
-
-    public function makeScoreboard($match, $hasLocal, $hasAway){
-        
     }
 
     /**
