@@ -127,17 +127,17 @@ class WelcomeController extends Controller
                 }else{
                     if($match->local_score > $match->visiting_score){
                         $tables[$team->category_id][$team->id]['losses']++;
-                        $tables[$team->category_id][$team->id]['goals_favor'] += $match->local_score;
-                        $tables[$team->category_id][$team->id]['goals_against'] += $match->visiting_score;
+                        $tables[$team->category_id][$team->id]['goals_favor'] += $match->visiting_score;
+                        $tables[$team->category_id][$team->id]['goals_against'] += $match->local_score;
                     }else if($match->local_score < $match->visiting_score){
                         $tables[$team->category_id][$team->id]['wins']++;
-                        $tables[$team->category_id][$team->id]['goals_favor'] += $match->local_score;
-                        $tables[$team->category_id][$team->id]['goals_against'] += $match->visiting_score;
+                        $tables[$team->category_id][$team->id]['goals_favor'] += $match->visiting_score;
+                        $tables[$team->category_id][$team->id]['goals_against'] += $match->local_score;
                         $tables[$team->category_id][$team->id]['points'] += 3;
                     }else{
                         $tables[$team->category_id][$team->id]['ties']++;
-                        $tables[$team->category_id][$team->id]['goals_favor'] += $match->local_score;
-                        $tables[$team->category_id][$team->id]['goals_against'] += $match->visiting_score;
+                        $tables[$team->category_id][$team->id]['goals_favor'] += $match->visiting_score;
+                        $tables[$team->category_id][$team->id]['goals_against'] += $match->local_score;
                         $tables[$team->category_id][$team->id]['points']++;
                     }
                 }

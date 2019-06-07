@@ -98,7 +98,7 @@ class PdfController extends Controller
         }
         $pdf->loadHTML($table);
         $pdf->setPaper('A4', 'landscape');
-        return $pdf->stream($match->tournament->name.'_fecha_'.$match->fixture_day.'.pdf');
+        return $pdf->stream($match->tournament->name.'_fecha_'.$request->fixture_day.'.pdf');
     }
 
     public function generatePlayersGrid($id){
