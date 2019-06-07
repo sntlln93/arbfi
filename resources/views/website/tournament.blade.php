@@ -88,25 +88,25 @@
                         <tbody class="text-center">
                             <tr>
                                 @php($n=0)
-                                @foreach($scoreboard as $score)
-                                    @if($category->id == $score->team->category_id)
-                                        <tr>
-                                            <td class="number">{{ $n+1 }}</td>
-                                            <td class="text-left">
-                                                <!--<img src="{{ $score->team->club->path_file }}" alt="{{ $score->team->club->name }}">-->
-                                                <span>{{ $score->team->club->name }} ( CAT. {{ $score->team->category->name }})</span>
-                                            </td>
-                                            
-                                            <td>{{ $score->wins + $score->ties + $score->losses }}</td>
-                                            <td>{{ $score->wins }}</td>
-                                            <td>{{ $score->ties }}</td>
-                                            <td>{{ $score->losses }}</td>
-                                            <td>{{ $score->goals_favor }}</td>
-                                            <td>{{ $score->goals_against }}</td>
-                                            <td>{{ $score->goals_favor - $score->goals_against }}</td>
-                                            <td><b>{{ $score->points }}<b></td>
-                                        </tr>
-                                        @php($n++)
+                                @foreach($tables as $categories)
+                                    @if(key($categories) == $category->id)
+                                        @foreach($categories as $row)
+                                            <tr>
+                                                <td class="number">{{ $n+1 }}</td>
+                                                <td class="text-left">
+                                                    <span>{{ $row['name'] }}</span>
+                                                </td>
+                                                <td>{{ $row['wins'] + $row['ties'] + $row['losses'] }}</td>
+                                                <td>{{ $row['wins'] }}</td>
+                                                <td>{{ $row['ties'] }}</td>
+                                                <td>{{ $row['losses'] }}</td>
+                                                <td>{{ $row['goals_favor'] }}</td>
+                                                <td>{{ $row['goals_against'] }}</td>
+                                                <td>{{ $row['goals_favor'] - $row['goals_against'] }}</td>
+                                                <td><b>{{ $row['points'] }}<b></td>
+                                            </tr>
+                                            @php($n++)
+                                        @endforeach
                                     @endif
                                 @endforeach
                             </tr>
