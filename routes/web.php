@@ -11,13 +11,8 @@
 |
 */
 
-/*test
-Route::get('/test', function(){
-	$teams = App\Team::all();
-	foreach($teams as $team){
-		echo $team->club->name.' - '.$team->id.' - '.$team->players->count().'<br>';
-	}
-});*/
+
+
 
 //auth
 Route::match(['get', 'post'], '/user', 'AuthController@login');
@@ -69,4 +64,4 @@ Auth::routes();
 //pdf
 Route::get('/players/{id}/pdf', 'PlayerController@htmlToPdf');
 Route::get('/fixtures/{id}/pdf', 'FixtureController@htmlToPdf');
-Route::get('tournaments/{id}/pdf', 'TournamentController@htmlToPdf');
+Route::get('tournaments/{id}/pdf', 'PdfController@htmlToPdf');

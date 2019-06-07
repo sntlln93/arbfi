@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Fixture;
+use DB;
+use App;
 
 class PdfController extends Controller
 {
-    public function htmlToPdf(){
-        $match = Fixture::all();
-        
-        $teamsGrid = $this->generatePlayersGrid($match->id);
-
+    public function htmlToPdf(Request $request, $id){
+        $fixtures = Fixture::all();
         $pdf = App::make('dompdf.wrapper');
-        $pdf->loadHTML('<table border="1" style="border-collapse:collapse;" width="267mm">
+        $table = '';
+        foreach($fixtures as $match){
+            if($request->fixture_day == $match->fixture_day){
+                $teamsGrid = $this->generatePlayersGrid($match->id);
+                $table .= '<table border="1" style="border-collapse:collapse;" width="267mm">
                             <tr style="text-align:center">
                                 <td colspan="15"><b>ARBFI<br>Asociación Riojana de Baby Fútbol Infantil</b></td>
                             </tr>
@@ -88,7 +92,11 @@ class PdfController extends Controller
                             <tr>
                             <td colspan="15">Observaciones:<br><br><br></td>
                             </tr>
-                        </table>');
+                        </table>
+                        <div style="page-break-before: always;"></div>';
+            }         
+        }
+        $pdf->loadHTML($table);
         $pdf->setPaper('A4', 'landscape');
         return $pdf->stream($match->tournament->name.'_fecha_'.$match->fixture_day.'.pdf');
     }
