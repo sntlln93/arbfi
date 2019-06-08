@@ -1,17 +1,14 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-
+//test
+Route::get('/test', function(){
+	$event = App\Event::all();
+	foreach($event as $e){
+		if($e->type == "Verde"){
+			echo $e->type.' - '.$e->player->last_name.' '.$e->player->first_name.' - '.$e->player->team->club->name.'<br>';
+		}
+	}
+});
 
 
 //auth

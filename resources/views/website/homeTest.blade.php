@@ -42,89 +42,62 @@
                     </div>
                 </div>
                 <!-- End Club Ranking -->
-
-                <!-- next-matches -->
+                <!-- Top player -->
                 <div class="col-lg-4 general">
-                    <div class="recent-results">
-                        <h5><a>Próximos partidos</a></h5>
-                        <div class="info-results">
-                            <ul>
-                                @if(count($recents))
-                                    @php($i=0)
-                                    @foreach($recents as $recent)
-                                    
-                                        <li>
-                                            <span class="head">
-                                                {{ $recent->tournament->name}} (CAT. {{ $recent->local->category->name }}) <span class="date">{{ $recent->date }}</span>
-                                            </span>
-
-                                            <div class="goals-result">
-                                                <a href="{{ url('/web/teams/'.$recent->local->id ) }}">
-                                                    <img src="{{ asset($recent->local->club->path_file) }}" alt="">
-                                                    {{ $recent->local->club->name }}
-                                                </a>
-
-                                                <span class="goals">
-                                                    <b style="color:red">0</b> - <b style="color:red">0</b>
-                                                </span>
-
-                                                <a href="{{ url('/web/teams/'.$recent->visiting->id ) }}">
-                                                    <img src="{{ asset($recent->visiting->club->path_file) }}" alt="">
-                                                    {{ $recent->visiting->club->name }}
-                                                </a>
-                                            </div>
-                                        </li>
-                                        @php($i++)
-                                        @if($i == 3) @break;
-                                        @endif
-                                    @endforeach
-                                @endif
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- end next-matches -->
-
-                <!-- recent-results -->
-                <div class="col-lg-4 general">
-                    <div class="recent-results">
-                        <h5><a>Partidos recientes</a></h5>
-                        <div class="info-results">
-                            <ul>
-                                @if(count($next))
-                                    @php($i=0)
-                                    @foreach($next as $tocome)
-                                        <li>
-                                            <span class="head">
-                                                {{ $tocome->tournament->name }} (CAT. {{ $tocome->local->category->name }}) <span class="date">{{ $tocome->date }}</span>
-                                            </span>
-
-                                            <div class="goals-result">
-                                                <a>
-                                                    <img src="{{ asset($tocome->local->club->path_file) }}" alt="">
-                                                    {{ $tocome->local->club->name }}
-                                                </a>
-
-                                                <span class="goals">
-                                                    <b style="color:green">{{ $tocome->local_score}}</b> - <b style="color:green">{{ $tocome->visiting_score }}</b>
-                                                </span>
-
-                                                <a>
-                                                    <img src="{{ asset($tocome->visiting->club->path_file) }}" alt="">
-                                                    {{ $tocome->visiting->club->name }}
-                                                </a>
-                                            </div>
-                                        </li>
-                                    @php($i++)
-                                    @if($i == 3) @break;
+                    <div class="player-ranking">
+                         <h5><a href="group-list.html">Goleadores</a></h5>
+                         <div class="info-player">
+                             <ul>
+                                @php($n = 0)
+                                @foreach($goal_makers as $goal_maker)
+                                    <li>
+                                        <span class="position">
+                                            {{ $n+1 }}
+                                        </span>
+                                        <a href="$">
+                                            <img style="width:20px;height:20px;" src="{{ asset($goal_maker->path_file) }}" alt="">
+                                            {{ $goal_maker->first_name.' '.$goal_maker->last_name }}
+                                        </a>
+                                        <span class="points">
+                                            {{ $goal_maker->goals}}
+                                        </span>
+                                    </li>
+                                    @if($n > 6)
+                                        @break
+                                    @else
+                                        @php($n++)
                                     @endif
-                                    @endforeach
-                                @endif
-                            </ul>
-                        </div>
+                                @endforeach
+                                
+                             </ul>
+                         </div>
                     </div>
-                </div>
-                <!-- end-recent-results -->
+                 </div>
+                 <!-- End Top player -->
+
+                <!-- Fair Play -->
+                <div class="col-lg-4 general">
+                    <div class="player-ranking">
+                         <h5><a href="group-list.html">Top player</a></h5>
+                         <div class="info-player">
+                             <ul>
+                                 <li>
+                                   <span class="position">
+                                       1
+                                   </span>
+                                    <a href="single-team.html">
+                                         <img src="{{ asset('/') }}" alt="">
+                                         Cristiano R.
+                                     </a>
+                                     <span class="points">
+                                         90
+                                     </span>
+                                 </li>
+                             </ul>
+                         </div>
+                    </div>
+                 </div>
+                <!-- end-fair play-->
                 <!-- categories table -->
                 @foreach($categories as $category)
                     <div class="col-lg-4 {{ $category->name }}" style="display:none">
@@ -158,91 +131,63 @@
                     </div>
                     <!-- End Club Ranking -->
     
-                    <!-- recent-results -->
+                    <!-- Top player -->
                     <div class="col-lg-4 {{ $category->name }}" style="display:none">
-                        <div class="recent-results">
-                            <h5><a>Próximos partidos</a></h5>
-                            <div class="info-results">
+                        <div class="player-ranking">
+                            <h5><a href="group-list.html">Goleadores</a></h5>
+                            <div class="info-player">
                                 <ul>
-                                    @if(count($recents))
-                                        @php($i=0)
-                                        @foreach($recents as $recent)
-                                            @if($recent->local->category_id == $category->id)
-                                                <li>
-                                                    <span class="head">
-                                                        {{ $recent->tournament->name}} (CAT. {{ $recent->local->category->name }}) <span class="date">{{ $recent->date }}</span>
-                                                    </span>
-        
-                                                    <div class="goals-result">
-                                                        <a href="{{ url('/web/teams/'.$recent->local->id ) }}">
-                                                            <img src="{{ asset($recent->local->club->path_file) }}" alt="">
-                                                            {{ $recent->local->club->name }}
-                                                        </a>
-        
-                                                        <span class="goals">
-                                                            <b style="color:red">0</b> - <b style="color:red">0</b>
-                                                        </span>
-        
-                                                        <a href="{{ url('/web/teams/'.$recent->visiting->id ) }}">
-                                                            <img src="{{ asset($recent->visiting->club->path_file) }}" alt="">
-                                                            {{ $recent->visiting->club->name }}
-                                                        </a>
-                                                    </div>
-                                                </li>
-                                                @php($i++)
+                                    @php($n = 0)
+                                    @foreach($goal_makers as $goal_maker)
+                                        @if($category->name == $goal_maker->name)
+                                            <li>
+                                                <span class="position">
+                                                    {{ $n+1 }}
+                                                </span>
+                                                <a href="$">
+                                                    <img style="width:20px;height:20px;" src="{{ asset($goal_maker->path_file) }}" alt="">
+                                                    {{ $goal_maker->first_name.' '.$goal_maker->last_name }}
+                                                </a>
+                                                <span class="points">
+                                                    {{ $goal_maker->goals}}
+                                                </span>
+                                            </li>
+                                            @if($n > 6)
+                                                @break
+                                            @else
+                                                @php($n++)
                                             @endif
-                                            @if($i == 3) @break;
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end recent-results -->
-    
-                    <!-- Próximos partidos -->
-                    <div class="col-lg-4 {{ $category->name }}" style="display:none">
-                        <div class="recent-results">
-                            <h5><a>Partidos recientes</a></h5>
-                            <div class="info-results">
-                                <ul>
-                                    @if(count($next))
-                                        @php($i=0)
-                                        @foreach($next as $tocome)
-                                            @if($tocome->local->category_id == $category->id)
-                                                <li>
-                                                    <span class="head">
-                                                        {{ $tocome->tournament->name }} (CAT. {{ $tocome->local->category->name }}) <span class="date">{{ $tocome->date }}</span>
-                                                    </span>
-        
-                                                    <div class="goals-result">
-                                                        <a href="{{ url('/teams/'.$tocome->local->id) }}">
-                                                            <img src="{{ asset($tocome->local->club->path_file) }}" alt="">
-                                                            {{ $tocome->local->club->name }}
-                                                        </a>
-        
-                                                        <span class="goals">
-                                                            <b style="color:green">{{ $tocome->local_score}}</b> - <b style="color:green">{{ $tocome->visiting_score }}</b>
-                                                        </span>
-        
-                                                        <a href="{{ url('/teams/'.$tocome->visiting->id) }}">
-                                                            <img src="{{ asset($tocome->visiting->club->path_file) }}" alt="">
-                                                            {{ $tocome->visiting->club->name }}
-                                                        </a>
-                                                    </div>
-                                                </li>
-                                                @php($i++)
-                                            @endif
-                                        @if($i == 3) @break;
                                         @endif
-                                        @endforeach
-                                    @endif
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <!-- End Top player -->
+    
+                    <!-- Fair Play -->
+                    <div class="col-lg-4 " style="display:none">
+                        <div class="player-ranking">
+                            <h5><a href="group-list.html">Top player</a></h5>
+                            <div class="info-player">
+                                <ul>
+                                    <li>
+                                    <span class="position">
+                                        1
+                                    </span>
+                                        <a href="single-team.html">
+                                            <img src="{{ asset('/') }}" alt="">
+                                            Cristiano R.
+                                        </a>
+                                        <span class="points">
+                                            90
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end-fair play-->
                 @endforeach
             </div>
         </div>

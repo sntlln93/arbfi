@@ -11,7 +11,7 @@
     <div class="container-fluid">
 
       <div class="widget-box">
-          <div class="widget-content nopadding">
+          <div class="widget-content">
             @foreach($chapters as $chapter)
                 <h5><a href="{{ url('/chapters/'.$chapter->id.'/edit') }}">CAPITULO {{ $chapter->name }}</a></h5>
                 @foreach($chapter->articles as $article)

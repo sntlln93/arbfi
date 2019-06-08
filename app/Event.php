@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     public function match(){
-        return $this->belongsTo('App\Fixture', 'match_id');
+        return $this->belongsTo('App\Fixture', 'fixture_id');
     }
 
     public function player(){

@@ -15,6 +15,8 @@ use App\Scoreboard;
 use App\Institution;
 use App\Category;
 use App\Team;
+use App\Event;
+use App\Player;
 
 class WelcomeController extends Controller
 {
@@ -24,9 +26,10 @@ class WelcomeController extends Controller
         $recents = Fixture::where('state', 'no jugado')->orderByDesc('id')->get();//DB::table('fixtures')->where('state', '<>', 'no jugado')->get();
         $tocome = Fixture::where('state', 'JUGADO')->orderBy('id')->get();
         $categories = Category::all();
-        $tables = $this->categoriesScoreboards();
-        $scoreboard = $this->sort_tables($tables); 
+        $scoreboard = $this->categoriesScoreboards();
         $general = $this->challengerScoreboard($scoreboard);
+        $goal_makers = $this->goals();
+
         
 
         return view('website.homeTest') ->with('recents', $recents)
@@ -34,7 +37,8 @@ class WelcomeController extends Controller
                                         ->with('scores', $general)
                                         ->with('posts', $posts)
                                         ->with('categories', $categories)
-                                        ->with('scoreboards', $scoreboard);
+                                        ->with('scoreboards', $scoreboard)
+                                        ->with('goal_makers', $goal_makers);
     }
 
     public function galery(){
@@ -113,7 +117,7 @@ class WelcomeController extends Controller
                         $tables[$team->category_id][$team->id]['wins']++;
                         $tables[$team->category_id][$team->id]['goals_favor'] += $match->local_score;
                         $tables[$team->category_id][$team->id]['goals_against'] += $match->visiting_score;
-                        $tables[$team->category_id][$team->id]['points'] += 3;
+                        $tables[$team->category_id][$team->id]['points'] += 2;
                     }else if($match->local_score < $match->visiting_score){
                         $tables[$team->category_id][$team->id]['losses']++;
                         $tables[$team->category_id][$team->id]['goals_favor'] += $match->local_score;
@@ -133,7 +137,7 @@ class WelcomeController extends Controller
                         $tables[$team->category_id][$team->id]['wins']++;
                         $tables[$team->category_id][$team->id]['goals_favor'] += $match->visiting_score;
                         $tables[$team->category_id][$team->id]['goals_against'] += $match->local_score;
-                        $tables[$team->category_id][$team->id]['points'] += 3;
+                        $tables[$team->category_id][$team->id]['points'] += 2;
                     }else{
                         $tables[$team->category_id][$team->id]['ties']++;
                         $tables[$team->category_id][$team->id]['goals_favor'] += $match->visiting_score;
@@ -143,7 +147,7 @@ class WelcomeController extends Controller
                 }
             }  
         } 
-        return $tables;
+        return $this->sort_tables($tables, 'points');
     }
 
     public function challengerScoreboard($score){
@@ -197,10 +201,10 @@ class WelcomeController extends Controller
         return $scores;
     }
 
-    public function sort_tables($tables){
+    public function sort_tables($tables, $subkey){
         $c = array();
         foreach($tables as $table){
-        array_push($c, $this->sort($table, 'points'));
+        array_push($c, $this->sort($table, $subkey));
 
         }
         return $c;
@@ -215,5 +219,39 @@ class WelcomeController extends Controller
             $c[] = $categories[$key];
         } 
         return $c; 
+    }
+
+    public function goals(){
+        $query = 'select
+                        categories.name,
+                        players.last_name,
+                        players.first_name,
+                        count(events.player_id) as goals,
+                        team.path_file
+                from 
+                        events
+                join
+                        players on events.player_id = players.id
+                join
+                        (select
+                                teams.id,
+                                teams.category_id, 
+                                institutions.path_file 
+                        from 
+                                teams, institutions 
+                        where 
+                                teams.club_id = institutions.id
+                        ) as team on players.team_id = team.id
+                join
+                        categories on team.category_id = categories.id
+                where 
+                        type = "Gol"
+                group by 
+                        events.player_id
+                order by 
+                        goals desc;';
+        $goal_makers = DB::select($query);
+        
+        return $goal_makers;
     }
 }
