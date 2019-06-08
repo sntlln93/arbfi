@@ -29,7 +29,6 @@ class WelcomeController extends Controller
         $scoreboard = $this->categoriesScoreboards();
         $general = $this->challengerScoreboard($scoreboard);
         $goal_makers = $this->goals();
-
         
 
         return view('website.homeTest') ->with('recents', $recents)

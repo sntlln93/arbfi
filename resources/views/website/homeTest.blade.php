@@ -75,7 +75,7 @@
                  </div>
                  <!-- End Top player -->
 
-                <!-- Fair Play -->
+                <!-- Fair Play 
                 <div class="col-lg-4 general">
                     <div class="player-ranking">
                          <h5><a href="group-list.html">Top player</a></h5>
@@ -97,9 +97,9 @@
                          </div>
                     </div>
                  </div>
-                <!-- end-fair play-->
-                <!-- categories table -->
+                 end-fair play-->
                 @foreach($categories as $category)
+                    <!-- Club Ranking -->
                     <div class="col-lg-4 {{ $category->name }}" style="display:none">
                         <div class="club-ranking">
                             <h5><a>Categoría {{ $category->name }}</a></h5>
@@ -165,8 +165,8 @@
                     </div>
                     <!-- End Top player -->
     
-                    <!-- Fair Play -->
-                    <div class="col-lg-4 " style="display:none">
+                    <!-- Fair Play 
+                    <div class="col-lg-4 {{ $category->name }}" style="display:none">
                         <div class="player-ranking">
                             <h5><a href="group-list.html">Top player</a></h5>
                             <div class="info-player">
@@ -187,7 +187,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- end-fair play-->
+                    end-fair play-->
                 @endforeach
             </div>
         </div>
@@ -261,11 +261,6 @@
 <script>
     function myFunction(e){
         var div, i;
-        /*for(i = 0; i < $categories.length(); i++){
-            div = document.getElementById("table_"+$category[i].name);
-            div.style.display = "";
-        }*/
-
         e.target.style.display = "";
     }
 </script>
