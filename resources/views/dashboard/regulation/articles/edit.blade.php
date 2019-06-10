@@ -28,10 +28,10 @@
               {{ csrf_field() }}
               {{ method_field('PUT') }}
               <div class="control-group">
-                  <label class="control-label">Título</label>
-                  <div class="controls">
-                    <input name="name" type="text"  class="span11" value="{{ $article->name }}" />
-                  </div>
+                <label class="control-label">Número</label>
+                <div class="controls">
+                  <input name="name" type="number"  class="span11" placeholder="Número del capítulo" />
+                </div>
               </div>
               <div class="control-group">
                 <label class="control-label">Capítulo</label>

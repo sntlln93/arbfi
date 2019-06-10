@@ -16,7 +16,7 @@
                     </div>
                     <div class="shield-container">
                         @foreach(App\Institution::all() as $club)
-                            <img src="{{ $club->path_file }}" alt="" class="shields">
+                            <img style="width:40px;height:40px" src="{{ $club->path_file }}" alt="" class="shields">
                         @endforeach
                     </div>
                 </div>

@@ -13,7 +13,7 @@
       <div class="widget-box">
           <div class="widget-content">
             @foreach($chapters as $chapter)
-                <h5><a href="{{ url('/chapters/'.$chapter->id.'/edit') }}">CAPITULO {{ $chapter->name }}</a></h5>
+                <h5><a href="{{ url('/chapters/'.$chapter->id.'/edit') }}">CAPITULO {{ $chapter->id }}: {{ $chapter->name }}</a></h5>
                 @foreach($chapter->articles as $article)
                     <a href="{{ url('/articles/'.$article->id.'/edit') }}"><span><b>Art. {{ $article->name }}°)</b> {{ $article->body }}<br></span></a>
                     @if($article->subsections)

@@ -17,7 +17,7 @@
         <li><a href="{{ url('chapters/create') }}"><i class="icon icon-file"></i> <span>Nuevo capítulo</span></a></li>
         <li><a href="{{ url('articles/create') }}"><i class="icon icon-file"></i> <span>Nuevo artículo</span></a></li>
         <li><a href="{{ url('subsections/create') }}"><i class="icon icon-file"></i> <span>Nuevo inciso</span></a></li>
-        <li><a href="{{ url('subsections/create') }}"><i class="icon icon-file"></i> <span>Ver reglamento</span></a></li>
+        <li><a href="{{ url('regulation') }}"><i class="icon icon-file"></i> <span>Ver reglamento</span></a></li>
       </ul>
     </li>
     
