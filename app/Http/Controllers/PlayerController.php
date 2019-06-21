@@ -32,30 +32,160 @@ class PlayerController extends Controller
     public function htmlToPdf($id){
         $player = Player::find($id);
         $pdf = App::make('dompdf.wrapper');
-        $pdf->loadHTML('<table style="border:1 black solid; border-collapse:collapse;" width="110mm" height="100mm">
-                            <tr style="text-align:center;">
-                                <td colspan="2"> <h3>Asociación Riojana de Baby Fútbol Infantil</h3> </td>
-                            </tr>
-                            <tr>
-                                <td rowspan="4" style="text-align:center;"> FOTO </td>
-                                <td>Apellido y nombre: '.$player->last_name. ' '.$player->first_name.'</td>                                
-                            </tr>
-                            <tr>
-                                <td>Equipo: '.$player->team->club->name.'</td>
-                            </tr>
-                            <tr>
-                                <td>Categoría: '.$player->team->category->name.'</td>
-                            </tr>
-                            <tr>
-                                <td>Fecha de nacimiento: '.$player->birth_date->format('d/m/Y').'</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"> <br> </td>
-                            </tr>
-                        </table>');
-        return $pdf->stream();
+        $pdf->loadHTML($this->render($player));
+        return $pdf->download();
     }
 
+    public function render($player){
+        $background = "{{ asset('/img/backend_img/background1.png') }}";
+        $logo = "{{ asset('/img/front_end/logo-light.png') }}";
+        
+
+        $html = '<table style="width: 86mm;
+        height: 53,8mm;
+        background-image: url('."''".');
+        background-repeat: no-repeat;
+        background-position: center;"><tr><th rowspan="2"><img src="'.asset('img/frontend_img/logo-light').'" class="logo"></th><th style="font-family: Arial,serif;
+        font-size: 5.0px;
+        color: rgb(0,0,0);
+        font-weight: bold;
+        font-style: normal;
+        text-decoration: none;
+        text-align: left;" colspan="2">ASOCIACIÓN RIOJANA DE BABY FÚTBOL INFANTIL</th>
+        </tr>
+        <tr>
+          <td style="font-family:Arial,serif;
+          font-size:5.0px;
+          color:rgb(0,0,0);
+          font-weight:normal;
+          font-style:normal;
+          text-decoration: none" colspan="2">Carnet Identificador de Jugador</td>
+        </tr><tr>
+        <td colspan="2" rowspan="12"></td>
+        <td style="titlfont-family:Arial,serif;
+        font-size:4.6px;
+        color:rgb(0,0,0);
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: none;
+        padding-bottom: 1mm;">Apellido</td>
+      </tr>
+      <tr>
+        <td style="font-family: Arial,serif;
+        font-size: 7.4px;
+        color: rgb(0,0,0);
+        font-weight: normal;
+        font-style: normal; 
+        text-decoration: none;
+        padding-bottom: 1mm;">SANTILLÁN</td>
+      </tr>
+      <tr>
+        <td style="titlfont-family:Arial,serif;
+        font-size:4.6px;
+        color:rgb(0,0,0);
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: none;
+        padding-bottom: 1mm;">Nombre</td>
+      </tr>
+      <tr>
+        <td style="font-family: Arial,serif;
+        font-size: 7.4px;
+        color: rgb(0,0,0);
+        font-weight: normal;
+        font-style: normal; 
+        text-decoration: none;
+        padding-bottom: 1mm;">MATÍAS OSCAR</td>
+      </tr>
+      <tr>
+        <td style="titlfont-family:Arial,serif;
+        font-size:4.6px;
+        color:rgb(0,0,0);
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: none;
+        padding-bottom: 1mm;">Institución</td>
+      </tr>
+      <tr>
+        <td style="font-family: Arial,serif;
+        font-size: 7.4px;
+        color: rgb(0,0,0);
+        font-weight: normal;
+        font-style: normal; 
+        text-decoration: none;
+        padding-bottom: 1mm;">CENTRO VECINAL 3 DE FEBRERO</td>
+      </tr>
+      <tr>
+        <td style="titlfont-family:Arial,serif;
+        font-size:4.6px;
+        color:rgb(0,0,0);
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: none;
+        padding-bottom: 1mm;">Fecha de nacimiento</td>
+      </tr>
+      <tr>
+        <td style="font-family: Arial,serif;
+        font-size: 7.4px;
+        color: rgb(0,0,0);
+        font-weight: normal;
+        font-style: normal; 
+        text-decoration: none;
+        padding-bottom: 1mm;">10 de octubre de 2006</td>
+      </tr>
+      <tr>
+        <td style="titlfont-family:Arial,serif;
+        font-size:4.6px;
+        color:rgb(0,0,0);
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: none;
+        padding-bottom: 1mm;">Fecha de emisión</td>
+      </tr>
+      <tr>
+        <td style="font-family: Arial,serif;
+        font-size: 7.4px;
+        color: rgb(0,0,0);
+        font-weight: normal;
+        font-style: normal; 
+        text-decoration: none;
+        padding-bottom: 1mm;">10 de octubre de 2019</td>
+      </tr>
+      <tr>
+        <td style="titlfont-family:Arial,serif;
+        font-size:4.6px;
+        color:rgb(0,0,0);
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: none;
+        padding-bottom: 1mm;">Categoría</td>
+      </tr>
+      <tr>
+        <td style="font-family: Arial,serif;
+        font-size: 7.4px;
+        color: rgb(0,0,0);
+        font-weight: normal;
+        font-style: normal; 
+        text-decoration: none;
+        padding-bottom: 1mm;">2006</td>
+      </tr>
+      <tr>
+        <td font-family:Arial,serif;
+        font-size:11.5px;
+        color:rgb(0,0,0);
+        font-weight:normal;
+        font-style:normal;
+        text-decoration: none;
+        text-align: center; colspan="2">99.999.999</td>
+        <td></td>
+      </tr>
+    </table>';
+        
+        
+
+        $html .= "</body></html>";
+        return $html;
+    }
     public function create(){
         if(!(Session::has('userSession'))){
             return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');

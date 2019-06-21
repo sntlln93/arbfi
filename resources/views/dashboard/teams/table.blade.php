@@ -34,10 +34,7 @@
                     <th>Nombre</th>
                     <th>Categoría</th>
                     <th>DT</th>
-                    <!--
-                    <th><i class="icon-pencil"></i></th>
-                    <th><i class="icon-trash"></i></th>
-                    -->
+                    <th><i class="icon-files"></i>Imprimir carnets</th>
                 </tr>
               </thead>
               <tbody>
@@ -46,7 +43,7 @@
                     <th> {{ $team->id }} </th>
                     <th> {{ $team->club->name }}</th>
                     <th> {{ $team->category->name }} </th>
-                    <th> {{ $team->manager->last_name }} {{ $team->manager->first_name }} </th>
+                    <th> </th>
                     <!--
                     <th>
                       <a href="{{ url('/teams/'.$team->id.'/edit') }}" class="btn btn-mini btn-warning"><i class="icon-pencil"></i></a>

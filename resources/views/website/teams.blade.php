@@ -29,10 +29,10 @@
                                 <span class="logo-team">
                                     <img src="{{ $team->club->path_file }}" alt="logo-team">
                                 </span>
-                                <h4>{{ $team->club->name }}</h4>
+                                <h5>{{ $team->club->name }}</h5>
                                 <span class="location-team">
                                     <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                    {{ $team->club->stadium }}
+                                    {{ Str::limit($team->club->stadium, 16) }}
                                 </span>
                                 <span class="group-team">
                                     <i class="fa fa-trophy" aria-hidden="true"></i>

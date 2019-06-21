@@ -21,77 +21,70 @@
                     <div class="col-lg-9 padding-top-mini">
                         <!-- Content Tabs -->
                         <div class="tab-content">
-                            <!-- Tab Two - squad -->
+                            <!-- Tab One - squad -->
                             <div class="tab-pane active" id="squad">
                                 <div class="row">
-
-                                    @foreach($team->players as $player)
-                                    <div class="col-xl-4 col-lg-6 col-md-6">
-                                        <div class="item-player">
-                                            <div class="head-player">
-                                                @if($player->path_file == '#' OR $player->path_file == NULL)
-                                                    <img class="object-fit: scale-down" src="{{ asset('/img/frontend_img/players/0.jpg') }}" alt="{{ $player->last_name }}">
-                                                @else
-                                                <img src="{{ $player->path_file }}" alt="{{ $player->last_name }}">
-                                                @endif
-                                            </div>
-                                            <div class="info-player">
-                                                <span class="number-player">
-                                                    {{ $player->number }}
-                                                </span>
-                                                <h4>
-                                                    {{ $player->last_name.' '.$player->first_name }}
-                                                    <span>{{ $player->position }}</span>
-                                                </h4>
-                                                <ul>
-                                                    <li>
-                                                        <strong>CATEGORIA</strong> <span><img src="{{ $team->club->path_file }}" alt=""> {{ $player->team->category->name}} </span>
-                                                    </li>
-                                                    <li><strong>PARTIDOS:</strong> <span>{{$player->team->fixtureLocal->count()+$player->team->fixtureVisiting->count()}}</span></li>
-                                                    <li><strong>EDAD:</strong> <span> {{ $player->birth_date->diffInYears() }}</span></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endforeach
-
-                                </div>
-                            </div>
-                            <!-- End Tab Two - squad -->
-                            <div class="tab-pane" id="fixtures">
-
                                     <table class="table-striped table-responsive table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Local</th>
-                                                <th class="text-center">VS</th>
-                                                <th>Visitante</th>
-                                                <th>Detalles</th>
+                                                <th class="text-center">Apellido y nombre</th>
+                                                <th class="text-center">Categoría</th>
+                                                <th class="text-center">Goles</th>
+                                                <th class="text-center">Tarjetas verdes</th>
+                                                <th class="text-center">Tarjetas amarillas</th>
+                                                <th class="text-center">Tarjetas rojas</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                                @foreach($fixtures as $match)
-                                                    @if($match->state = "no jugado")
-                                                        <tr>
-                                                            <td>
-                                                                <img src="{{ asset($match->local->club->path_file) }}" alt="icon">
-                                                                <strong>{{ $match->local->club->name}}</strong><br>
-                                                            </td>
-                                                            <td class="text-center">Vs</td>
-                                                            <td>
-                                                                <img src="{{ asset($match->visiting->club->path_file) }}" alt="icon">
-                                                                <strong>{{ $match->visiting->club->name}}</strong><br>
-                                                            </td>
-                                                            <td>
-                                                                {{ $match->date }}<br>
-                                                                <small class="meta-text">Ubicación: {{ $match->location }}</small>
-                                                            </td>
-                                                        </tr>
-                                                    @endif
-                                                @endforeach
+                                            @foreach($team->players as $player)
+                                                <tr>
+                                                    <td class="text-center">{{ $player->last_name }} {{ $player->first_name }}</td>
+                                                    <td class="text-center">{{ $player->team->category->name }}</td>
+                                                    <td class="text-center">{{ $playerEvents[$player->id]['Gol'] }}</td>
+                                                    <td class="text-center">{{ $playerEvents[$player->id]['Verde'] }}</td>
+                                                    <td class="text-center">{{ $playerEvents[$player->id]['Amarilla'] }}</td>
+                                                    <td class="text-center">{{ $playerEvents[$player->id]['Roja'] }}</td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                     <hr>
+                                </div>
+                            </div>
+                            <!-- End Tab Two - Fixture -->
+                            <div class="tab-pane" id="fixtures">
+                                <table class="table-striped table-responsive table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Local</th>
+                                            <th class="text-center">VS</th>
+                                            <th class="text-center">Visitante</th>
+                                            <th class="text-center">Detalles</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            @foreach($fixtures as $match)
+                                                @if($match->state = "no jugado")
+                                                    <tr>
+                                                        <td>
+                                                            <img src="{{ asset($match->local->club->path_file) }}" alt="icon">
+                                                            <strong>{{ $match->local->club->name }}</strong><br>
+                                                        </td>
+                                                        <td class="text-center">Vs</td>
+                                                        <td>
+                                                            <img src="{{ asset($match->visiting->club->path_file) }}" alt="icon">
+                                                            <strong>{{ $match->visiting->club->name }}</strong><br>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $match->date }}<br>
+                                                            <small class="meta-text">Ubicación: {{ $match->location }}</small>
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                            @endforeach
+                                    </tbody>
+                                </table>
+                                <hr>
                             </div>
                             
     
