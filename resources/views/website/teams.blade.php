@@ -27,7 +27,7 @@
                             </div>
                             <div class="info-team">
                                 <span class="logo-team">
-                                    <img src="{{ $team->club->path_file }}" alt="logo-team">
+                                    Cat. "{{ substr($team->category->name, 2, 3) }}
                                 </span>
                                 <h5>{{ $team->club->name }}</h5>
                                 <span class="location-team">

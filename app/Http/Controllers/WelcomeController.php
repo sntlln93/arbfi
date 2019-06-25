@@ -29,6 +29,7 @@ class WelcomeController extends Controller
         $scoreboard = $this->categoriesScoreboards();
         $general = $this->challengerScoreboard($scoreboard);
         $goal_makers = $this->goals();
+        $fair_play = $this->fairplay();
         
 
         return view('website.homeTest') ->with('recents', $recents)
@@ -37,7 +38,8 @@ class WelcomeController extends Controller
                                         ->with('posts', $posts)
                                         ->with('categories', $categories)
                                         ->with('scoreboards', $scoreboard)
-                                        ->with('goal_makers', $goal_makers);
+                                        ->with('goal_makers', $goal_makers)
+                                        ->with('fair_play', $fair_play);
     }
 
     public function galery(){
@@ -275,5 +277,29 @@ class WelcomeController extends Controller
         }
 
     return $playerEvents;
+    }
+
+    public function fairplay(){
+        $fair_play = array();
+        $teams = Team::all();    
+        $categories = Category::all();  
+        
+        foreach($categories as $category){
+            foreach($category->teams as $team){
+                $yellow = 0; $red = 0; $green = 0;
+                foreach($team->events as $event){
+                    if($event->type == 'Amarilla') $yellow++;
+                    elseif($event->type == 'Roja') $red++;
+                    elseif($event->type == 'Verde') $green++;
+                }
+                $fair_play[$category->id][$team->id]['Categoria'] = $team->category->name;
+                $fair_play[$category->id][$team->id]['Equipo'] = $team->club->name;
+                $fair_play[$category->id][$team->id]['Amarilla'] = $yellow;
+                $fair_play[$category->id][$team->id]['Roja'] = $red;
+                $fair_play[$category->id][$team->id]['Verde'] = $green;
+                $fair_play[$category->id][$team->id]['Puntos'] = $yellow + $red*2 - $green;
+            }
+        }
+        return $this->sort_tables($fair_play, 'Puntos');
     }
 }

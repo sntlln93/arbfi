@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Team extends Model
 {
+    public function events(){
+        return $this->hasManyThrough('App\Event', 'App\Player');
+    }
+    
     public function club(){
         return $this->belongsTo('App\Institution');
     }

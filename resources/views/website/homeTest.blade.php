@@ -41,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- End Club Ranking -->
+                <!-- End general table -->
                 <!-- Top player -->
                 <div class="col-lg-4 general">
                     <div class="player-ranking">
@@ -75,10 +75,10 @@
                  </div>
                  <!-- End Top player -->
 
-                <!-- Fair Play 
+                <!-- Fair Play -->
                 <div class="col-lg-4 general">
                     <div class="player-ranking">
-                         <h5><a href="group-list.html">Top player</a></h5>
+                         <h5><a href="group-list.html">Tabla de Fair Play</a></h5>
                          <div class="info-player">
                              <ul>
                                  <li>
@@ -97,7 +97,7 @@
                          </div>
                     </div>
                  </div>
-                 end-fair play-->
+                 <!-- end-fair play-->
                 @foreach($categories as $category)
                     <!-- Club Ranking -->
                     <div class="col-lg-4 {{ $category->name }}" style="display:none">
@@ -165,29 +165,35 @@
                     </div>
                     <!-- End Top player -->
     
-                    <!-- Fair Play 
+                    <!-- Fair Play -->
                     <div class="col-lg-4 {{ $category->name }}" style="display:none">
                         <div class="player-ranking">
-                            <h5><a href="group-list.html">Top player</a></h5>
+                            <h5><a href="group-list.html">Tabla de Fair Play</a></h5>
                             <div class="info-player">
                                 <ul>
-                                    <li>
-                                    <span class="position">
-                                        1
-                                    </span>
-                                        <a href="single-team.html">
-                                            <img src="{{ asset('/') }}" alt="">
-                                            Cristiano R.
-                                        </a>
-                                        <span class="points">
-                                            90
-                                        </span>
-                                    </li>
+                                    @php( $n = 0 )
+                                    @for($i = 0; $i < sizeof($fair_play); $i++)
+                                        @if($fair_play[$i][0]['Categoria'] == $category->name)
+                                            @foreach(array_reverse($fair_play[$i]) as $row)
+                                                <li>
+                                                    <span class="position">
+                                                        {{ $n+1 }}
+                                                    </span>
+                                                    <a href="$">
+                                                        {{ $row['Equipo'] }}
+                                                    </a>
+                                                    <span class="points">
+                                                        {{ $row['Puntos']}}
+                                                </li>
+                                                @php($n++)
+                                            @endforeach
+                                        @endif
+                                    @endfor
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    end-fair play-->
+                   <!-- end-fair play-->
                 @endforeach
             </div>
         </div>
