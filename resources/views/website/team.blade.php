@@ -24,7 +24,7 @@
                             <!-- Tab One - squad -->
                             <div class="tab-pane active" id="squad">
                                 <div class="row">
-                                    <table class="table-striped table-responsive table-hover">
+                                    <table class="table-striped table-responsive table-hover" style="margin-bottom:35px">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">Apellido y nombre</th>
@@ -48,6 +48,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    <hr>                                    
                                     <hr>
                                 </div>
                             </div>
