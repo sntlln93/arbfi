@@ -40,10 +40,10 @@
                                                 <tr>
                                                     <td class="text-center">{{ $player->last_name }} {{ $player->first_name }}</td>
                                                     <td class="text-center">{{ $player->team->category->name }}</td>
-                                                    <td class="text-center">{{ $playerEvents[$player->id]['Gol'] }}</td>
-                                                    <td class="text-center">{{ $playerEvents[$player->id]['Verde'] }}</td>
-                                                    <td class="text-center">{{ $playerEvents[$player->id]['Amarilla'] }}</td>
-                                                    <td class="text-center">{{ $playerEvents[$player->id]['Roja'] }}</td>
+                                                    <td class="text-center">{{ $player->goal[0]->cantidad }}</td>
+                                                    <td class="text-center">{{ $player->green[0]->cantidad }}</td>
+                                                    <td class="text-center">{{ $player->yellow[0]->cantidad }}</td>
+                                                    <td class="text-center">{{ $player->red[0]->cantidad }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

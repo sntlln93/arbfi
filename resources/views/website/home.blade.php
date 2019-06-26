@@ -181,3 +181,9 @@
 </section>
 <!-- End Section Area -  Content Central -->
 @endsection
+
+ @section('js')
+
+ scrtdjobsg
+
+  @endsection

@@ -54,8 +54,8 @@ class WelcomeController extends Controller
     public function team($id){
         $team = Team::find($id);
         $fixtures = Fixture::where('local_team_id', $id)->orWhere('visiting_team_id', $id)->get();
-        $playerEvents = $this->playersTable($id);
-        return view('website.team')->with('team', $team)->with('fixtures', $fixtures)->with('playerEvents', $playerEvents);
+        
+        return view('website.team')->with('team', $team)->with('fixtures', $fixtures);
     }
 
     public function regulation(){
@@ -254,29 +254,6 @@ class WelcomeController extends Controller
         $goal_makers = DB::select($query);
         
         return $goal_makers;
-    }
-
-    public function playersTable($id){
-        $team = Team::find($id);
-        $playerEvents = array();
-        foreach($team->players as $player){
-            $goal = 0;
-            $yellow = 0;
-            $red = 0;
-            $green = 0;
-            foreach($player->event as $action){
-                if($action->type == 'Gol') $goal++;
-                elseif($action->type == 'Amarilla') $yellow++;
-                elseif($action->type == 'Roja') $red++;
-                elseif($action->type == 'Vede') $green++;
-            }
-            $playerEvents[$player->id]['Gol'] = $goal;
-            $playerEvents[$player->id]['Amarilla'] = $yellow;
-            $playerEvents[$player->id]['Roja'] = $red;
-            $playerEvents[$player->id]['Verde'] = $green;
-        }
-
-    return $playerEvents;
     }
 
     public function fairplay(){
