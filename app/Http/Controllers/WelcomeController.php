@@ -302,4 +302,8 @@ class WelcomeController extends Controller
         }
         return $this->sort_tables($fair_play, 'Puntos');
     }
+
+    public function challengerFairplay(){
+        
+    }
 }
