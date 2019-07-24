@@ -36,6 +36,7 @@
                           @if($type->type == "AAA") Todos contra Todos
                           @elseif($type->type == "GF") Fase de Grupos
                           @elseif($type->type == "PVP") Llaves
+                          @elseif($type->type == "SC") Super Copa
                           @endif | 
                           @if($type->round_trip) Ida y vuelta
                           @else Partido único

@@ -57,8 +57,7 @@ class TournamentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         if(Session::has('userSession')){
             $tournament = new Tournament;
             $teams = Institution::all();
@@ -86,8 +85,8 @@ class TournamentController extends Controller
                                                             ->with('fase', 1);
             }elseif($tournament->type->type == "GF"){
                 return view('dashboard.tournament.groups')->with('tournament', $tournament)
-                                                         ->with('teams', $teams)
-                                                         ->with('categories', $categories);                                                         
+                                                          ->with('teams', $teams)
+                                                          ->with('categories', $categories);                                                         
             }
             
 
@@ -245,31 +244,31 @@ class TournamentController extends Controller
         }
         
         $limit = $request->quantity_teams/$request->quantity_groups;
-        
-        for($cat = 0; $cat < sizeof($request->categories); $cat++){
-            
-            for($i = 0; $i < $request->quantity_groups; $i++){
+        for($cat = 0; $cat < sizeof($request->categories); $cat++){ //itero categorias
+            for($i = 0; $i < $request->quantity_groups; $i++){ //itero grupos 
                 $group = new Group;
                 $group->tournament_id = $id;
                 $group->name = chr(65+$i);
                 $group->save();
                 for($pivot = 0; $pivot < $limit; $pivot++){
                     for($j = $pivot+1; $j < $limit; $j++){
-                        $match = new Fixture;
-                        $match->tournament_id = $group->id;
-                        $match->local_team_id = DB::table('teams')->select('id')->where('club_id', $request->teams[$i][$pivot])
-                                                                                ->where('category_id', $request->categories[$cat])
-                                                                                ->get()[0]->id;
-                        $match->visiting_team_id = DB::table('teams')->select('id')->where('club_id', $request->teams[$i][$j])
-                                                                                   ->where('category_id', $request->categories[$cat])
-                                                                                   ->get()[0]->id;
-                        $match->date = null;
-                        $match->fixture_day = 0;
-                        $match->location = "A definir";
-                        $match->local_score = 0;
-                        $match->visiting_score = 0;
-                        $match->state = "no jugado";
-                        $match->save();
+                        if($request->teams[$i][$pivot] != 0 AND $request->teams[$i][$j] != 0){
+                            $match = new Fixture;
+                            $match->tournament_id = $group->id;
+                            $match->local_team_id = DB::table('teams')->select('id')->where('club_id', $request->teams[$i][$pivot])
+                                                                                    ->where('category_id', $request->categories[$cat])
+                                                                                    ->get()[0]->id;
+                            $match->visiting_team_id = DB::table('teams')->select('id')->where('club_id', $request->teams[$i][$j])
+                                                                                    ->where('category_id', $request->categories[$cat])
+                                                                                    ->get()[0]->id;
+                            $match->date = null;
+                            $match->fixture_day = 0;
+                            $match->location = "A definir";
+                            $match->local_score = 0;
+                            $match->visiting_score = 0;
+                            $match->state = "no jugado";
+                            $match->save();
+                        }
                     }
                 }
             }

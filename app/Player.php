@@ -29,22 +29,22 @@ class Player extends Model
     public function getRedAttribute(){
         //do whatever you want to do
         $query = 'select count(id) as cantidad from events where player_id = '.$this->id.' and type = "Roja"';
-        $green = DB::select($query);
-        return $green;
+        $red = DB::select($query);
+        return $red;
     }
 
     public function getYellowAttribute(){
         //do whatever you want to do
         $query = 'select count(id) as cantidad from events where player_id = '.$this->id.' and type = "Amarilla"';
-        $green = DB::select($query);
-        return $green;
+        $yellow = DB::select($query);
+        return $yellow;
     }
 
     public function getGoalAttribute(){
         //do whatever you want to do
         $query = 'select count(id) as cantidad from events where player_id = '.$this->id.' and type = "Gol"';
-        $green = DB::select($query);
-        return $green;
+        $goal = DB::select($query);
+        return $goal;
     }
 
     protected $dates = ['birth_date'];

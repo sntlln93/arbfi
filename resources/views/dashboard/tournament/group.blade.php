@@ -37,10 +37,10 @@
                 @for($i = 0; $i < $quantity_groups; $i++)
                   <div class="control-group">
                     <label class="control-label">Grupo {{ chr(65+$i) }}</label>
-                    @for($j = 0; $j < $quantity_teams/2 ; $j++)
+                    @for($j = 0; $j < ($quantity_teams/$quantity_groups) ; $j++)
                         <div id="uno" class="controls">
                           <select class="sel span11" name={{ 'teams['.$i.'][]' }}>
-                            <option></option>
+                            <option value="0"></option>
                             @foreach($clubs as $club)
                                 <option value="{{ $club->id }}">{{ $club->name }}</option>
                             @endforeach
