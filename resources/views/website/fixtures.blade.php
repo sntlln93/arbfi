@@ -23,23 +23,25 @@
                                     </thead>
                                     <tbody>
                                         @foreach($fixtures as $match)
-                                            <tr>
-                                                <td>
-                                                    <img src="{{asset($match->local->club->path_file)}}" alt="icon">
-                                                    <strong>{{ $match->local->club->name }}</strong><br>
-                                                    <small class="meta-text">{{ $match->local->category->name }}</small>
-                                                </td>
-                                                <td class="text-center">Vs</td>
-                                                <td>
-                                                    <img src="{{asset($match->visiting->club->path_file)}}" alt="icon">
-                                                    <strong>{{ $match->visiting->club->name }}</strong><br>
-                                                    <small class="meta-text">{{ $match->visiting->category->name }}</small>
-                                                </td>
-                                                <td>
-                                                    Fecha: {{ $match->date}}<br>
-                                                    <small class="meta-text">Cancha: {{$match->location}}</small>
-                                                </td>
-                                            </tr>
+                                            @if(isset($match->local) AND isset($match->visiting))
+                                                <tr>
+                                                    <td>
+                                                        <img src="{{asset('storage/'.$match->local_image)}}" alt="icon">
+                                                        <strong>{{ $match->local }}</strong><br>
+                                                        <small class="meta-text">{{ $match->category }}</small>
+                                                    </td>
+                                                    <td class="text-center">Vs</td>
+                                                    <td>
+                                                        <img src="{{asset('storage/'.$match->visiting_image)}}" alt="icon">
+                                                        <strong>{{ $match->visiting }}</strong><br>
+                                                        <small class="meta-text">{{ $match->category }}</small>
+                                                    </td>
+                                                    <td>
+                                                        Fecha: {{ $match->date}}<br>
+                                                        <small class="meta-text">Cancha: {{$match->location}}</small>
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>

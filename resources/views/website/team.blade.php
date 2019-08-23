@@ -65,22 +65,24 @@
                                     </thead>
                                     <tbody>
                                             @foreach($fixtures as $match)
-                                                @if($match->state = "no jugado")
-                                                    <tr>
-                                                        <td>
-                                                            <img src="{{ asset($match->local->club->path_file) }}" alt="icon">
-                                                            <strong>{{ $match->local->club->name }}</strong><br>
-                                                        </td>
-                                                        <td class="text-center">Vs</td>
-                                                        <td>
-                                                            <img src="{{ asset($match->visiting->club->path_file) }}" alt="icon">
-                                                            <strong>{{ $match->visiting->club->name }}</strong><br>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            {{ $match->date }}<br>
-                                                            <small class="meta-text">Ubicación: {{ $match->location }}</small>
-                                                        </td>
-                                                    </tr>
+                                                @if(isset($match->local) AND isset($match->visiting))
+                                                    @if($match->state = "no jugado")
+                                                        <tr>
+                                                            <td>
+                                                                <img src="{{ asset($match->local->club->image->path) }}" alt="icon">
+                                                                <strong>{{ $match->local->club->name }}</strong><br>
+                                                            </td>
+                                                            <td class="text-center">Vs</td>
+                                                            <td>
+                                                                <img src="{{ asset($match->visiting->club->image->path) }}" alt="icon">
+                                                                <strong>{{ $match->visiting->club->name }}</strong><br>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                {{ $match->date }}<br>
+                                                                <small class="meta-text">Ubicación: {{ $match->location }}</small>
+                                                            </td>
+                                                        </tr>
+                                                    @endif
                                                 @endif
                                             @endforeach
                                     </tbody>
@@ -96,28 +98,30 @@
                                         <div class="info-results">
                                             <ul>
                                                 @foreach($fixtures as $match)
-                                                    @if($match->state == "JUGADO")
-                                                        <li>
-                                                            <span class="head">
-                                                                {{ $match->local->club->name }} Vs {{ $match->visiting->club->name }} <span class="date">{{ $match->date }}</span>
-                                                            </span>
-            
-                                                            <div class="goals-result">
-                                                                <a href="{{ url('/web/teams/'.$match->local_team_id) }}">
-                                                                    <img src="{{ $match->local->club->path_file }}" alt="">
-                                                                    {{ $match->local->club->name }}
-                                                                </a>
-            
-                                                                <span class="goals">
-                                                                    <b>{{ $match->local_score }}</b> - <b>{{ $match->visiting_score }}</b>
+                                                    @if(isset($match->local) AND isset($match->visiting))
+                                                        @if($match->state == "JUGADO")
+                                                            <li>
+                                                                <span class="head">
+                                                                    {{ $match->local->club->name }} Vs {{ $match->visiting->club->name }} <span class="date">{{ $match->date }}</span>
                                                                 </span>
-            
-                                                                <a href="{{ url('/web/teams/'.$match->visiting_team_id) }}">
-                                                                    <img src="{{ $match->local->club->path_file }}" alt="">
-                                                                    {{ $match->visiting->club->name }}
-                                                                </a>
-                                                            </div>
-                                                        </li>
+                
+                                                                <div class="goals-result">
+                                                                    <a href="{{ url('/web/teams/'.$match->local_team_id) }}">
+                                                                        <img src="{{ $match->local->club->image->path }}" alt="">
+                                                                        {{ $match->local->club->name }}
+                                                                    </a>
+                
+                                                                    <span class="goals">
+                                                                        <b>{{ $match->local_score }}</b> - <b>{{ $match->visiting_score }}</b>
+                                                                    </span>
+                
+                                                                    <a href="{{ url('/web/teams/'.$match->visiting_team_id) }}">
+                                                                        <img src="{{ $match->local->club->image->path }}" alt="">
+                                                                        {{ $match->visiting->club->name }}
+                                                                    </a>
+                                                                </div>
+                                                            </li>
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </ul>

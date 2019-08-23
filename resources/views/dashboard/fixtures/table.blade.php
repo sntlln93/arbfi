@@ -44,14 +44,18 @@
               <tbody>
                 @foreach($fixtures as $match)
                   <tr>
-                    <th> {{ $match->id }} </th>
-                    <th> Torneo  | Categoría {{ $match->local->category->name }}</th>
-                    <th> {{ $match->local->club->name }} @if($match->state == 'JUGADO')({{ $match->local_score }})@endif </th>
-                    <th> {{ $match->visiting->club->name }} @if($match->state == 'JUGADO')({{ $match->visiting_score }})@endif </th>
+                    <th> #{{ $match->id }} </th>
+                    <th> Torneo  | Categoría @if(isset($match->local)) {{ $match->local->category->name }} @elseif(isset($match->visiting)) {{ $match->visiting->category->name }}@endif</th>
+                    <th>  @if(isset($match->local)) {{ $match->local->club->name }} @endif 
+                          @if($match->state == 'JUGADO') ({{ $match->local_score }}) @endif 
+                    </th>
+                    <th>  @if(isset($match->visiting)){{ $match->visiting->club->name }}@endif 
+                          @if($match->state == 'JUGADO')({{ $match->visiting_score }})@endif
+                    </th>
                     <th> {{ $match->date }} </th>
                     <th> #{{ $match->fixture_day }} </th>
                     <th> {{ $match->location }} </th>
-                    <th> {{ mb_strToUpper($match->state) }} </th>
+                    <th> #{{ mb_strToUpper($match->state) }} </th>
 
                     <th>
                         <a href="{{ url('/fixtures/'.$match->id.'/pdf') }}" class="btn btn-mini btn-info"><i class="icon-file"></i></a>  

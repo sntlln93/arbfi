@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Player extends Model
 {
+    public function image(){
+        return $this->belongsTo('App\Image');
+    }
     public function team(){
         return $this->belongsTo('App\Team');
     }

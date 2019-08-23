@@ -20,7 +20,7 @@ class CreatePlayersTable extends Migration
             $table->String('dni');
             $table->date('birth_date');
             $table->integer('team_id');
-            $table->String('path_file')->default('img/frontend_img/players/0.jpg');
+            $table->integer('image_id')->nullable();
         });
     }
 

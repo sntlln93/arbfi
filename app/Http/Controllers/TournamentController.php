@@ -344,4 +344,12 @@ class TournamentController extends Controller
         }
         return redirect('/tournaments');
     }
+
+    public function activate($id){
+        $tournament = Tournament::find($id);
+        DB::update('update tournaments set active = false');
+        $tournament->active = true;
+        $tournament->save();
+        return redirect('/tournaments');
+    }
 }

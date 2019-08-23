@@ -21,14 +21,14 @@
                         <h5><a>Tabla de Posiciones</a></h5>
                         <div class="info-ranking">
                             <ul>
-                                @php( $position = 1 )
+                                <!-- {{--@php( $position = 1 )
                                 @foreach($scores as $scoreboard)
                                     <li>
                                         <span class="position">
                                             {{ $position }}
                                         </span>
                                         <a>
-                                            <img src="{{--logo --}}" alt="">
+                                            <img src="" alt="">
                                             {{ $scoreboard[0] }}
                                         </a>
                                         <span class="points">
@@ -36,7 +36,8 @@
                                         </span>
                                     </li>
                                     @php( $position++ )
-                                @endforeach
+                                @endforeach 
+                                --}}-->
                             </ul>
                         </div>
                     </div>
@@ -55,7 +56,7 @@
                                             {{ $n+1 }}
                                         </span>
                                         <a href="$">
-                                            <img style="width:20px;height:20px;" src="{{ asset($goal_maker->path_file) }}" alt="">
+                                            <img style="width:20px;height:20px;" src="{{ asset(App\Image::find($goal_maker->image_id)->path) }}" alt="">
                                             {{ $goal_maker->first_name.' '.$goal_maker->last_name }}
                                         </a>
                                         <span class="points">
@@ -106,15 +107,15 @@
                             <div class="info-ranking">
                                 <ul>
                                     @php( $position = 1 )
-                                    @foreach($scoreboards as $categories)
-                                        @foreach($categories as $row)
-                                            @if($category->id == $row['category'])
+                                    @foreach($scoreboards as $key=>$categories)
+                                        @foreach($categories as $subkey=>$row)
+                                            @if($category->id == $key)
                                                 <li>
                                                     <span class="position">
                                                         {{ $position }}
                                                     </span>
                                                     <a>
-                                                        <img src="{{--logo --}}" alt="">
+                                                        <img src="{{ asset('storage/'.$row['image']) }}" alt="">
                                                         {{ $row['name'] }}
                                                     </a>
                                                     <span class="points">
@@ -145,7 +146,7 @@
                                                     {{ $n+1 }}
                                                 </span>
                                                 <a href="$">
-                                                    <img style="width:20px;height:20px;" src="{{ asset($goal_maker->path_file) }}" alt="">
+                                                    <img style="width:20px;height:20px;" src="{{ asset($goal_maker->image_id) }}" alt="">
                                                     {{ $goal_maker->first_name.' '.$goal_maker->last_name }}
                                                 </a>
                                                 <span class="points">
@@ -223,7 +224,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="img-hover">
-                                        <img src="{{ $post->path_file }}" alt="" class="img-responsive">
+                                        <img src="{{ App\Image::find($post->image_id)->path }}" alt="" class="img-responsive">
                                         <div class="overlay"><a href="{{ url('/posts/'.$post->id) }}">+</a></div>
                                     </div>
                                 </div>

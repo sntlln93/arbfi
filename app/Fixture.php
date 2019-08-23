@@ -25,5 +25,6 @@ class Fixture extends Model
     public function group(){
         return $this->belongsTo('App\Group', 'tournament_id');
     }
+
     public $timestamps = false;
 }

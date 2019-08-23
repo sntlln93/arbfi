@@ -11,7 +11,7 @@ class Team extends Model
     }
     
     public function club(){
-        return $this->belongsTo('App\Institution');
+        return $this->belongsTo('App\Institution', 'club_id');
     }
 
     public function manager(){

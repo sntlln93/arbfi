@@ -42,18 +42,18 @@
                                 <tr>
                                     <td class="number">{{ $n+1 }}</td>
                                     <td class="text-left">
-                                        <!--<img src="" alt="{{ $row[0] }}">-->
-                                        <span>{{ $row[0] }}</span>
+                                        <!--<img src="" alt="{{ $row['name'] }}">-->
+                                        <span>{{ $row['name'] }}</span>
                                     </td>
                                     
-                                    <td>{{ $row[2] + $row[3] + $row[4] }}</td>
-                                    <td>{{ $row[2] }}</td>
-                                    <td>{{ $row[3] }}</td>
-                                    <td>{{ $row[4] }}</td>
-                                    <td>{{ $row[5] }}</td>
-                                    <td>{{ $row[6] }}</td>
-                                    <td>{{ $row[5] - $row[6] }}</td>
-                                    <td><b>{{ $row[1] }}<b></td>
+                                    <td>{{ $row['wins'] + $row['ties'] + $row['losses'] }}</td>
+                                    <td>{{ $row['wins'] }}</td>
+                                    <td>{{ $row['ties'] }}</td>
+                                    <td>{{ $row['losses'] }}</td>
+                                    <td>{{ $row['goals_favor'] }}</td>
+                                    <td>{{ $row['goals_against'] }}</td>
+                                    <td>{{ $row['goals_favor'] - $row['goals_against'] }}</td>
+                                    <td><b>{{ $row['points'] }}<b></td>
                                 </tr>
                                 @php($n++)
                             @endforeach
@@ -88,9 +88,9 @@
                         <tbody class="text-center">
                             <tr>
                                 @php($n=0)
-                                @foreach($tables as $categories)
-                                    @foreach($categories as $row)
-                                        @if($category->id == $row['category'])
+                                @foreach($tables as $key=>$categories)
+                                    @foreach($categories as $subkey=>$row)
+                                        @if($category->id == $key)
                                             <tr>
                                                 <td class="number">{{ $n+1 }}</td>
                                                 <td class="text-left">

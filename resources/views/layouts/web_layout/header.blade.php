@@ -14,9 +14,10 @@
                     <div class="col">
                         <a class="mobile-nav" href="#mobile-nav"><i class="fa fa-bars"></i></a>
                     </div>
-                    <div class="shield-container">
+                
+                    <div class="col-sm-12 col-md-6 col-md-offset-6">
                         @foreach(App\Institution::all() as $club)
-                            <img style="width:40px;height:40px" src="{{ $club->path_file }}" alt="" class="shields">
+                            <img src="{{ getImage($club, 'clubs') }}" alt="" class="shields">
                         @endforeach
                     </div>
                 </div>

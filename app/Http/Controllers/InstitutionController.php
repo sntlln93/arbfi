@@ -55,10 +55,12 @@ class InstitutionController extends Controller
                 'name' => 'required',
                 'responsable' => 'required',
                 'stadium' => 'required',
+                'image' => 'required|file|image|max:5000',
             ]);
             $club->name = mb_strToUpper($request->name);
             $club->responsable = mb_strToUpper($request->responsable);
             $club->stadium = mb_strToUpper($request->stadium);
+            $club->image_id = newImage($request, 'clubs');
             $club->save();
             
             
@@ -128,8 +130,9 @@ class InstitutionController extends Controller
             $club->name = mb_strToUpper($request->name);
             $club->responsable = mb_strToUpper($request->responsable);
             $club->stadium = mb_strToUpper($request->stadium);  
-            $club->path_file = $request->path_file;
-
+            if($request->has('image')){
+                $club->image_id = newImage($request, 'clubs');
+            }
             $club->save();
             
 

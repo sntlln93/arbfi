@@ -21,7 +21,7 @@
         margin:auto;
     }
     .shields{
-        width:45px;
-        height:45px;
+        width:51.5px;
+        height:51.5px;
     }       
 </style>

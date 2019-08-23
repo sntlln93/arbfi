@@ -17,7 +17,7 @@
             <h5>Modificar jugador</h5>
           </div> <!--widget-title-->
           <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="{{ '/players/'.$player->id }}">
+            <form class="form-horizontal" method="post" action="{{ '/players/'.$player->id }}" enctype="multipart/form-data">
               {{ csrf_field() }}                                                           
               {{ method_field('PUT') }}
               <div class="control-group">
@@ -91,9 +91,14 @@
               <div class="control-group">
                 <label class="control-label">Foto</label>
                 <div class="controls">
-                  <input name="path_file" type="text"  class="span11" value="{{ $player->path_file }}" />
+                    @if($player->image_id)
+                      <img class="editimage" src="{{ asset('storage/'.$player->image->path) }}" alt="">
+                    @endif
+                    <div class="custom-file">
+                        <input name="image" type="file" class="custom-file-input" id="validatedCustomFile">
+                    </div>
                 </div>
-              </div>
+              </div>   
               
               
               <div class="form-actions">

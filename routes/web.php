@@ -2,12 +2,8 @@
 
 //test
 Route::get('/test', function(){
-	$event = App\Event::all();
-	foreach($event as $e){
-		if($e->type == "Verde"){
-			echo $e->type.' - '.$e->player->last_name.' '.$e->player->first_name.' - '.$e->player->team->club->name.'<br>';
-		}
-	}
+	$players = App\Player::all();
+	return view('carnets')->with('players', $players);
 });
 
 

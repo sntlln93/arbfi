@@ -18,7 +18,7 @@ class CreateInstitutionsTable extends Migration
             $table->String('name');
             $table->String('responsable');
             $table->String('stadium');
-            $table->String('path_file')->nullable();
+            $table->integer('image_id')->nullable();
         });
     }
 

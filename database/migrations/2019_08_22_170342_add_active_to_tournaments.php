@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTeamsTable extends Migration
+class AddActiveToTournaments extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateTeamsTable extends Migration
      */
     public function up()
     {
-        Schema::create('teams', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('manager_id');
-            $table->integer('category_id');
-            $table->integer('club_id');
-            $table->integer('image_id');
+        Schema::table('tournaments', function (Blueprint $table) {
+            $table->boolean('active')->default(false);
         });
     }
 
@@ -29,6 +25,8 @@ class CreateTeamsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('teams');
+        Schema::table('tournaments', function (Blueprint $table) {
+            //
+        });
     }
 }

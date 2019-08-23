@@ -18,7 +18,7 @@
             <h5>Nuevo institución</h5>
           </div> <!--widget-title-->
           <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="{{ '/institutions' }}">
+            <form class="form-horizontal" method="post" action="{{ '/institutions' }}" enctype="multipart/form-data">
               {{ csrf_field() }}
               <div class="control-group">
                 <label class="control-label">Nombre</label>
@@ -36,10 +36,13 @@
                   <input name="stadium" type="text"  class="span11" placeholder="Cancha" />
               </div>
               <div class="control-group">
-                <label class="control-label">Escudo</label>
-                <div class="controls">
-                  <input name="path_file" type="text"  class="span11" placeholder="Cancha" />
-              </div>
+                  <label class="control-label">Foto</label>
+                  <div class="controls">
+                      <div class="custom-file">
+                          <input name="image" type="file" class="custom-file-input" id="validatedCustomFile" required>
+                      </div>
+                  </div>
+                </div>    
               
               <div class="form-actions">
                 <button type="submit" class="btn btn-success">Guardar</button>
