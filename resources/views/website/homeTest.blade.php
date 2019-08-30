@@ -21,23 +21,22 @@
                         <h5><a>Tabla de Posiciones</a></h5>
                         <div class="info-ranking">
                             <ul>
-                                <!-- {{--@php( $position = 1 )
+                                @php( $position = 1 )
                                 @foreach($scores as $scoreboard)
                                     <li>
                                         <span class="position">
                                             {{ $position }}
                                         </span>
                                         <a>
-                                            <img src="" alt="">
-                                            {{ $scoreboard[0] }}
+                                            <img src="{{ asset(getImage(App\Institution::where('name', $scoreboard['name'])->get(),'clubs')) }}" alt="">
+                                            {{ $scoreboard['name'] }}
                                         </a>
                                         <span class="points">
-                                            {{ $scoreboard[1] }}
+                                            {{ $scoreboard['points'] }}
                                         </span>
                                     </li>
                                     @php( $position++ )
-                                @endforeach 
-                                --}}-->
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -115,7 +114,7 @@
                                                         {{ $position }}
                                                     </span>
                                                     <a>
-                                                        <img src="{{ asset('storage/'.$row['image']) }}" alt="">
+                                                        <img src="{{ asset(getImage(App\Team::find($subkey)->club,'clubs')) }}" alt="">
                                                         {{ $row['name'] }}
                                                     </a>
                                                     <span class="points">

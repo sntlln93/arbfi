@@ -179,5 +179,5 @@ class Tournament extends Model
             }
         }
         return $scores;
-        }
+    }
 }

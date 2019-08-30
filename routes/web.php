@@ -1,9 +1,9 @@
 <?php
 
 //test
-Route::get('/test', function(){
-	$players = App\Player::all();
-	return view('carnets')->with('players', $players);
+Route::get('/test/', function(){
+	generatePDF();
+
 });
 
 

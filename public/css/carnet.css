@@ -24,7 +24,7 @@
             
         }  
         .carnet{
-            background-image: url('/img/backend_img/background1.svg');        
+            background-image: url('/img/backend_img/background1.png');        
             border-style: solid;   
             display:grid;
         }
