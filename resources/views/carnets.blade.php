@@ -12,9 +12,6 @@
                 }
 
             .fila{
-                padding-top: 1.5cm;
-                padding-left: 1.5cm;
-                padding-right: 1.5cm;
                 display:grid;
                 grid-template-columns: 8.6cm 8.6cm;
                 grid-template-rows: 5.38cm;
