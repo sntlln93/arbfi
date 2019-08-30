@@ -104,7 +104,7 @@
                     </div>
                     <div class="row">
                         <div class="foto">
-                            <img src="{{ asset('storage/'.$player->image->path) }}" alt="">
+                            <img src="{{ asset(getImage($player, 'players')) }}" alt="">
                             <p>Número de documento</p>
                             <h3>{{ $player->dni }}</h3>
                         </div>
