@@ -1,12 +1,5 @@
 <?php
 
-//test
-Route::get('/test/', function(){
-	generatePDF();
-
-});
-
-
 //auth
 Route::match(['get', 'post'], '/user', 'AuthController@login');
 Route::get('/logout', 'AuthController@logout');
@@ -55,6 +48,6 @@ Route::get('/categories/{id}/enable', 'CategoryController@enable');
 Auth::routes();
 
 //pdf
-Route::get('/players/{id}/pdf', 'PlayerController@htmlToPdf');
+Route::get('/teams/{id}/pdf', 'TeamController@htmlToPdf');
 Route::get('/fixtures/{id}/pdf', 'FixtureController@htmlToPdf');
 Route::get('tournaments/{id}/pdf', 'PdfController@htmlToPdf');

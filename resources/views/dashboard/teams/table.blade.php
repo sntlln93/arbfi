@@ -16,12 +16,6 @@
               <input id="filtrar" name="search" value="" type="text" placeholder="Buscar" class="span3">
               <span class="add-on"><i class="icon-search"></i></span>
           </div>
-          <div class="input-append">
-              
-          </div>
-          <div class="input-append">
-              <!--<span><a class="btn btn-success" href="{{ '/teams/create' }}"><i class="icon-plus"></i></a></span>-->
-          </div>
         </div>
       </div>
 
@@ -33,7 +27,6 @@
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Categoría</th>
-                    <th>DT</th>
                     <th><i class="icon-files"></i>Imprimir carnets</th>
                 </tr>
               </thead>
@@ -43,19 +36,9 @@
                     <th> {{ $team->id }} </th>
                     <th> {{ $team->club->name }}</th>
                     <th> {{ $team->category->name }} </th>
-                    <th> </th>
-                    <!--
-                    <th>
-                      <a href="{{ url('/teams/'.$team->id.'/edit') }}" class="btn btn-mini btn-warning"><i class="icon-pencil"></i></a>
-                    </th>
                     <th> 
-                      <form class="form-group" action="{{ '/teams/'.$team->id }}" method="post">
-                        {{ @csrf_field() }}
-                        {{ method_field('DELETE') }}
-                        <button type="submit" class="btn btn-mini btn-danger"><i class="icon-trash"></i></button> 
-                      </form>
+                        <a href="{{ url('/teams/'.$team->id.'/pdf') }}" class="btn btn-mini btn-info"><i class="icon-file"></i></a>
                     </th>
-                  -->
                   </tr>
                 @endforeach
               </tbody>

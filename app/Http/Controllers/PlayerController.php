@@ -29,34 +29,6 @@ class PlayerController extends Controller
         return view('dashboard.players.table')->with('players', $players);    
     }
 
-    public function htmlToPdf($id){
-        $players = Player::find($id);
-        $pdf = App::make('snappy.pdf.wrapper');
-        $pdf->loadHTML($this->render($players));
-        return $pdf->download();
-    }
-
-    private function render($player){
-        $html = '
-                    <div class="titulo">Apellidos</div>
-                    <div class="subtitulo">'. $player->last_name .'</div>
-                    <div class="titulo">Nombres</div>
-                    <div class="subtitulo">'. $player->first_name .'</div>
-                    <div class="titulo">Club</div>
-                    <div class="subtitulo">'. $player->team->club->name .'</div>
-                    <div class="titulo">Fecha de nacimiento</div>
-                    <div class="subtitulo">'. $player->birth_date->format('d/m/Y') .'</div>
-                    <div class="titulo">Fecha de emisión</div>
-                    <div class="subtitulo"></div>
-                    <div class="titulo">Categoría</div>
-                    <div class="subtitulo">'. $player->team->category->name .'</div>
-                    <div class="barcode"></div>';
-        
-        
-
-        
-        return $html;
-    }
     public function create(){
         if(!(Session::has('userSession'))){
             return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');

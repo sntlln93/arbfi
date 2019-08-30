@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Carnets</title>
 
     <style>
            body{
@@ -15,7 +15,7 @@
                 display:grid;
                 grid-template-columns: 8.6cm 8.6cm;
                 grid-template-rows: 5.38cm;
-                grid-gap: 0.8cm;
+                grid-gap: 0.6cm;
                 
             }  
             .carnet{
@@ -109,7 +109,6 @@
                             <h3>{{ $player->dni }}</h3>
                         </div>
                         <div class="info">
-                            
                             <div class="titulo">Apellidos</div>
                             <div class="subtitulo">{{ $player->last_name }}</div>
                             <div class="titulo">Nombres</div>
@@ -126,9 +125,7 @@
                         </div>
                     </div>
                 </div>
-                
-                @endforeach
-                
+                @endforeach     
             </div>
 </body>
 </html>

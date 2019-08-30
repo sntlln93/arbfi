@@ -38,7 +38,6 @@
                     <th>Posición</th>
                     <th>Escuela</th>
                     <th>Obra Social</th>
-                    <th>Carnet</th>
                     <th><i class="icon-pencil"></i></th>
                     <th><i class="icon-trash"></i></th>
                 </tr>
@@ -54,9 +53,6 @@
                     <th> {{ $player->position }} </th>
                     <th> {{ $player->school }} </th>
                     <th> {{ $player->prepaid }}</th>
-                    <th>
-                        <a href="{{ url('/players/'.$player->id.'/pdf') }}" class="btn btn-mini btn-info"><i class="icon-file"></i></a>  
-                    </th>
                     <th>
                       <a href="{{ url('/players/'.$player->id.'/edit') }}" class="btn btn-mini btn-warning"><i class="icon-pencil"></i></a>
                     </th>
