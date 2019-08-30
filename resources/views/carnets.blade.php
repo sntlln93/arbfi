@@ -22,7 +22,7 @@
                 
             }  
             .carnet{
-                background-image: url('/img/backend_img/background1.png');        
+                background-image: url({{ asset('/img/backend_img/background1.png') }});        
                 border-style: solid;   
                 display:grid;
             }
@@ -107,7 +107,7 @@
                     </div>
                     <div class="row">
                         <div class="foto">
-                            <img src="{{ getImage($player, 'players') }}" alt="">
+                            <img src="{{ asset('storage/'.$player->image->path) }}" alt="">
                             <p>Número de documento</p>
                             <h3>{{ $player->dni }}</h3>
                         </div>

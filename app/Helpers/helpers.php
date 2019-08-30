@@ -11,7 +11,7 @@ function newImage($request, $where){
 
 function getImage($model, $where){
     if(isset($model->image)){
-        return 'storage/'.$model->image->path;
+        return 'storage/'.$where.'/'.$model->image->path;
     }
     return 'img/frontend_img/'.$where.'/0.jpg';
 }
