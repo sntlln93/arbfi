@@ -9,13 +9,6 @@ function newImage($request, $where){
     return $image->id;
 }
 
-function getImage($model, $where){
-    if(isset($model->image)){
-        return 'storage/'.$where.'/'.$model->image->path;
-    }
-    return 'img/frontend_img/'.$where.'/0.jpg';
-}
-
 function sort_tables($tables, $subkey){                 //$this->array[$category][$team]['name'] = Team::find($team)->club->name;
     $c = array();                                       //$this->array[$category][$team]['wins'] = 0;
     foreach($tables as $table){                         //$this->array[$category][$team]['ties'] = 0;

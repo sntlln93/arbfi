@@ -22,7 +22,7 @@
                     <div class="col-md-6 col-lg-4 col-xl-3 {{ $category->name }}">
                         <div class="item-team">
                             <div class="head-team">
-                                <img src="{{ $team->club->image->path }}" alt="location-team">
+                                <img src="{{ asset('storage/clubs/'.$team->club->image->path) }}" alt="location-team">
                                 <div class="overlay"><a href="{{ url('/web/teams/'.$team->id ) }}">+</a></div>
                             </div>
                             <div class="info-team">
