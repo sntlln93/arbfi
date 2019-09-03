@@ -17,7 +17,7 @@
                 
                     <div class="col-sm-12 col-md-6 col-md-offset-6">
                         @foreach(App\Institution::all() as $club)
-                            <img src="{{ asset('storage/clubs/'.$club->image->path) }}" alt="" class="shields">
+                            <img src="{{ asset('storage/'.$club->image->path) }}" alt="" class="shields">
                         @endforeach
                     </div>
                 </div>

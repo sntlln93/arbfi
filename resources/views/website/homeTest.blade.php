@@ -28,7 +28,7 @@
                                             {{ $position }}
                                         </span>
                                         <a>
-                                            <img src="{{ asset('storage/image/'.App\Institution::where('name', $scoreboard['name'])->get()[0]->image->path) }}" alt="">
+                                            <img src="{{ asset('storage/'.App\Institution::where('name', $scoreboard['name'])->get()[0]->image->path) }}" alt="">
                                             {{ $scoreboard['name'] }}
                                         </a>
                                         <span class="points">
@@ -55,7 +55,7 @@
                                             {{ $n+1 }}
                                         </span>
                                         <a href="$">
-                                            <img style="width:20px;height:20px;" src="{{ asset(App\Image::find($goal_maker->image_id)->path) }}" alt="">
+                                            <img style="width:20px;height:20px;" src="{{ asset('storage/'.App\Image::find($goal_maker->image_id)->path) }}" alt="">
                                             {{ $goal_maker->first_name.' '.$goal_maker->last_name }}
                                         </a>
                                         <span class="points">
@@ -114,7 +114,7 @@
                                                         {{ $position }}
                                                     </span>
                                                     <a>
-                                                        <img src="{{ asset(App\Team::find($subkey)->club->image->path) }}" alt="">
+                                                        <img src="{{ asset('storage/'.App\Team::find($subkey)->club->image->path) }}" alt="">
                                                         {{ $row['name'] }}
                                                     </a>
                                                     <span class="points">
@@ -145,7 +145,7 @@
                                                     {{ $n+1 }}
                                                 </span>
                                                 <a href="$">
-                                                    <img style="width:20px;height:20px;" src="{{ asset($goal_maker->image_id) }}" alt="">
+                                                    <img style="width:20px;height:20px;" src="{{ asset('storage/'.$goal_maker->image_id) }}" alt="">
                                                     {{ $goal_maker->first_name.' '.$goal_maker->last_name }}
                                                 </a>
                                                 <span class="points">
