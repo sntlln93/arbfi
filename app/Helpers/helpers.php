@@ -1,12 +1,10 @@
 <?php
-use Intervention/Image/Facades/Image;
 
 function newImage($request, $where){
     if($request->has('image')){
         $image = new App\Image;
         $image->path = $request->image->store($where, 'public');
         $image->save();
-
     }
     return $image->id;
 }
