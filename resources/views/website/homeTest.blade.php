@@ -28,7 +28,7 @@
                                             {{ $position }}
                                         </span>
                                         <a>
-                                            <img src="{{ asset('storage/image/'.App\Institution::where('name', $scoreboard['name'])->get()->image->path) }}" alt="">
+                                            <img src="{{ asset('storage/image/'.App\Institution::where('name', $scoreboard['name'])->get()[0]->image->path) }}" alt="">
                                             {{ $scoreboard['name'] }}
                                         </a>
                                         <span class="points">
