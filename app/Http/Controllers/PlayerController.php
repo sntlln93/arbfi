@@ -75,7 +75,9 @@ class PlayerController extends Controller
                                                         ->where('category_id', '=', $category_id[0]->id)
                                                         ->get();
                 $player->team_id = $team[0]->id;
-                $player->save();                    
+                $player->save();       
+                $file = Image::make(public_path('storage/'.$player->image->path))->fit(700, 700);
+                $file->save();             
             }else{
                 return redirect('/players/create')->with('flash_message_error','La categoría no puede ser mayor al año de nacimiento');
             }
@@ -126,7 +128,8 @@ class PlayerController extends Controller
                 $player->image_id = newImage($request, 'players');
             }
             $player->save();
-            
+            $file = Image::make(public_path('storage/'.$player->image->path))->fit(700, 700);
+            $file->save();
 
         }else{
             return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');

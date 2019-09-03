@@ -139,6 +139,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+        Intervention\Image\ImageServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
@@ -227,5 +228,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 ];
