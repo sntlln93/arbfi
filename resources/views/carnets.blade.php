@@ -104,7 +104,11 @@
                     </div>
                     <div class="row">
                         <div class="foto">
-                            <img src="{{ asset('storage/'.$player->image->path) }}" alt="">
+                            @if(isset($player->image))
+                                <img src="{{ asset('storage/'.$player->image->path) }}" alt="">
+                            @else
+                                <img src="{{ asset('img/frontend_img/players/0.jpg') }}" alt="">
+                            @endif
                             <p>Número de documento</p>
                             <h3>{{ $player->dni }}</h3>
                         </div>
