@@ -114,7 +114,7 @@
                                                         {{ $position }}
                                                     </span>
                                                     <a>
-                                                        <img src="{{ asset(getImage(App\Team::find($subkey)->club,'clubs')) }}" alt="">
+                                                        <img src="{{ asset(App\Team::find($subkey)->club->image->path) }}" alt="">
                                                         {{ $row['name'] }}
                                                     </a>
                                                     <span class="points">
