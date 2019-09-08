@@ -86,7 +86,7 @@ class Tournament extends Model
                     order by 
                         goals desc;';
         $goal_makers = DB::select($query);
-        
+        t
         return $goal_makers;
     }
 

@@ -246,11 +246,12 @@ class TournamentController extends Controller
         $limit = $request->quantity_teams/$request->quantity_groups;
         for($cat = 0; $cat < sizeof($request->categories); $cat++){ //itero categorias
             for($i = 0; $i < $request->quantity_groups; $i++){ //itero grupos 
+                
                 $group = new Group;
                 $group->tournament_id = $id;
                 $group->name = chr(65+$i);
                 $group->save();
-                for($pivot = 0; $pivot < $limit; $pivot++){
+                for($pivot = 0; $pivot < $limit; $pivot++){$day = 1;
                     for($j = $pivot+1; $j < $limit; $j++){
                         if($request->teams[$i][$pivot] != 0 AND $request->teams[$i][$j] != 0){
                             $match = new Fixture;
@@ -262,7 +263,7 @@ class TournamentController extends Controller
                                                                                     ->where('category_id', $request->categories[$cat])
                                                                                     ->get()[0]->id;
                             $match->date = null;
-                            $match->fixture_day = 0;
+                            $match->fixture_day = $day++;
                             $match->location = "A definir";
                             $match->local_score = 0;
                             $match->visiting_score = 0;

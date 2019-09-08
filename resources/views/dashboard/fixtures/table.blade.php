@@ -32,7 +32,6 @@
                     <th>Categoría</th>
                     <th>Local</th>
                     <th>Visitante</th>
-                    <th>Fecha</th>
                     <th>Jornada</th>
                     <th>Cancha</th>
                     <th>Estado</th>
@@ -45,14 +44,13 @@
                 @foreach($fixtures as $match)
                   <tr>
                     <th> #{{ $match->id }} </th>
-                    <th> Torneo  | Categoría @if(isset($match->local)) {{ $match->local->category->name }} @elseif(isset($match->visiting)) {{ $match->visiting->category->name }}@endif</th>
+                    <th> Torneo {{ $match->group->tournament->name }} G{{ $match->group->name }} | Categoría {{ $match->local->category->name }}</th>
                     <th>  @if(isset($match->local)) {{ $match->local->club->name }} @endif 
                           @if($match->state == 'JUGADO') ({{ $match->local_score }}) @endif 
                     </th>
                     <th>  @if(isset($match->visiting)){{ $match->visiting->club->name }}@endif 
                           @if($match->state == 'JUGADO')({{ $match->visiting_score }})@endif
                     </th>
-                    <th> {{ $match->date }} </th>
                     <th> #{{ $match->fixture_day }} </th>
                     <th> {{ $match->location }} </th>
                     <th> #{{ mb_strToUpper($match->state) }} </th>
