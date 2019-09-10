@@ -95,12 +95,18 @@ class WelcomeController extends Controller
     public function tournament($id){
         $tournament = Tournament::find($id);
         $categories = Category::all();
-        $scoreboard = $tournament->scoreboard;
-        $general = $tournament->challenger;
-
-        return view('website.tournament')->with('tables', $scoreboard)
+        if($tournament->type->type == 'AAA'){
+            $scoreboard = $tournament->scoreboard;
+            $general = $tournament->challenger;
+            return view('website.league')->with('tables', $scoreboard)
                                          ->with('categories', $categories)
                                          ->with('general', $general);
+        }elseif($tournament->type->type == 'PVP'){
+
+        }
+
+        return view('website.groups')   ->with('categories', $categories)
+                                        ->with('tournament', $tournament);   
     }
 
 }

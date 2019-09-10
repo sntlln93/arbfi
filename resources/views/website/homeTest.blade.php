@@ -230,7 +230,7 @@
                                 <div class="col-md-8">
                                     <h5><a href="{{ url('/posts/'.$post->id) }}">{{ $post->title }}</a></h5>
                                     <span class="data-info">{{ Carbon\Carbon::parse($post->created_at)->diffForHumans() }} </span>
-                                    <p>{{ Str_limit($post->body, 350) }}<a href="{{ url('/posts/'.$post->id) }}">Leer más [+]</a></p>
+                                    <p>{{ Str::limit($post->body, 350) }}<a href="{{ url('/posts/'.$post->id) }}">Leer más [+]</a></p>
                                 </div>
                             </div>
                         </div>

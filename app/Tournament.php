@@ -14,20 +14,28 @@ class Tournament extends Model
         return $this->hasMany('App\Fixture');
     }
 
-    public function getPlayedAttribute(){
-        $played = Fixture::where([
-            'state' => 'JUGADO',
-            'tournament_id' => $this->id
-        ])->get();
-        return $played;
+    public function groups(){
+        return $this->hasMany('App\Group');
     }
 
     public function type(){
         return $this->belongsTo('App\TournamentType');
     }
 
-    public function groups(){
-        return $this->hasMany('App\Group');
+    public function getPlayedMatchesAttribute(){
+        $played = Fixture::where([
+            'state' => 'JUGADO',
+            'tournament_id' => $this->id
+        ])->get();
+        return $played;
+    }      
+    
+    public function getPendingMatchesAttribute(){
+        $played = Fixture::where([
+            'state' => 'no jugado',
+            'tournament_id' => $this->id
+        ])->get();
+        return $played;
     }
 
     public function GetFairPlayAttribute(){
@@ -86,12 +94,12 @@ class Tournament extends Model
                     order by 
                         goals desc;';
         $goal_makers = DB::select($query);
-        t
+        
         return $goal_makers;
     }
 
-    public function getScoreboardAttribute(){
-        foreach($this->played as $match){
+    public function getLeagueScoreboardAttribute(){
+        foreach($this->playedMatches as $match){
             if(isset($match->local)) 
                 if(!isset($this->array[$match->local->category->id][$match->local_team_id])) 
                     $this->loadTeam($match->local->category->id, $match->local_team_id);
@@ -132,30 +140,7 @@ class Tournament extends Model
         return $this->array;
     }
 
-    private function loadTeam($category, $team){
-        $this->array[$category][$team]['name'] = Team::find($team)->club->name;
-        $this->array[$category][$team]['wins'] = 0;
-        $this->array[$category][$team]['ties'] = 0;
-        $this->array[$category][$team]['losses'] = 0;
-        $this->array[$category][$team]['goals_favor'] = 0;
-        $this->array[$category][$team]['goals_against'] = 0;
-        $this->array[$category][$team]['points'] = 0;
-    }
-
-    private function fillTeam($category, $team, $goals_favor, $goals_against, $result, $condition){
-        if($condition == $result)
-            $this->array[$category][$team]['wins']++;
-        elseif($result == 'tie')
-            $this->array[$category][$team]['ties']++;
-        else
-            $this->array[$category][$team]['losses']++;
-
-        $this->array[$category][$team]['goals_favor'] += $goals_favor;
-        $this->array[$category][$team]['goals_against'] += $goals_against;
-        $this->array[$category][$team]['points'] = $this->array[$category][$team]['wins'] * 2 + $this->array[$category][$team]['ties'];
-    }
-
-    public function getChallengerAttribute(){
+    public function getChallengerScoreboardAttribute(){
         $scores = array();
         foreach($this->array as $category){
             foreach($category as $team){
@@ -179,5 +164,28 @@ class Tournament extends Model
             }
         }
         return $scores;
+    }
+
+    private function loadTeam($category, $team){
+        $this->array[$category][$team]['name'] = Team::find($team)->club->name;
+        $this->array[$category][$team]['wins'] = 0;
+        $this->array[$category][$team]['ties'] = 0;
+        $this->array[$category][$team]['losses'] = 0;
+        $this->array[$category][$team]['goals_favor'] = 0;
+        $this->array[$category][$team]['goals_against'] = 0;
+        $this->array[$category][$team]['points'] = 0;
+    }
+
+    private function fillTeam($category, $team, $goals_favor, $goals_against, $result, $condition){
+        if($condition == $result)
+            $this->array[$category][$team]['wins']++;
+        elseif($result == 'tie')
+            $this->array[$category][$team]['ties']++;
+        else
+            $this->array[$category][$team]['losses']++;
+
+        $this->array[$category][$team]['goals_favor'] += $goals_favor;
+        $this->array[$category][$team]['goals_against'] += $goals_against;
+        $this->array[$category][$team]['points'] = $this->array[$category][$team]['wins'] * 2 + $this->array[$category][$team]['ties'];
     }
 }

@@ -14,6 +14,10 @@ class Team extends Model
         return $this->belongsTo('App\Institution', 'club_id');
     }
 
+    public function getLogoAttribute(){
+        return $this->club->image->path;
+    }
+
     public function manager(){
         return $this->belongsTo('App\Manager');
     }
@@ -37,5 +41,6 @@ class Team extends Model
     public function scoreboard(){
         return $this->hasMany('App\Scoreboard');
     }
+
     public $timestamps = false;
 }

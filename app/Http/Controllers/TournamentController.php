@@ -68,6 +68,7 @@ class TournamentController extends Controller
             ]);
             $tournament->name = mb_strToUpper($request->name);
             $tournament->type_id = $request->type_id;
+            $tournament->active = true;
             $tournament->save();
 
             if($tournament->type->type == "AAA"){
