@@ -59,4 +59,4 @@ Route::get('/fixtures/{id}/pdf', 'FixtureController@htmlToPdf');
 Route::get('tournaments/{id}/pdf', 'PdfController@htmlToPdf');
 
 //validate credential
-Route::get('/players/{id}/validate', 'PlayerController@validate');
+Route::get('/players/{id}/validate', 'PlayerController@validatePlayer');

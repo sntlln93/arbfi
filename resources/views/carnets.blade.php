@@ -125,7 +125,9 @@
                             <div class="subtitulo">{{ Carbon\Carbon::now()->format('d/m/Y') }}</div>
                             <div class="titulo">Categoría</div>
                             <div class="subtitulo">{{ $player->team->category->name }}</div>
-                            <div class="barcode"></div>
+                            <div class="barcode">
+                                {!! QrCode::generate(url('players/'.$player->id.'/validate')) !!}
+                            </div>
                         </div>
                     </div>
                 </div>

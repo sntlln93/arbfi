@@ -136,4 +136,9 @@ class PlayerController extends Controller
         }
         return redirect('/players');
     }
+    
+    public function validatePlayer($id){
+        $player = Player::find($id);
+        return $player->dni;
+    }
 }
