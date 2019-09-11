@@ -14,7 +14,8 @@
         "intervention/image": "^2.5",
         "laravel/framework": "6.0.*",
         "laravel/tinker": "^1.0",
-        "laraveles/spanish": "^1.2"
+        "laraveles/spanish": "^1.2",
+        "simplesoftwareio/simple-qrcode": "~2"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

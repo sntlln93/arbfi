@@ -5,6 +5,7 @@ Route::get('test', function(){
 	return view('carnets')->with('players', $players);
 });
 
+
 //auth
 Route::match(['get', 'post'], '/user', 'AuthController@login');
 Route::get('/logout', 'AuthController@logout');
@@ -56,3 +57,6 @@ Auth::routes();
 Route::get('/teams/{id}/pdf', 'TeamController@htmlToPdf');
 Route::get('/fixtures/{id}/pdf', 'FixtureController@htmlToPdf');
 Route::get('tournaments/{id}/pdf', 'PdfController@htmlToPdf');
+
+//validate credential
+Route::get('/players/{id}/validate', 'PlayerController@validate');
