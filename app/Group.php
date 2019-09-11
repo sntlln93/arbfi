@@ -38,18 +38,18 @@ class Group extends Model
     }
 
     public function getScoreboardAttribute(){
-        $this->construct();
+        $this->writeScoreboard();
         $tablePoint = array();
-        foreach($this->scoreboard as $category){
-            dd($this->scoreboard, $category);
-                $zone = new Group($groups_v, $this->name);
-                $tablePoint[$category->name][$group->id] = $zone->sortScoreboards;
-            
+        
+        foreach($this->scoreboard as $key => $value){
+                $zone = new GroupStats($value, $this->name);
+                $tablePoint[$key][$this->id] = $zone->sortScoreboards;
         }
+        
         return $tablePoint;
     }
 
-    private function construct(){
+    private function writeScoreboard(){
         foreach($this->playedMatches as $match){
             
             if(! isset($match->local_team_id, $scoreboard[$match->local->category->id][$match->local_team_id]))

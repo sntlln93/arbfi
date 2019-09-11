@@ -3,26 +3,27 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use App\TeamStats;
 
 class GroupStats extends Model
-{
+{   
     private $name;
     private $teams = array();
 
-    public function __construct($teams, $name){
+    public function __construct($group, $name){
         $this->name = $name;
-        foreach($teams as $team){
+        foreach($group as $team){
             $t = new TeamStats($team);
-            $teams = array_push($t);
+            array_push($this->teams, $t);
         }
     }
 
-    public function sortScoreboards(){
+    public function getSortScoreboardsAttribute(){
         $stats = array();
-        $stats = Arr::sort($teams, function($team){
+        $stats = Arr::sort($this->teams, function($team){
                 return $team->points;
             });
-        return $stats;
+        return array_reverse($stats, true);
     }
 }
