@@ -1,7 +1,7 @@
 <?php
 
 Route::get('test', function(){
-	$players = App\Player::all();
+	$players = App\Team::all()->first()->players;
 	return view('carnets')->with('players', $players);
 });
 

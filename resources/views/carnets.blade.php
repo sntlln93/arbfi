@@ -68,7 +68,8 @@
             }
             .row{
                 display: grid;
-                grid-template-columns: 35mm 50mm;
+                grid-template-columns: 35mm 40mm 10mm;
+                position: relative;
             }
 
             .info .titulo{
@@ -82,6 +83,15 @@
                 font-weight: bold;
                 text-shadow: 1px 1px 1px blanchedalmond;
             }
+            .barcode {
+                margin-right: 3mm;
+                margin-bottom: 3mm;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+            }
+
+
     </style>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
@@ -109,7 +119,6 @@
                             @else
                                 <img src="{{ asset('img/frontend_img/players/0.jpg') }}" alt="">
                             @endif
-                            <p>Número de documento</p>
                             <h3>{{ $player->dni }}</h3>
                         </div>
                         <div class="info">
@@ -125,9 +134,9 @@
                             <div class="subtitulo">{{ Carbon\Carbon::now()->format('d/m/Y') }}</div>
                             <div class="titulo">Categoría</div>
                             <div class="subtitulo">{{ $player->team->category->name }}</div>
-                            <div class="barcode">
-                                {!! QrCode::generate(url('players/'.$player->id.'/validate')) !!}
-                            </div>
+                        </div>
+                        <div class="barcode">
+                            {!! QrCode::size(20)->generate(url('players/'.$player->id.'/validate')) !!}
                         </div>
                     </div>
                 </div>
