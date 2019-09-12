@@ -11,6 +11,7 @@ use DateTime;
 use PDF;
 
 
+
 use Carbon\Carbon;
 use App\Blood;
 use App\Institution;
@@ -76,8 +77,7 @@ class PlayerController extends Controller
                                                         ->get();
                 $player->team_id = $team[0]->id;
                 $player->save();       
-                $file = Image::make(public_path('storage/'.$player->image->path))->fit(700, 700);
-                $file->save();             
+                     
             }else{
                 return redirect('/players/create')->with('flash_message_error','La categoría no puede ser mayor al año de nacimiento');
             }
@@ -128,7 +128,7 @@ class PlayerController extends Controller
                 $player->image_id = newImage($request, 'players');
             }
             $player->save();
-            $file = Image::make(public_path('storage/'.$player->image->path))->fit(700, 700);
+            $file = Image::make(public_path('storage/'.$player->image->path));
             $file->save();
 
         }else{

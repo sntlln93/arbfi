@@ -62,7 +62,7 @@ class InstitutionController extends Controller
             $club->stadium = mb_strToUpper($request->stadium);
             $club->image_id = newImage($request, 'clubs');
             $club->save();
-            $file = Image::make(public_path('storage/'.$club->image->path))->fit(700, 700);
+            $file = Image::make(public_path('storage/'.$club->image->path))->fit(113, 113);
             $file->save();
             
 

@@ -136,7 +136,7 @@
                             <div class="subtitulo">{{ $player->team->category->name }}</div>
                         </div>
                         <div class="barcode">
-                            {!! QrCode::size(20)->generate(url('players/'.$player->id.'/validate')) !!}
+                            {!! QrCode::size(80)->generate(url('players/'.$player->id.'/validate')) !!}
                         </div>
                     </div>
                 </div>
