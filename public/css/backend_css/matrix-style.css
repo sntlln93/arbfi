@@ -56,9 +56,8 @@ hr{ border-top-color:#dadada;}
 	width: 100%;
 	z-index: -9;
 }
-#header h1 {
-	background: url("/images/backend_images/logo2.png") no-repeat scroll 0 0 transparent;
-	height: 50px;
+#header img {
+	height: auto;
 	left: 20px;
 	line-height: 600px;
 	overflow: hidden;

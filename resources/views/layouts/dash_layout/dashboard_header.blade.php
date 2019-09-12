@@ -1,6 +1,6 @@
 <!--Header-part-->
 <div id="header">
-  <h1><a href="#">Asociación Riojana de Baby Fútbol Infantil</a></h1>
+    <img src="{{ asset('/img/frontend_img/logo_header.png') }}" alt="">
 </div>
 <!--close-Header-part--> 
 
