@@ -77,7 +77,7 @@ class PlayerController extends Controller
                                                         ->get();
                 $player->team_id = $team[0]->id;
                 $player->save();       
-                //
+                //again??
                      
             }else{
                 return redirect('/players/create')->with('flash_message_error','La categoría no puede ser mayor al año de nacimiento');
