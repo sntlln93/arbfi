@@ -56,8 +56,10 @@ hr{ border-top-color:#dadada;}
 	width: 100%;
 	z-index: -9;
 }
-#header img {
-	height: auto;
+
+#header h1 {
+	background: url("/img/frontend_img/logo-light.png") no-repeat scroll 0 0 transparent;
+	height: 50px;
 	left: 20px;
 	line-height: 600px;
 	overflow: hidden;
@@ -67,6 +69,15 @@ hr{ border-top-color:#dadada;}
 }
 #header h1 a {
 	display: block;
+}
+#header h1 img {
+	height: auto;
+	left: 20px;
+	line-height: 600px;
+	overflow: hidden;
+	position: relative;
+	top: 26px;
+	width: 191px;
 }
 /* Search input */
 #search {

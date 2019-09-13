@@ -194,6 +194,7 @@ class FixtureController extends Controller
         $away = DB::table('players')->select('last_name','first_name')->where('team_id',$match->visiting_team_id)->get();
         
         $teamsGrid = $this->generatePlayersGrid($match->id);
+        $name = $match->tournamentName;
 
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadHTML('<table border="1" style="border-collapse:collapse;" width="267mm">
@@ -201,7 +202,7 @@ class FixtureController extends Controller
                                 <td colspan="15"><b>ARBFI<br>Asociación Riojana de Baby Fútbol Infantil</b></td>
                             </tr>
                             <tr style="text-align:center">
-                                <th colspan="11">TORNEO "'.$match->tournament->name.'" CATEGORÍA '.$match->local->category->name.'</th>
+                                <th colspan="11">TORNEO "'.$name.'" CATEGORÍA '.$match->local->category->name.'</th>
                                 
                                 <th colspan="4">Fecha '.$match->fixture_day.'°</th>
                             </tr>
@@ -274,7 +275,7 @@ class FixtureController extends Controller
                             </tr>
                         </table>');
         $pdf->setPaper('A4', 'landscape');
-        return $pdf->stream($match->tournament->name.'_fecha_'.$match->fixture_day.'.pdf');
+        return $pdf->stream($name.'_fecha_'.$match->fixture_day.'.pdf');
     }
 
     public function generatePlayersGrid($id){

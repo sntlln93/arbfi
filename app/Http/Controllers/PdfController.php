@@ -4,24 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Fixture;
+use App\Tournament;
 use DB;
 use App;
 
 class PdfController extends Controller
-{
+{   
     public function htmlToPdf(Request $request, $id){
-        $fixtures = Fixture::all();
+        $tournament = Tournament::find($id); 
+        
+        $isLeague = ( new \ReflectionClass($tournament) )->getShortName() == 'Tournament' ;
+
+        if($isLeague) $fixtures = $tournament->fixtures;
+        else $fixtures = $tournament->groupsFixture;
+        
+        //$fixtures = Fixture::all();
         $pdf = App::make('dompdf.wrapper');
         $table = '';
+        
         foreach($fixtures as $match){
-            if($request->fixture_day == $match->fixture_day){
+            if($request->fixture_day == $match->fixture_day){ //use a where statement to fetch de matches instead of a if statement, this will improve performance
+                $name = $match->tournamentName;
                 $teamsGrid = $this->generatePlayersGrid($match->id);
                 $table .= '<table border="1" style="border-collapse:collapse;" width="267mm">
                             <tr style="text-align:center">
                                 <td colspan="15"><b>ARBFI<br>Asociación Riojana de Baby Fútbol Infantil</b></td>
                             </tr>
                             <tr style="text-align:center">
-                                <th colspan="11">TORNEO "'.$match->tournament->name.'" CATEGORÍA '.$match->local->category->name.'</th>
+                                <th colspan="11">TORNEO "'.$name.'" CATEGORÍA '.$match->local->category->name.'</th>
                                 
                                 <th colspan="4">Fecha '.$match->fixture_day.'°</th>
                             </tr>
@@ -98,7 +108,7 @@ class PdfController extends Controller
         }
         $pdf->loadHTML($table);
         $pdf->setPaper('A4', 'landscape');
-        return $pdf->stream($match->tournament->name.'_fecha_'.$request->fixture_day.'.pdf');
+        return $pdf->stream($name.'_fecha_'.$request->fixture_day.'.pdf');
     }
 
     public function generatePlayersGrid($id){

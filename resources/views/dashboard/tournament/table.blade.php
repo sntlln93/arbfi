@@ -43,7 +43,7 @@
                 @foreach($tournaments as $tournament)
                   <tr>
                     <th> {{ $tournament->id }} </th>
-                    <th> {{ $tournament->name }}</th>
+                    <th> <a href="{{ url('tournaments/'.$tournament->id) }}">{{ $tournament->name }}</a></th>
                     <th> @if($tournament->type->type == "AAA") Todos contra Todos
                         @elseif($tournament->type->type == "GF") Fase de Grupos
                         @elseif($tournament->type->type == "PVP") Llaves
@@ -89,7 +89,7 @@
             <div class="control-group">
               <label class="control-label">Fecha</label>
               <div class="controls">
-                  <input name="fixture_day" type="number">
+                  <input name="fixture_day" type="number" min="1">
               </div>
             </div> 
             

@@ -18,6 +18,12 @@ class Tournament extends Model
         return $this->hasMany('App\Group');
     }
 
+    public function getGroupsFixtureAttribute(){
+        $query = "select * from fixtures where tournament_id in (select id from groups where tournament_id = ".$this->groups.")";
+        $fixture = DB::select($query); dd($fixture);
+        return $fixture->get(); 
+    }
+
     public function type(){
         return $this->belongsTo('App\TournamentType');
     }

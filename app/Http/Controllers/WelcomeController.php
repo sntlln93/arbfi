@@ -26,7 +26,6 @@ class WelcomeController extends Controller
         $tournament = Tournament::where('active', true)->first();
         $clubs = Institution::all();
         $categories = Category::all();
-        
         $posts = DB::table('posts')->orderByDesc('created_at')->get();
         return view('website.homeTest') ->with('scoreboards', $tournament->scoreboard)
                                         ->with('goal_makers', $tournament->goalMakers)

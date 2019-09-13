@@ -26,5 +26,21 @@ class Fixture extends Model
         return $this->belongsTo('App\Group', 'tournament_id');
     }
 
+    public function getTournamentNameAttribute(){ 
+        
+        $isLeague = false; 
+        if( isset($this->tournament) )
+            $isLeague = ( new \ReflectionClass($this->tournament) )->getShortName() == 'Tournament' ;
+                
+        $parent =  $isLeague ? $this->tournament : $this->group;
+
+        if($isLeague)
+            $name = $parent->name;
+        else
+            $name = $parent->tournament->name.'" Grupo: "'.$parent->name;        
+        
+        return $name;
+    }
+
     public $timestamps = false;
 }

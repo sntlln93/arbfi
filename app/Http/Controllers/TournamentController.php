@@ -288,7 +288,13 @@ class TournamentController extends Controller
      */
     public function show($id)
     {
-        //
+        $tournament = Tournament::find($id);
+        if($tournament->type->type == 'AAA') $view = 'dashboard/tournament/showleague';
+        elseif($tournament->type->type == 'GF') $view = 'dashboard/tournament/showgroup';
+        else $view = 'dashboard/tournament/showplayoff';
+
+        return view($view)->with('tournament', $tournament);
+
     }
 
     /**
