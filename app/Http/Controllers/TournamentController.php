@@ -167,9 +167,6 @@ class TournamentController extends Controller
             }
         }
         
-        
-        
-        
         return redirect('/tournaments');       
     }
 
@@ -275,7 +272,6 @@ class TournamentController extends Controller
                 }
             }
         }
-
 
         return redirect('/fixtures');
     }

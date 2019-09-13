@@ -20,13 +20,9 @@ class FixtureController extends Controller
      */
     public function index(){
         if(Session::has('userSession')){
-            $fixtures = Fixture::all();
-        }else{
-            return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');
+            return redirect('/tournaments');
         }
-        
-        return view('dashboard.fixtures.table')->with('fixtures', $fixtures);
-                                              
+            return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');                                              
     }
 
     /**
