@@ -5,7 +5,7 @@
     <div id="breadcrumb">
         <a href="{{ url('/dashboard') }}" title="Ir a inicio" class="tip-bottom"><i class="icon-home"></i> Panel de control</a>
         <a class="breadcrumb-item"><i class="icon-arrow-right"></i></a>
-        <a href="{{ url('/tournaments') }}" class="tip-bottom">Posts</a>
+        <a href="{{ url('/tournaments') }}" class="tip-bottom">Torneos</a>
         <a class="breadcrumb-item"><i class="icon-arrow-right"></i></a>
         <a href="#" class="current">{{ $tournament->name }}</i></a></div>
     </div>
