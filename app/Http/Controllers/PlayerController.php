@@ -129,8 +129,6 @@ class PlayerController extends Controller
                 $player->image_id = newImage($request, 'players');
             }
             $player->save();
-            $file = Image::make(public_path('storage/'.$player->image->path));
-            $file->save();
 
         }else{
             return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');

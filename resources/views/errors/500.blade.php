@@ -18,12 +18,11 @@
         <meta property="og:description" content="Sitio web de la Asociación Riojana de Baby Fútbol Infantil" />
         <!-- Mobile Metas -->
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        
+        @include('layouts.web_layout.styles')
 
     </head>
 
     <body>
-        @include('layouts.web_layout.styles')
         <!-- layout-->
         <div id="layout">
         
