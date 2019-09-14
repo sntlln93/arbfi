@@ -15,7 +15,7 @@
     <div class="dark-home paddings-50-50">
         <div class="container">
             <div id="general" class="row portfolioContainer">
-                <!-- General table -->
+                {{-- <!-- General table 
                 <div class="col-lg-4 general">
                     <div class="club-ranking">
                         <h5><a>Tabla de Posiciones</a></h5>
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- End general table -->
+                 End general table -->--}}
                 <!-- Top player -->
                 <div class="col-lg-4 general">
                     <div class="player-ranking">
@@ -106,24 +106,20 @@
                             <div class="info-ranking">
                                 <ul>
                                     @php( $position = 1 )
-                                    @foreach($scoreboards as $key=>$categories)
-                                        @foreach($categories as $subkey=>$row)
-                                            @if($category->id == $key)
+                                    @foreach($scoreboards[$category->id] as $team)
                                                 <li>
                                                     <span class="position">
                                                         {{ $position }}
                                                     </span>
                                                     <a>
-                                                        <img src="{{ asset('storage/'.App\Team::find($subkey)->club->image->path) }}" alt="">
-                                                        {{ $row['name'] }}
+                                                        <img src="" alt="">
+                                                        {{ $team->name }}
                                                     </a>
                                                     <span class="points">
-                                                        {{ $row['points'] }}
+                                                        {{ $team->points }}
                                                     </span>
                                                 </li>
                                                 @php( $position++)
-                                            @endif
-                                        @endforeach
                                     @endforeach
                                 </ul>
                             </div>

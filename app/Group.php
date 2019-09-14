@@ -80,24 +80,24 @@ class Group extends Model
         if($local){
             if($result == 'local'){
                 $this->scoreboard[$category][$team->id]['wins'] ++;
-                $this->scoreboard[$category][$team->id]['points'] += 3;
+                $this->scoreboard[$category][$team->id]['points'] += 2;
             }elseif($result == 'away'){
                 $this->scoreboard[$category][$team->id]['losses'] ++;
             }else{
                 $this->scoreboard[$category][$team->id]['ties'] ++;
-                $this->scoreboard[$category][$team->id]['points'] += 3;
+                $this->scoreboard[$category][$team->id]['points'] += 2;
             }
             $this->scoreboard[$category][$team->id]['goals_favor'] += $match->local_score;
             $this->scoreboard[$category][$team->id]['goals_against'] += $match->visiting_score;
         }else{
             if($result == 'away'){
                 $this->scoreboard[$category][$team->id]['wins'] ++;
-                $this->scoreboard[$category][$team->id]['points'] += 3;
+                $this->scoreboard[$category][$team->id]['points'] += 2;
             }elseif($result == 'local'){
                 $this->scoreboard[$category][$team->id]['losses'] ++;
             }else{
                 $this->scoreboard[$category][$team->id]['ties'] ++;
-                $this->scoreboard[$category][$team->id]['points'] += 3;
+                $this->scoreboard[$category][$team->id]['points'] += 2;
             }
             $this->scoreboard[$category][$team->id]['goals_favor'] += $match->visiting_score;
             $this->scoreboard[$category][$team->id]['goals_against'] += $match->local_score;

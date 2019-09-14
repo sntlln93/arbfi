@@ -7,7 +7,7 @@ use DB;
 
 class Tournament extends Model
 {
-    private $array = array();
+    private $scoreboard = array();
     public $timestamps = false;
 
     public function fixtures(){
@@ -16,6 +16,30 @@ class Tournament extends Model
 
     public function groups(){
         return $this->hasMany('App\Group');
+    }
+
+    public function getCategoriesAttribute(){
+        $arr = array();
+        foreach($this->teams as $team){
+            array_push($arr, $team->category_id);
+        }
+        return Category::whereIn('id', $arr)->get();
+    }
+
+    public function getTeamsAttribute(){
+        $arr = array();
+        $query = "select id from teams 
+                    where id in 
+                        (select local_team_id from fixtures where tournament_id = ".$this->id.") 
+                    or id in 
+                        (select visiting_team_id from fixtures where tournament_id = ".$this->id.")";
+        $teams_id = DB::select($query);
+        foreach($teams_id as $key => $value){
+            array_push($arr, $value->id);
+        }
+        $teams = Team::whereIn('id', $arr)->get();
+        
+        return $teams;
     }
 
     public function getGroupsFixtureAttribute(){
@@ -104,94 +128,76 @@ class Tournament extends Model
         return $goal_makers;
     }
 
-    public function getLeagueScoreboardAttribute(){
-        foreach($this->playedMatches as $match){
-            if(isset($match->local)) 
-                if(!isset($this->array[$match->local->category->id][$match->local_team_id])) 
-                    $this->loadTeam($match->local->category->id, $match->local_team_id);
-            if(isset($match->visiting))
-                if(!isset($this->array[$match->visiting->category->id][$match->visiting_team_id])) 
-                    $this->loadTeam($match->visiting->category->id, $match->visiting_team_id);
-            
-            if($match->local_score > $match->visiting_score){
-                $result = 'local';
-            }elseif($match->local_score < $match->visiting_score){
-                $result = 'away';
-            }else{
-                $result = 'tie';
-            }
-
-            if(isset($match->local)){ //fillTeam($category, $team, $goals_favor, $goals_against, $result)
-                $this->fillTeam(
-                                $match->local->category->id,
-                                $match->local_team_id,
-                                $match->local_score,
-                                $match->visiting_score,
-                                $result,
-                                'local'
-                            );
-            }
-            if(isset($match->visiting)){//fillTeam($category, $team, $goals_favor, $goals_against, $result)
-                $this->fillTeam(
-                                $match->visiting->category->id,
-                                $match->visiting_team_id,
-                                $match->visiting_score,
-                                $match->local_score,
-                                $result,
-                                'away'
-                            ); 
-            }
-        }
+    public function getScoreboardAttribute(){
+        $this->initializeTeamStats();
+        $this->writeScoreboard();
+        $tablePoint = array();
         
-        return $this->array;
-    }
-
-    public function getChallengerScoreboardAttribute(){
-        $scores = array();
-        foreach($this->array as $category){
-            foreach($category as $team){
-                $index = Institution::where('name', $team['name'])->get()[0]->id;
-                $scores[$index]['name'] = $team['name'];
-                if(array_key_exists('points', $scores[$index])){
-                    $scores[$index]['points'] += $team['points'];
-                    $scores[$index]['wins'] += $team['wins'];
-                    $scores[$index]['ties'] += $team['ties'];
-                    $scores[$index]['losses'] += $team['losses'];
-                    $scores[$index]['goals_favor'] += $team['goals_favor'];
-                    $scores[$index]['goals_against'] += $team['goals_against'];
-                }else{
-                    $scores[$index]['points'] = $team['points'];
-                    $scores[$index]['wins'] = $team['wins'];
-                    $scores[$index]['ties'] = $team['ties'];
-                    $scores[$index]['losses'] = $team['losses'];
-                    $scores[$index]['goals_favor'] = $team['goals_favor'];
-                    $scores[$index]['goals_against'] = $team['goals_against'];
-                }
-            }
+        foreach($this->scoreboard as $key => $value){
+            $zone = new GroupStats($value, $this->name);
+            $tablePoint[$key] = $zone->sortScoreboards;
         }
-        return $scores;
+        return $tablePoint;
     }
 
-    private function loadTeam($category, $team){
-        $this->array[$category][$team]['name'] = Team::find($team)->club->name;
-        $this->array[$category][$team]['wins'] = 0;
-        $this->array[$category][$team]['ties'] = 0;
-        $this->array[$category][$team]['losses'] = 0;
-        $this->array[$category][$team]['goals_favor'] = 0;
-        $this->array[$category][$team]['goals_against'] = 0;
-        $this->array[$category][$team]['points'] = 0;
+    private function writeScoreboard(){
+        foreach($this->playedMatches as $match){
+            $this->checkForWinner($match);
+        }
+        return $this->scoreboard;
     }
 
-    private function fillTeam($category, $team, $goals_favor, $goals_against, $result, $condition){
-        if($condition == $result)
-            $this->array[$category][$team]['wins']++;
-        elseif($result == 'tie')
-            $this->array[$category][$team]['ties']++;
-        else
-            $this->array[$category][$team]['losses']++;
-
-        $this->array[$category][$team]['goals_favor'] += $goals_favor;
-        $this->array[$category][$team]['goals_against'] += $goals_against;
-        $this->array[$category][$team]['points'] = $this->array[$category][$team]['wins'] * 2 + $this->array[$category][$team]['ties'];
+    private function checkForWinner($match){
+        $result = 'tie';
+        if($match->local_score > $match->visiting_score)
+            $result = 'local';
+        elseif($match->local_score < $match->visiting_score)
+            $result = 'away';
+        
+        $this->loadTeamStats($match, $result, true);
+        $this->loadTeamStats($match, $result, false); 
     }
+
+    private function loadTeamStats($match, $result, $local){
+        $team = $local ? $match->local : $match->visiting;
+        $category = $team->category_id;
+        if($local){
+            if($result == 'local'){
+                $this->scoreboard[$category][$team->id]['wins'] ++;
+                $this->scoreboard[$category][$team->id]['points'] += 2;
+            }elseif($result == 'away'){
+                $this->scoreboard[$category][$team->id]['losses'] ++;
+            }else{
+                $this->scoreboard[$category][$team->id]['ties'] ++;
+                $this->scoreboard[$category][$team->id]['points'] += 2;
+            }
+            $this->scoreboard[$category][$team->id]['goals_favor'] += $match->local_score;
+            $this->scoreboard[$category][$team->id]['goals_against'] += $match->visiting_score;
+        }else{
+            if($result == 'away'){
+                $this->scoreboard[$category][$team->id]['wins'] ++;
+                $this->scoreboard[$category][$team->id]['points'] += 2;
+            }elseif($result == 'local'){
+                $this->scoreboard[$category][$team->id]['losses'] ++;
+            }else{
+                $this->scoreboard[$category][$team->id]['ties'] ++;
+                $this->scoreboard[$category][$team->id]['points'] += 2;
+            }
+            $this->scoreboard[$category][$team->id]['goals_favor'] += $match->visiting_score;
+            $this->scoreboard[$category][$team->id]['goals_against'] += $match->local_score;
+        }
+    }
+
+    private function initializeTeamStats(){
+        foreach ($this->teams as $team) {
+            $this->scoreboard[$team->category_id][$team->id]['name'] = $team->club->name;
+            $this->scoreboard[$team->category_id][$team->id]['wins'] = 0;
+            $this->scoreboard[$team->category_id][$team->id]['ties'] = 0;
+            $this->scoreboard[$team->category_id][$team->id]['losses'] = 0;
+            $this->scoreboard[$team->category_id][$team->id]['goals_favor'] = 0;
+            $this->scoreboard[$team->category_id][$team->id]['goals_against'] = 0;
+            $this->scoreboard[$team->category_id][$team->id]['points'] = 0;
+        }
+    }
+
 }

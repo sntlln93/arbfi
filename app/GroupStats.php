@@ -14,8 +14,7 @@ class GroupStats extends Model
     public function __construct($group, $name){
         $this->name = $name;
         foreach($group as $team){
-            $t = new TeamStats($team);
-            array_push($this->teams, $t);
+            array_push($this->teams, new TeamStats($team));
         }
     }
 
