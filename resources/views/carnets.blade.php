@@ -98,7 +98,7 @@
 
 </head>
 <body>
-            <div class="fila">@php($count = 0)
+            <div class="fila">
                 @foreach($players as $player)
                     <div class="carnet">
                         <div class="row">
@@ -140,10 +140,6 @@
                             </div>
                         </div>
                     </div>
-                    @if($count/10 == 1)
-                        <div style="page-break-before:always"></div>
-                    @endif
-                    @php($count++)
                 @endforeach     
             </div>
 </body>

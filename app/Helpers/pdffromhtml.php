@@ -5,7 +5,7 @@ function generatePDF($players){
 	
 	$view = view('carnets')->with('players', $players)->render();
 	$client->setPageSize("A4");
-	$client->setPageMargins("10mm", "15mm", "15mm", "15mm");
+	$client->setPageMargins("20mm", "15mm", "20mm", "15mm");
 	$pdf = $client->convertString($view);
 	header("Content-Type: application/pdf");
     header("Cache-Control: no-cache");
