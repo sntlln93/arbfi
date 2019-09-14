@@ -97,7 +97,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
 </head>
-<body>
+<body><div style="page-break-before:always"></div>
             <div class="fila">@php($count = 0)
                 @foreach($players as $player)
                     @if($count/10 == 1)
