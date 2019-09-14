@@ -98,48 +98,52 @@
 
 </head>
 <body>
-            <div class="fila">
+            <div class="fila">@php($count = 0)
                 @foreach($players as $player)
-                <div class="carnet">
-                    <div class="row">
-                        <div class="cabecera">
-                            <div class="logo">
-                                <img src="{{ asset('/img/frontend_img/logo-light.png') }}" alt="">
+                    @if($count/10 == 1)
+                        <div style="page-break-before:always"></div>
+                    @endif
+                    <div class="carnet">
+                        <div class="row">
+                            <div class="cabecera">
+                                <div class="logo">
+                                    <img src="{{ asset('/img/frontend_img/logo-light.png') }}" alt="">
+                                </div>
+                                <div class="titulos">
+                                    <div class="titulo">Asociación Riojana de Baby Fútbol Infantil</div>
+                                    <div class="subtitulo">Carnet identificador de jugador</div>
+                                </div>
                             </div>
-                            <div class="titulos">
-                                <div class="titulo">Asociación Riojana de Baby Fútbol Infantil</div>
-                                <div class="subtitulo">Carnet identificador de jugador</div>
+                        </div>
+                        <div class="row">
+                            <div class="foto">
+                                @if(isset($player->image))
+                                    <img src="{{ asset('storage/'.$player->image->path) }}" alt="">
+                                @else
+                                    <img src="{{ asset('img/frontend_img/players/0.jpg') }}" alt="">
+                                @endif
+                                <h3>{{ $player->dni }}</h3>
+                            </div>
+                            <div class="info">
+                                <div class="titulo">Apellidos</div>
+                                <div class="subtitulo">{{ $player->last_name }}</div>
+                                <div class="titulo">Nombres</div>
+                                <div class="subtitulo">{{ $player->first_name }}</div>
+                                <div class="titulo">Club</div>
+                                <div class="subtitulo">{{ $player->team->club->name }}</div>
+                                <div class="titulo">Fecha de nacimiento</div>
+                                <div class="subtitulo">{{ $player->birth_date->format('d/m/Y') }}</div>
+                                <div class="titulo">Fecha de emisión</div>
+                                <div class="subtitulo">{{ Carbon\Carbon::now()->format('d/m/Y') }}</div>
+                                <div class="titulo">Categoría</div>
+                                <div class="subtitulo">{{ $player->team->category->name }}</div>
+                            </div>
+                            <div class="barcode">
+                                {!! QrCode::size(80)->generate(url('players/'.$player->id.'/validate')) !!}
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="foto">
-                            @if(isset($player->image))
-                                <img src="{{ asset('storage/'.$player->image->path) }}" alt="">
-                            @else
-                                <img src="{{ asset('img/frontend_img/players/0.jpg') }}" alt="">
-                            @endif
-                            <h3>{{ $player->dni }}</h3>
-                        </div>
-                        <div class="info">
-                            <div class="titulo">Apellidos</div>
-                            <div class="subtitulo">{{ $player->last_name }}</div>
-                            <div class="titulo">Nombres</div>
-                            <div class="subtitulo">{{ $player->first_name }}</div>
-                            <div class="titulo">Club</div>
-                            <div class="subtitulo">{{ $player->team->club->name }}</div>
-                            <div class="titulo">Fecha de nacimiento</div>
-                            <div class="subtitulo">{{ $player->birth_date->format('d/m/Y') }}</div>
-                            <div class="titulo">Fecha de emisión</div>
-                            <div class="subtitulo">{{ Carbon\Carbon::now()->format('d/m/Y') }}</div>
-                            <div class="titulo">Categoría</div>
-                            <div class="subtitulo">{{ $player->team->category->name }}</div>
-                        </div>
-                        <div class="barcode">
-                            {!! QrCode::size(80)->generate(url('players/'.$player->id.'/validate')) !!}
-                        </div>
-                    </div>
-                </div>
+                    @php($count++)
                 @endforeach     
             </div>
 </body>
