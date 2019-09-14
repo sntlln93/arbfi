@@ -6,8 +6,8 @@
         <title>Asociación Riojana de Baby Fútbol Infantil</title>
         <meta name="keywords" content="HTML5 Template" />
         <meta name="description" content="Asociación Riojana de Baby Fútbol Infantil">
-        <meta name="author" content="https://www.workana.com/freelancer/fb03555b7841fa8a58a11560bd9f3e0e">
-        
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
         <!--tab icon-->
         <link rel="icon" type="image/png" href="{{ asset('img/frontend_img/logo-light.png') }}" />
         <!-- link thumbnail -->
