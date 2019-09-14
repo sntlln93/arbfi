@@ -97,11 +97,11 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
 </head>
-<body><div style="page-break-before:always"></div>
+<body>
             <div class="fila">@php($count = 0)
                 @foreach($players as $player)
                     @if($count/10 == 1)
-                        <div style="page-break-before:always"></div>
+                        <br><br><br><br><br>
                     @endif
                     <div class="carnet">
                         <div class="row">
