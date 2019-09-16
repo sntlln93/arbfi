@@ -43,17 +43,17 @@
                                     <td class="number">{{ $n+1 }}</td>
                                     <td class="text-left">
                                         <!--<img src="" alt="{{ $row['name'] }}">-->
-                                        <span>{{ $row['name'] }}</span>
+                                        <span>{{ $row->name }}</span>
                                     </td>
                                     
-                                    <td>{{ $row['wins'] + $row['ties'] + $row['losses'] }}</td>
-                                    <td>{{ $row['wins'] }}</td>
-                                    <td>{{ $row['ties'] }}</td>
-                                    <td>{{ $row['losses'] }}</td>
-                                    <td>{{ $row['goals_favor'] }}</td>
-                                    <td>{{ $row['goals_against'] }}</td>
-                                    <td>{{ $row['goals_favor'] - $row['goals_against'] }}</td>
-                                    <td><b>{{ $row['points'] }}<b></td>
+                                    <td>{{ $row->wins + $row->ties + $row->losses }}</td>
+                                    <td>{{ $row->wins }}</td>
+                                    <td>{{ $row->ties }}</td>
+                                    <td>{{ $row->losses }}</td>
+                                    <td>{{ $row->goals_favor }}</td>
+                                    <td>{{ $row->goals_against }}</td>
+                                    <td>{{ $row->goals_favor - $row->goals_against }}</td>
+                                    <td><b>{{ $row->points }}<b></td>
                                 </tr>
                                 @php($n++)
                             @endforeach
@@ -94,16 +94,18 @@
                                             <tr>
                                                 <td class="number">{{ $n+1 }}</td>
                                                 <td class="text-left">
-                                                    <span>{{ $row['name'] }}</span>
+                                                    <!--<img src="" alt="{{ $row['name'] }}">-->
+                                                    <span>{{ $row->name }}</span>
                                                 </td>
-                                                <td>{{ $row['wins'] + $row['ties'] + $row['losses'] }}</td>
-                                                <td>{{ $row['wins'] }}</td>
-                                                <td>{{ $row['ties'] }}</td>
-                                                <td>{{ $row['losses'] }}</td>
-                                                <td>{{ $row['goals_favor'] }}</td>
-                                                <td>{{ $row['goals_against'] }}</td>
-                                                <td>{{ $row['goals_favor'] - $row['goals_against'] }}</td>
-                                                <td><b>{{ $row['points'] }}<b></td>
+                                                
+                                                <td>{{ $row->wins + $row->ties + $row->losses }}</td>
+                                                <td>{{ $row->wins }}</td>
+                                                <td>{{ $row->ties }}</td>
+                                                <td>{{ $row->losses }}</td>
+                                                <td>{{ $row->goals_favor }}</td>
+                                                <td>{{ $row->goals_against }}</td>
+                                                <td>{{ $row->goals_favor - $row->goals_against }}</td>
+                                                <td><b>{{ $row->points }}<b></td>
                                             </tr>
                                             @php($n++)
                                         @endif

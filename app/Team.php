@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Team extends Model
 {
@@ -40,6 +41,30 @@ class Team extends Model
 
     public function scoreboard(){
         return $this->hasMany('App\Scoreboard');
+    }
+
+    public function getPlayedAttribute(){
+        $arr = array();
+        $query = "select id from fixtures where state = 'JUGADO' and (local_team_id = ".$this->id." or visiting_team_id = ".$this->id.");";
+        $matches_id = DB::select($query);
+
+        foreach($matches_id as $key => $value){
+            array_push($arr, $value->id);
+        }
+
+        return Fixture::findMany($arr);
+    }
+
+    public function getPendingAttribute(){
+        $arr = array();
+        $query = "select id from fixtures where state = 'no jugado' and (local_team_id = ".$this->id." or visiting_team_id = ".$this->id.");";
+        $matches_id = DB::select($query);
+        
+        foreach($matches_id as $key => $value){
+            array_push($arr, $value->id);
+        }
+
+        return Fixture::findMany($arr);
     }
 
     public $timestamps = false;

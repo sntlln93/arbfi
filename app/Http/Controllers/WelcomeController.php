@@ -54,9 +54,8 @@ class WelcomeController extends Controller
 
     public function team($id){
         $team = Team::find($id);
-        $fixtures = Fixture::where('local_team_id', $id)->orWhere('visiting_team_id', $id)->get();
         
-        return view('website.team')->with('team', $team)->with('fixtures', $fixtures);
+        return view('website.team')->with('team', $team);
     }
 
     public function regulation(){
@@ -101,18 +100,15 @@ class WelcomeController extends Controller
     }
     public function tournament($id){
         $tournament = Tournament::find($id);
-        $categories = Category::all();
         if($tournament->type == 'AAA'){
-            $scoreboard = $tournament->scoreboard;
-            $general = $tournament->challenger;
-            return view('website.league')->with('tables', $scoreboard)
-                                         ->with('categories', $categories)
-                                         ->with('general', $general);
+            return view('website.league')->with('tables', $tournament->scoreboard)
+                                         ->with('categories', $tournament->categories)
+                                         ->with('general', $tournament->challenger);
         }elseif($tournament->type == 'PVP'){
 
         }
 
-        return view('website.groups')   ->with('categories', $categories)
+        return view('website.groups')   ->with('categories', $tournament->categories)
                                         ->with('tournament', $tournament);   
     }
 

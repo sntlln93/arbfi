@@ -23,7 +23,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($fixtures as $match)
-                                            @if(isset($match->local) AND isset($match->visiting))
+                                            
                                                 <tr>
                                                     <td>
                                                         <img src="{{asset('storage/'.$match->local_image)}}" alt="icon">
@@ -41,7 +41,7 @@
                                                         <small class="meta-text">Cancha: {{$match->location}}</small>
                                                     </td>
                                                 </tr>
-                                            @endif
+                                            
                                         @endforeach
                                     </tbody>
                                 </table>
