@@ -1,8 +1,12 @@
 <?php
 
 Route::get('test', function(){
+	Artisan::call("php artisan backup:run");
+
+	/*
 	$players = App\Team::all()->first()->players;
 	return view('carnets')->with('players', $players);
+	*/
 });
 
 //auth
