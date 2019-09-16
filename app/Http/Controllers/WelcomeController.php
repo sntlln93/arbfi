@@ -22,19 +22,25 @@ use App\Player;
 class WelcomeController extends Controller
 {
     public function index(){
-        
+        $posts = DB::table('posts')->orderByDesc('created_at')->get(); 
         $tournament = Tournament::where('active', true)->first();
         $clubs = Institution::all();
-        $categories = $tournament->categories;
-        $posts = DB::table('posts')->orderByDesc('created_at')->get(); 
+       
 
+        if($tournament->type == 'AAA'){
+            return view('website.homeLeague') 
+                    ->with('scoreboards', $tournament->scoreboard)
+                    ->with('goal_makers', $tournament->goalMakers)
+                    ->with('fair_play', $tournament->fairPlay)
+                    ->with('categories', $tournament->categories)
+                    ->with('challenger', $tournament->challenger)
+                    ->with('posts', $posts);
+        }elseif($tournament->type == 'GF'){
+            return view('website.homeGroup');
+        }
+
+        return view('website.homePVP');
         
-        return view('website.homeTest') ->with('scoreboards', $tournament->scoreboard)
-                                        ->with('goal_makers', $tournament->goalMakers)
-                                        ->with('fair_play', $tournament->fairPlay)
-                                        ->with('categories', $categories)
-                                        ->with('posts', $posts)
-                                        ->with('tournament', $tournament);      
     }
 
     public function galery(){
@@ -96,13 +102,13 @@ class WelcomeController extends Controller
     public function tournament($id){
         $tournament = Tournament::find($id);
         $categories = Category::all();
-        if($tournament->type->type == 'AAA'){
+        if($tournament->type == 'AAA'){
             $scoreboard = $tournament->scoreboard;
             $general = $tournament->challenger;
             return view('website.league')->with('tables', $scoreboard)
                                          ->with('categories', $categories)
                                          ->with('general', $general);
-        }elseif($tournament->type->type == 'PVP'){
+        }elseif($tournament->type == 'PVP'){
 
         }
 

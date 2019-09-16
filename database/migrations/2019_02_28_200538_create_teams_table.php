@@ -18,7 +18,7 @@ class CreateTeamsTable extends Migration
             $table->integer('manager_id');
             $table->integer('category_id');
             $table->integer('club_id');
-            $table->integer('image_id');
+            $table->integer('image_id')->nullable();
         });
     }
 

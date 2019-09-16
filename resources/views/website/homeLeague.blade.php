@@ -15,33 +15,35 @@
     <div class="dark-home paddings-50-50">
         <div class="container">
             <div id="general" class="row portfolioContainer">
-                {{-- <!-- General table 
+                <!-- General table -->
                 <div class="col-lg-4 general">
                     <div class="club-ranking">
                         <h5><a>Tabla de Posiciones</a></h5>
                         <div class="info-ranking">
                             <ul>
                                 @php( $position = 1 )
-                                @foreach($scores as $scoreboard)
-                                    <li>
-                                        <span class="position">
-                                            {{ $position }}
-                                        </span>
-                                        <a>
-                                            <img src="{{ asset('storage/'.App\Institution::where('name', $scoreboard['name'])->get()[0]->image->path) }}" alt="">
-                                            {{ $scoreboard['name'] }}
-                                        </a>
-                                        <span class="points">
-                                            {{ $scoreboard['points'] }}
-                                        </span>
-                                    </li>
-                                    @php( $position++ )
+                                @foreach($challenger as $club=>$team)
+                                    @if(! ($team->name == 'FERROCARRIL OESTE' OR $team->name == 'GAUCHITOS DE BOEDO') )
+                                        <li>
+                                            <span class="position">
+                                                {{ $position }}
+                                            </span>
+                                            <a>
+                                                
+                                                {{ $team->name }}
+                                            </a>
+                                            <span class="points">
+                                                {{ $team->points }}
+                                            </span>
+                                        </li>
+                                        @php( $position++ )
+                                    @endif
                                 @endforeach
                             </ul>
                         </div>
                     </div>
                 </div>
-                 End general table -->--}}
+                 <!-- End general table -->
                 <!-- Top player -->
                 <div class="col-lg-4 general">
                     <div class="player-ranking">
@@ -50,23 +52,21 @@
                              <ul>
                                 @php($n = 0)
                                 @foreach($goal_makers as $goal_maker)
-                                    <li>
-                                        <span class="position">
-                                            {{ $n+1 }}
-                                        </span>
-                                        <a href="$">
-                                            <img style="width:20px;height:20px;" src="{{ asset('storage/'.App\Image::find($goal_maker->image_id)->path) }}" alt="">
-                                            {{ $goal_maker->first_name.' '.$goal_maker->last_name }}
-                                        </a>
-                                        <span class="points">
-                                            {{ $goal_maker->goals}}
-                                        </span>
-                                    </li>
-                                    @if($n > 6)
-                                        @break
-                                    @else
-                                        @php($n++)
+                                    @if( $n < 6)
+                                        <li>
+                                            <span class="position">
+                                                {{ $n+1 }}
+                                            </span>
+                                            <a href="$">
+                                                <img style="width:20px;height:20px;" src="{{ asset('storage/'.App\Image::find($goal_maker->image_id)->path) }}" alt="">
+                                                {{ $goal_maker->first_name.' '.$goal_maker->last_name }}
+                                            </a>
+                                            <span class="points">
+                                                {{ $goal_maker->goals}}
+                                            </span>
+                                        </li>
                                     @endif
+                                    @php($n++)
                                 @endforeach
                                 
                              </ul>
@@ -75,7 +75,7 @@
                  </div>
                  <!-- End Top player -->
 
-                <!-- Fair Play 
+                <!-- Fair Play  -->
                 <div class="col-lg-4 general">
                     <div class="player-ranking">
                          <h5><a href="group-list.html">Tabla de Fair Play</a></h5>
@@ -97,7 +97,7 @@
                          </div>
                     </div>
                  </div>
-                 end-fair play-->
+                 <!-- end-fair play-->
                 @foreach($categories as $category)
                     <!-- Club Ranking -->
                     <div class="col-lg-4 {{ $category->name }}" style="display:none">
@@ -107,6 +107,7 @@
                                 <ul>
                                     @php( $position = 1 )
                                     @foreach($scoreboards[$category->id] as $team)
+                                        @if(! ($team->name == 'FERROCARRIL OESTE' OR $team->name == 'GAUCHITOS DE BOEDO') )
                                                 <li>
                                                     <span class="position">
                                                         {{ $position }}
@@ -120,6 +121,7 @@
                                                     </span>
                                                 </li>
                                                 @php( $position++)
+                                        @endif
                                     @endforeach
                                 </ul>
                             </div>
@@ -136,23 +138,21 @@
                                     @php($n = 0)
                                     @foreach($goal_makers as $goal_maker)
                                         @if($category->name == $goal_maker->name)
-                                            <li>
-                                                <span class="position">
-                                                    {{ $n+1 }}
-                                                </span>
-                                                <a href="$">
-                                                    <img style="width:20px;height:20px;" src="{{ asset('storage/'.$goal_maker->image_id) }}" alt="">
-                                                    {{ $goal_maker->first_name.' '.$goal_maker->last_name }}
-                                                </a>
-                                                <span class="points">
-                                                    {{ $goal_maker->goals}}
-                                                </span>
-                                            </li>
-                                            @if($n > 6)
-                                                @break
-                                            @else
-                                                @php($n++)
+                                            @if($n < 6)
+                                                <li>
+                                                    <span class="position">
+                                                        {{ $n+1 }}
+                                                    </span>
+                                                    <a href="$">
+                                                        <img style="width:20px;height:20px;" src="{{ asset('storage/'.$goal_maker->image_id) }}" alt="">
+                                                        {{ $goal_maker->first_name.' '.$goal_maker->last_name }}
+                                                    </a>
+                                                    <span class="points">
+                                                        {{ $goal_maker->goals}}
+                                                    </span>
+                                                </li>
                                             @endif
+                                            @php($n++)
                                         @endif
                                     @endforeach
                                 </ul>
@@ -171,16 +171,18 @@
                                     @for($i = 0; $i < sizeof($fair_play); $i++)
                                         @if($fair_play[$i][0]['Categoria'] == $category->name)
                                             @foreach(array_reverse($fair_play[$i]) as $row)
-                                                <li>
-                                                    <span class="position">
-                                                        {{ $n+1 }}
-                                                    </span>
-                                                    <a href="$">
-                                                        {{ $row['Equipo'].' (R:'.$row['Roja'].'/A:'.$row['Amarilla'].'/V:'.$row['Verde'].')' }}
-                                                    </a>
-                                                    <span class="points">
-                                                        {{ $row['Puntos']}}
-                                                </li>
+                                                @if($n < 6)
+                                                    <li>
+                                                        <span class="position">
+                                                            {{ $n+1 }}
+                                                        </span>
+                                                        <a href="$">
+                                                            {{ $row['Equipo'].' (R:'.$row['Roja'].'/A:'.$row['Amarilla'].'/V:'.$row['Verde'].')' }}
+                                                        </a>
+                                                        <span class="points">
+                                                            {{ $row['Puntos']}}
+                                                    </li>
+                                                @endif
                                                 @php($n++)
                                             @endforeach
                                         @endif

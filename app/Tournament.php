@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use App\Institution;
 
 class Tournament extends Model
 {
@@ -48,8 +49,10 @@ class Tournament extends Model
         return $fixture->get(); 
     }
 
-    public function type(){
-        return $this->belongsTo('App\TournamentType');
+    public function getTypeAttribute(){
+        $query = "select type from tournament_types where id = ".$this->type_id;
+
+        return DB::select($query)[0]->type;
     }
 
     public function getPlayedMatchesAttribute(){
@@ -138,6 +141,35 @@ class Tournament extends Model
             $tablePoint[$key] = $zone->sortScoreboards;
         }
         return $tablePoint;
+    }
+
+    public function getChallengerAttribute(){
+        $arr = array();
+
+        foreach($this->teams as $team){
+            $club = $team->club_id;
+            $arr[$club]['name'] = $team->club->name;
+            $arr[$club]['wins'] = 0;
+            $arr[$club]['ties'] = 0;
+            $arr[$club]['losses'] = 0;
+            $arr[$club]['goals_favor'] = 0;
+            $arr[$club]['goals_against'] = 0;
+            $arr[$club]['points'] = 0;
+        }
+        foreach($this->scoreboard as $category){
+            foreach ($category as $team) {
+                $club = Institution::where('name', $team['name'])->get()[0]->id;
+                
+                $arr[$club]['wins'] += $team['wins'];
+                $arr[$club]['ties'] += $team['ties'];
+                $arr[$club]['losses'] += $team['losses'];
+                $arr[$club]['goals_favor'] += $team['goals_favor'];
+                $arr[$club]['goals_against'] += $team['goals_against'];
+                $arr[$club]['points'] += $team['points'];
+            }
+        }
+        $zone = new GroupStats($arr, 'Copa Challenger');
+        return $zone->sortScoreboards;
     }
 
     private function writeScoreboard(){

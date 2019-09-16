@@ -17,7 +17,9 @@ class GroupStats extends Model
             array_push($this->teams, new TeamStats($team));
         }
     }
-
+    public function getTeamsAttribute(){
+        return $this->teams;
+    }
     public function getSortScoreboardsAttribute(){
         $stats = array();
         $stats = Arr::sort($this->teams, function($team){
