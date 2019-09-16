@@ -5,7 +5,6 @@ Route::get('test', function(){
 	return view('carnets')->with('players', $players);
 });
 
-
 //auth
 Route::match(['get', 'post'], '/user', 'AuthController@login');
 Route::get('/logout', 'AuthController@logout');

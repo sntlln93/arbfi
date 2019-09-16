@@ -15,7 +15,9 @@
         "laravel/framework": "6.0.*",
         "laravel/tinker": "^1.0",
         "laraveles/spanish": "^1.2",
-        "simplesoftwareio/simple-qrcode": "~2"
+        "league/flysystem-aws-s3-v3": "~1.0",
+        "simplesoftwareio/simple-qrcode": "~2",
+        "spatie/laravel-backup": "^6.4"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
