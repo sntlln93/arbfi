@@ -138,6 +138,6 @@ class PlayerController extends Controller
     
     public function validatePlayer($id){
         $player = Player::find($id);
-        return $player->dni;
+        return view('website.player')->with('player', $player);
     }
 }
