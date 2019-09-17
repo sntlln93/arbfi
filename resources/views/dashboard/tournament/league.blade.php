@@ -16,11 +16,11 @@
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
             <h5>FECHA {{$fixture_day}}° - {{ $tournament->name }} (
-                        @if($tournament->type->type == "AAA") Todos contra Todos
-                        @elseif($tournament->type->type == "GF") Fase de Grupos
-                        @elseif($tournament->type->type == "PVP") Llaves
+                        @if($tournament->type == "AAA") Todos contra Todos
+                        @elseif($tournament->type == "GF") Fase de Grupos
+                        @elseif($tournament->type == "PVP") Llaves
                         @endif | 
-                        @if($tournament->type->round_trip) Ida y vuelta
+                        @if($tournament->round) Ida y vuelta
                         @else Partido único
                         @endif
             )</h5>

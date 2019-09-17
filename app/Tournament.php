@@ -55,6 +55,12 @@ class Tournament extends Model
         return DB::select($query)[0]->type;
     }
 
+    public function getRoundAttribute(){
+        $query = "select round_trip from tournament_types where id = ".$this->type_id;
+
+        return DB::select($query)[0]->round_trip;
+    }
+
     public function getPlayedMatchesAttribute(){
         $played = Fixture::where([
             'state' => 'JUGADO',

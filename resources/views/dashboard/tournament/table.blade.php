@@ -44,20 +44,22 @@
                   <tr>
                     <th> {{ $tournament->id }} </th>
                     <th> <a href="{{ url('tournaments/'.$tournament->id) }}">{{ $tournament->name }}</a></th>
-                    <th> @if($tournament->type->type == "AAA") Todos contra Todos
-                        @elseif($tournament->type->type == "GF") Fase de Grupos
-                        @elseif($tournament->type->type == "PVP") Llaves
+                    <th> @if($tournament->type == "AAA") Todos contra Todos
+                        @elseif($tournament->type == "GF") Fase de Grupos
+                        @elseif($tournament->type == "PVP") Llaves
                         @endif | 
-                        @if($tournament->type->round_trip) Ida y vuelta
+                        @if($tournament->round) Ida y vuelta
                         @else Partido único
                         @endif
                     </th>
-                    <th><button type="button" class="btn btn-mini btn-info" data-toggle="modal" data-target="#myModal"><i class="icon-file"></i></button></th>
+                    <th>
+                      <button type="button" class="btn btn-mini btn-info" data-toggle="modal" data-target="{{ '#myModal'.$tournament->id }}"><i class="icon-file"></i></button>
+                    </th>
                     <th>
                       <a href="{{ url('/tournaments/'.$tournament->id.'/edit') }}" class="btn btn-mini btn-warning"><i class="icon-pencil"></i></a>
                     </th>
                     <th> 
-                      <form class="form-group" action="{{ '/tournaments/'.$tournament->id }}" method="post">
+                      <form class="form-group" action="{{ url('/tournaments/'.$tournament->id) }}" method="post">
                         {{ @csrf_field() }}
                         {{ method_field('DELETE') }}
                         <button type="submit" class="btn btn-mini btn-danger"><i class="icon-trash"></i></button> 
@@ -73,8 +75,8 @@
     </div>
 </div>
 <!--modal-->
-
-  <div id="myModal" class="modal fade" role="dialog">
+@foreach($tournaments as $tournament)
+  <div id="{{ 'myModal'.$tournament->id }}" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
       <!-- Modal content-->
@@ -106,6 +108,8 @@
 
     </div>
   </div>
+@endforeach
+  
 
 
 <script>

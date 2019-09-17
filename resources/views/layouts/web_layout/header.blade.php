@@ -17,7 +17,9 @@
                 
                     <div class="col-sm-12 col-md-6 col-md-offset-6">
                         @foreach(App\Institution::all() as $club)
-                            <img src="{{ asset('storage/'.$club->image->path) }}" alt="" class="shields">
+                            @if($club->name != "FERROCARRIL OESTE" and $club->name != "GAUCHITOS DE BOEDO")
+                                <img src="{{ asset('storage/'.$club->image->path) }}" alt="" class="shields">
+                            @endif
                         @endforeach
                     </div>
                 </div>

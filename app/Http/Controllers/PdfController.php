@@ -11,7 +11,7 @@ use App;
 class PdfController extends Controller
 {   
     public function htmlToPdf(Request $request, $id){
-        $tournament = Tournament::find($id); 
+        $tournament = Tournament::find($id);
         
         $isLeague = ( new \ReflectionClass($tournament) )->getShortName() == 'Tournament' ;
 
