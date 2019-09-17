@@ -22,6 +22,17 @@ class Player extends Model
         return $this->hasMany('App\Event');
     }
 
+    public function getPlayedAttribute(){
+        return $this->team->played->count();
+    }
+
+    public function getSeasonsAttribute(){
+        dd($this->team->played->last());
+    }
+
+    public function getFairPlayAttribute(){
+        return $this->red[0]->cantidad * 2 + $this->yellow[0]->cantidad + $this->green[0]->cantidad;
+    }
     public function getGreenAttribute(){
         //do whatever you want to do
         $query = 'select count(id) as cantidad from events where player_id = '.$this->id.' and type = "Verde"';
