@@ -75,7 +75,7 @@
                  </div>
                  <!-- End Top player -->
 
-                <!-- Fair Play  -->
+                <!-- Fair Play  
                 <div class="col-lg-4 general">
                     <div class="player-ranking">
                          <h5><a href="group-list.html">Tabla de Fair Play</a></h5>
@@ -97,7 +97,7 @@
                          </div>
                     </div>
                  </div>
-                 <!-- end-fair play-->
+                  end-fair play-->
                 @foreach($categories as $category)
                     <!-- Club Ranking -->
                     <div class="col-lg-4 {{ $category->name }}" style="display:none">
