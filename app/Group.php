@@ -85,7 +85,7 @@ class Group extends Model
                 $this->scoreboard[$category][$team->id]['losses'] ++;
             }else{
                 $this->scoreboard[$category][$team->id]['ties'] ++;
-                $this->scoreboard[$category][$team->id]['points'] += 2;
+                $this->scoreboard[$category][$team->id]['points'] ++;
             }
             $this->scoreboard[$category][$team->id]['goals_favor'] += $match->local_score;
             $this->scoreboard[$category][$team->id]['goals_against'] += $match->visiting_score;
@@ -97,7 +97,7 @@ class Group extends Model
                 $this->scoreboard[$category][$team->id]['losses'] ++;
             }else{
                 $this->scoreboard[$category][$team->id]['ties'] ++;
-                $this->scoreboard[$category][$team->id]['points'] += 2;
+                $this->scoreboard[$category][$team->id]['points'] ++;
             }
             $this->scoreboard[$category][$team->id]['goals_favor'] += $match->visiting_score;
             $this->scoreboard[$category][$team->id]['goals_against'] += $match->local_score;
