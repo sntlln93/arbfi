@@ -39,7 +39,7 @@
                   <label class="control-label">Foto</label>
                   <div class="controls">
                       @if($club->image_id)
-                        <img class="editimage" src="{{ asset('storage/clubs/'.$club->image->path) }}" alt="">
+                        <img class="editimage" src="{{ asset('storage/'.$club->image->path) }}" alt="">
                       @endif
                       <div class="custom-file">
                           <input name="image" type="file" class="custom-file-input" id="validatedCustomFile" required>
