@@ -221,7 +221,9 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="img-hover">
+                                        @if($post->image_id)
                                         <img src="{{ App\Image::find($post->image_id)->path }}" alt="" class="img-responsive">
+                                        @endif
                                         <div class="overlay"><a href="{{ url('/posts/'.$post->id) }}">+</a></div>
                                     </div>
                                 </div>
