@@ -23,7 +23,7 @@
                       <strong>{!! session('flash_message_error') !!}</strong>
                   </div>
               @endif
-            <form class="form-horizontal" method="post" action="{{ '/posts' }}">
+            <form class="form-horizontal" method="post" action="{{ '/posts' }}" enctype="multipart/form-data">
               {{ csrf_field() }}
               <div class="control-group">
                 <label class="control-label">Título</label>
@@ -41,9 +41,11 @@
               <div class="control-group">
                 <label class="control-label">Foto</label>
                 <div class="controls">
-                  <input name="path_file" type="text"  class="span11" placeholder="URL de la imagen" />
+                    <div class="custom-file">
+                        <input name="image" type="file" class="custom-file-input" id="validatedCustomFile" required>
+                    </div>
                 </div>
-              </div>
+              </div> 
               
               <div class="form-actions">
                 <button type="submit" class="btn btn-success">Guardar</button>

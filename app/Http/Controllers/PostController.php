@@ -57,8 +57,10 @@ class PostController extends Controller
             ]);
             $post->title = $request->title;
             $post->body = $request->body;
-            $post->path_file = $request->path_file;
             $post->user_id = User::find(Auth::id())->id;
+            if($request->has('image')){
+                $player->image_id = newImage($request, 'players');
+            }
             $post->save();
         }else{
             return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');
@@ -112,7 +114,9 @@ class PostController extends Controller
             ]);
             $post->title = $request->title;
             $post->body = $request->body;
-            $post->path_file = $request->path_file;
+            if($request->has('image')){
+                $player->image_id = newImage($request, 'players');
+            }
 
             $post->save();
             

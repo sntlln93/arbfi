@@ -24,7 +24,7 @@
                       <strong>{!! session('flash_message_error') !!}</strong>
                   </div>
               @endif
-            <form class="form-horizontal" method="post" action="{{ '/posts/'.$post->id }}">
+            <form class="form-horizontal" method="post" action="{{ '/posts/'.$post->id }}" enctype="multipart/form-data">
               {{ csrf_field() }}
               {{ method_field('PUT') }}
               <div class="control-group">
@@ -43,7 +43,12 @@
               <div class="control-group">
                 <label class="control-label">Foto</label>
                 <div class="controls">
-                  <input name="path_file" type="text"  class="span11" placeholder="URL de la imagen" value="{{ $post->path_file }}"/>
+                    @if($player->image_id)
+                      <img class="editimage" src="{{ asset('storage/players/'.$player->image->path) }}" alt="">
+                    @endif
+                    <div class="custom-file">
+                        <input name="image" type="file" class="custom-file-input" id="validatedCustomFile">
+                    </div>
                 </div>
               </div>
               
