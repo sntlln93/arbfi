@@ -13,11 +13,15 @@
 
                         <div class="item-player single-player">
                             <div class="head-player">
-                                <img src="{{ asset('storage/'.$player->image->path) }}" alt="location-team">
+                                @if($player->image)
+                                    <img src="{{ asset('storage/'.$player->image->path) }}" alt="location-team">
+                                @endif
                             </div>
                             <div class="info-player">
                                 <span class="number-player">
-                                    <img src="{{ asset('storage/'.$player->team->logo) }}" alt="">
+                                    @if($player->team->logo)
+                                        <img src="{{ asset('storage/'.$player->team->logo) }}" alt="">
+                                    @endif
                                 </span>
 
                                 <h4>
