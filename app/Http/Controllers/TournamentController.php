@@ -71,7 +71,7 @@ class TournamentController extends Controller
             $tournament->active = true;
             $tournament->save();
 
-            if($tournament->type->type == "AAA"){
+            if($tournament->type == "AAA"){
                 $fixture_day = 1;
                 if($teams->count()%2 == 0) $free = false; else $free = true;
                 return view('dashboard.tournament.league')->with('tournament', $tournament)
@@ -79,12 +79,12 @@ class TournamentController extends Controller
                                                           ->with('categories', $categories)
                                                           ->with('fixture_day', $fixture_day)
                                                           ->with('free', $free);
-            }elseif($tournament->type->type == "PVP"){
+            }elseif($tournament->type == "PVP"){
                 return view('dashboard.tournament.playoffs')->with('tournament', $tournament)
                                                             ->with('teams', $teams)
                                                             ->with('categories', $categories)
                                                             ->with('fase', 1);
-            }elseif($tournament->type->type == "GF"){
+            }elseif($tournament->type == "GF"){
                 return view('dashboard.tournament.groups')->with('tournament', $tournament)
                                                           ->with('teams', $teams)
                                                           ->with('categories', $categories);                                                         
@@ -127,7 +127,7 @@ class TournamentController extends Controller
                 $match->fixture_day = $fixture_day;
                 $match->save();
 
-                if($tournament->type->round_trip){
+                if($tournament->round){
                     $match = new Fixture;
                     $match->tournament_id = $tournament->id;
                     $match->local_team_id = DB::table('teams')->select('id')->where('club_id', $request->teams[$j+1])
@@ -197,7 +197,7 @@ class TournamentController extends Controller
                 else $match->fixture_day = $request->fase."° Fase | Partido único";
                 $match->save();
     
-                if($tournament->type->round_trip){
+                if($tournament->round){
                     $match = new Fixture;
                     $match->tournament_id = $tournament->id;
                     $match->local_team_id = DB::table('teams')->select('id')
