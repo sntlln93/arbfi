@@ -62,9 +62,6 @@ class InstitutionController extends Controller
             $club->stadium = mb_strToUpper($request->stadium);
             $club->image_id = newImage($request, 'clubs');
             $club->save();
-            $file = Image::make(public_path('storage/'.$club->image->path))->fit(113, 113);
-            $file->save();
-            
 
             $categories = Category::all();
             
@@ -153,15 +150,12 @@ class InstitutionController extends Controller
     {
         if(Session::has('userSession')){
             $item = Institution::find($id);
-            $teams = Team::all();
-            //$teams = DB::table('teams')->select('id')->where('club_id',$id)->get();
-            foreach($teams as $team){
-                if($team->club_id == $id){
-                    foreach($team->players as $player){
-                        $player->delete();
-                    }
-                    $team->delete();
+
+            foreach($item->teams as $team){
+                foreach($team->players as $player){
+                    $player->delete();
                 }
+                $team->delete();
             }
             $item->delete();
             session()->flash('message','Eliminado correctamente');
