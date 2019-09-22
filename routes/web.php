@@ -1,12 +1,17 @@
 <?php
 
-Route::get('test', function(){
+Route::get('images', function(){
+	$clubs = scandir(public_path('storage/clubs'));
+	$players = scandir(public_path('storage/players'));
+	
+	return view('images')->with('clubs', $clubs)
+						 ->with('players', $players);
+});
+Route::get('clean', function(){
+	Artisan::call('php artisan backup:clean');
+});
+Route::get('backup', function(){
 	Artisan::call("php artisan backup:run");
-
-	/*
-	$players = App\Team::all()->first()->players;
-	return view('carnets')->with('players', $players);
-	*/
 });
 
 //auth
