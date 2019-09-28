@@ -19,6 +19,14 @@ class Tournament extends Model
         return $this->hasMany('App\Group');
     }
 
+    public function getClubsAttribute(){
+        $arr = array();
+        foreach($this->teams as $team){
+            array_push($arr, $team->club_id);
+        }
+        return Institution::whereIn('id', $arr)->get();
+    }
+
     public function getCategoriesAttribute(){
         $arr = array();
         foreach($this->teams as $team){
