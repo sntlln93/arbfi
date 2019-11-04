@@ -59,7 +59,7 @@ class PostController extends Controller
             $post->body = $request->body;
             $post->user_id = User::find(Auth::id())->id;
             if($request->has('image')){
-                $player->image_id = newImage($request, 'players');
+                $post->image_id = newImage($request, 'players');
             }
             $post->save();
         }else{
