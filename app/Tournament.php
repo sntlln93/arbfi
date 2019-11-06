@@ -42,7 +42,7 @@ class Tournament extends Model
                         (select local_team_id from fixtures where tournament_id = ".$this->id.") 
                     or id in 
                         (select visiting_team_id from fixtures where tournament_id = ".$this->id.")";
-        $teams_id = DB::select($query);
+        $teams_id = DB::select($query); 
         foreach($teams_id as $key => $value){
             array_push($arr, $value->id);
         }
