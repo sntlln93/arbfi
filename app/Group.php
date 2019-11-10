@@ -38,6 +38,7 @@ class Group extends Model
     }
 
     public function getScoreboardAttribute(){
+        $this->initialize();
         $this->writeScoreboard();
         $tablePoint = array();
         
@@ -51,13 +52,6 @@ class Group extends Model
 
     private function writeScoreboard(){
         foreach($this->playedMatches as $match){
-            
-            if(! isset($match->local_team_id, $scoreboard[$match->local->category->id][$match->local_team_id]))
-                $this->initializeTeamStats($match->local_team_id);
-        
-            if(! isset($match->visiting_team_id, $scoreboard[$match->visiting->category->id][$match->visiting_team_id]))
-                $this->initializeTeamStats($match->visiting_team_id);
-                
             $this->checkForWinner($match);
         }
         return $this->scoreboard;
@@ -71,7 +65,7 @@ class Group extends Model
             $result = 'away';
         
         $this->loadTeamStats($match, $result, true);
-        $this->loadTeamStats($match, $result, false); 
+        $this->loadTeamStats($match, $result, false);
     }
 
     private function loadTeamStats($match, $result, $local){
@@ -104,6 +98,13 @@ class Group extends Model
         }
     }
 
+    private function initialize(){
+        foreach($this->playedMatches as $match){
+            $this->initializeTeamStats($match->local_team_id);
+            $this->initializeTeamStats($match->visiting_team_id);
+        }
+    }
+    
     private function initializeTeamStats($id){
         $team = Team::find($id);
         $this->scoreboard[$team->category_id][$team->id]['name'] = $team->club->name;

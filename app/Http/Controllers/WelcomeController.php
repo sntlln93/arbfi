@@ -29,14 +29,19 @@ class WelcomeController extends Controller
 
         if($tournament->type == 'AAA'){
             return view('website.homeLeague') 
-                    ->with('scoreboards', $tournament->scoreboard)
+                    ->with('scoreboards', $tournament->scoreboard) //scoreboard by category
+                    ->with('goal_makers', $tournament->goalMakers) //
+                    ->with('fair_play', $tournament->fairPlay)
+                    ->with('categories', $tournament->categories)
+                    ->with('challenger', $tournament->challenger) //general scoreboard
+                    ->with('posts', $posts);
+        }elseif($tournament->type == 'GF'){
+            return view('website.homeGroup')
+                    ->with('scoreboards', $tournament->scoreboards)
                     ->with('goal_makers', $tournament->goalMakers)
                     ->with('fair_play', $tournament->fairPlay)
                     ->with('categories', $tournament->categories)
-                    ->with('challenger', $tournament->challenger)
                     ->with('posts', $posts);
-        }elseif($tournament->type == 'GF'){
-            return view('website.homeGroup');
         }
 
         return view('website.homePVP');
@@ -107,7 +112,7 @@ class WelcomeController extends Controller
         }elseif($tournament->type == 'PVP'){
 
         }
-
+        
         return view('website.groups')   ->with('categories', $tournament->categories)
                                         ->with('tournament', $tournament);   
     }
