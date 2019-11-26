@@ -34,6 +34,7 @@
                     <th>Nombre</th>
                     <th>Tipo</th>
                     <th>Imprimir fixture</th>
+                    <th>Activar</th>
                     <th><i class="icon-pencil"></i></th>
                     <th><i class="icon-trash"></i></th>
                     
@@ -55,6 +56,7 @@
                     <th>
                       <button type="button" class="btn btn-mini btn-info" data-toggle="modal" data-target="{{ '#myModal'.$tournament->id }}"><i class="icon-file"></i></button>
                     </th>
+                    <th><a href="{{ url('/tournaments/'.$tournament->id.'/activate') }}" class="btn btn-mini btn-success" @if($tournament->active == 1) disabled @endif><i class="icon-trophy"></i></a></th>
                     <th>
                       <a href="{{ url('/tournaments/'.$tournament->id.'/edit') }}" class="btn btn-mini btn-warning"><i class="icon-pencil"></i></a>
                     </th>

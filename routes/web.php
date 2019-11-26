@@ -56,6 +56,10 @@ Route::put('/tournaments/playoffs/{id}', 'TournamentController@playoffMaker');
 Route::put('/tournaments/groups/{id}', 'TournamentController@faseGroupMaker');
 Route::put('/tournaments/league/{id}', 'TournamentController@leagueMaker');
 Route::put('/tournaments/groups/{id}/make', 'TournamentController@groupMaker');
+Route::get('/tournaments/{id}/activate', 'TournamentController@activate');
+Route::get('/tournaments/gold-cup/{id}', 'TournamentController@goldCup');
+Route::post('/tournaments/gold-cup/{id}', 'TournamentController@makeGoldCup');
+Route::post('/tournaments/n-round/{id}', 'TournamentController@makeNRound');
 
 //Helpers
 Route::get('/categories/{id}/enable', 'CategoryController@enable');

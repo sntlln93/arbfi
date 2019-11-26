@@ -18,13 +18,66 @@ use App;
 
 class TournamentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
+
+    public function goldCup($id){
+        if(! Session::has('userSession')){
+            return redirect('/')->with('flash_message_error','No tienes permiso para ver esta página');
+        }
+        $tournament = Tournament::find($id);
+        $limit = 2**floor(log($tournament->teams->count(),2)); //la cantidad de llaves es la potencia de 2 más chica e inmediata a la cantidad de equipos dividida en 2
+        
+        return view('dashboard.tournament.create-gold-cup')->with('tournament', $tournament)->with('teams', $tournament->teams)->with('limit', $limit);
+
+    }
+    
+    //1st round
+    public function makeGoldCup(Request $request, $id){
+        
+        for($i = 0; $i < sizeof($request->teamsL); $i++){
+            $match = new Fixture;
+            $match->tournament_id = $id;
+            $match->local_team_id = $request->teamsL[$i];
+            $match->visiting_team_id = $request->teamsB[$i];
+            $match->state = "no jugado";
+            $match->local_score = 0;
+            $match->visiting_score = 0;
+            $match->location ="A definir";
+            $match->date = null;
+            $match->fixture_day = $i+1;
+            $match->save();
+        }
+
+        
+
+        return redirect('/tournaments');
+    }
+
+    private function powerOff($n){ return 2**floor(log($n,2)); }
+    
+    //Nst round
+    public function makeNRound($id){ //datos que ya tengo-> numero de equipos, la cantidad de rondas (log2(totalteams)), la cantidad de partidos totales (igual a la cantidad de equipos)
+        $played = Tournament::find($id)->playedMatches;
+        $initialTeams = Tournament::find($id)->teams->count();
+        $totalTeams = (int)$this->powerOff($initialTeams);
+        
+        for($i = 0; $i <= $played->count() / 2; $i+=2){
+            $match = new Fixture;
+            $match->tournament_id = $id;
+            $match->local_team_id = $played[$i]->winnerIs;
+            $match->visiting_team_id = $played[$i+1]->winnerIs;
+            $match->state = "no jugado";
+            $match->local_score = 0;
+            $match->visiting_score = 0;
+            $match->location ="A definir";
+            $match->date = null;
+            $match->fixture_day = ($totalTeams / 2) + (int)ceil($played->count() / 2);
+            $match->save();
+        }
+
+        return redirect()->back();
+    }
+
+    public function index(){
         if(Session::has('userSession')){
             $tournaments = Tournament::all();
             if($tournaments->count() < 1) return redirect('tournaments/create');
@@ -34,12 +87,7 @@ class TournamentController extends Controller
         
         return view('dashboard.tournament.table')->with('tournaments', $tournaments);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         if(!(Session::has('userSession'))){
@@ -50,14 +98,9 @@ class TournamentController extends Controller
         return view('dashboard.tournament.create')->with('types',$types)
                                                   ->with('categories',$categories);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request){
+        DB::update('update tournaments set active = false');
         if(Session::has('userSession')){
             $tournament = new Tournament;
             $teams = Institution::all();
@@ -275,15 +318,8 @@ class TournamentController extends Controller
 
         return redirect('/fixtures');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
+    
+    public function show($id){
         $tournament = Tournament::find($id);
         if($tournament->type == 'AAA') $view = 'dashboard/tournament/showleague';
         elseif($tournament->type == 'GF') $view = 'dashboard/tournament/showgroup';
@@ -293,14 +329,7 @@ class TournamentController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
+    public function edit($id){
         if(Session::has('userSession')){
             $tournament = Tournament::find($id);
         }else{
@@ -308,16 +337,8 @@ class TournamentController extends Controller
         }
         return view('dashboard/tournament/edit')->with('tournament',$tournament);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
+    
+    public function update(Request $request, $id){
         if(Session::has('userSession')){
             $tournament = Tournament::find($id);
             $this->validate($request,[
@@ -330,15 +351,8 @@ class TournamentController extends Controller
         }
         return redirect('/tournaments');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
+    
+    public function destroy($id){
         if(Session::has('userSession')){
             $item = Tournament::find($id);
             $item->delete();

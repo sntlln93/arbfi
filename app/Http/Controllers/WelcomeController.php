@@ -26,7 +26,6 @@ class WelcomeController extends Controller
         $tournament = Tournament::where('active', true)->first();
         $clubs = Institution::all();
        
-
         if($tournament->type == 'AAA'){
             return view('website.homeLeague') 
                     ->with('scoreboards', $tournament->scoreboard) //scoreboard by category
@@ -36,12 +35,28 @@ class WelcomeController extends Controller
                     ->with('challenger', $tournament->challenger) //general scoreboard
                     ->with('posts', $posts);
         }elseif($tournament->type == 'GF'){
+            $teams = array();
+            $results = array();
+            $totalTeams = 2**floor(log($tournament->teams->count(),2)); 
+            for($i = 0; $i < $tournament->fixtures->count(); $i++){
+                array_push($teams, [$tournament->fixtures[$i]->local->club->name, $tournament->fixtures[$i]->visiting->club->name]);
+            }
+            foreach($tournament->fixtures as $match){
+                if($match->state == "JUGADO"){
+                    array_push($results, [$match->local_score, $match->visiting_score]);
+                }
+                else{
+                    array_push($results, [null, null]);
+                }
+            }
             return view('website.homeGroup')
+                    ->with('tournament', $tournament)
                     ->with('scoreboards', $tournament->scoreboards)
                     ->with('goal_makers', $tournament->goalMakers)
                     ->with('fair_play', $tournament->fairPlay)
-                    ->with('categories', $tournament->categories)
-                    ->with('posts', $posts);
+                    ->with('posts', $posts)
+                    ->with('teams', $teams)
+                    ->with('results', $results);
         }
 
         return view('website.homePVP');

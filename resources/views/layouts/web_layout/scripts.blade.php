@@ -11,3 +11,5 @@
         <!-- theme-main.js-->
         <script type="text/javascript" src="{{ asset('/js/frontend_js/theme-main.js') }}"></script>
         <!-- ======================= End JQuery libs =========================== -->
+        <script type="text/javascript" src="{{ asset('/js/frontend_js/jquery.bracket.js') }}"></script>
+        @yield('scripts')

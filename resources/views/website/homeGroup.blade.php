@@ -2,65 +2,59 @@
 @section('content')
 <!-- Section Area - Content Central -->
 <section class="content-info">
-        <div class="portfolioFilter">
+         <div class="portfolioFilter">
                 <div class="container">
                     <h5><i class="fa fa-filter" aria-hidden="true"></i>Filtrar:</h5>
-                    @foreach($categories as $category)
-                        <a id="filter" onclick="myFunction(e)" href="#" data-filter="{{'.'.$category->name}}">Categoría {{ $category->name }}</a>
-                    @endforeach
+                    <a id="filter" onclick="myFunction(e)" href="#" data-filter=".GF" class="">Fase de Grupos</a>
+                    <a id="filter" onclick="myFunction(e)" href="#" data-filter=".PVP" class="current">Eliminatoria</a>
+                    <a id="filter" onclick="myFunction(e)" href="#" data-filter=".ST" class="">Estadísticas</a>
                 </div>
             </div>
     <!-- Dark Home -->
     <div class="dark-home paddings-50-50">
         <div class="container">
             <div id="general" class="row portfolioContainer">
-                @foreach($categories as $category)
+                    
+                @foreach($tournament->groups as $group)
                     <!-- Club Ranking -->
-                    <div class="col-lg-4 {{ $category->name }}" style="display:none">
+                    <div class="col-lg-4 GF" style="display: none">
                         <div class="club-ranking">
-                            <h5><a>Categoría {{ $category->name }}</a></h5>
+                            <h5><a>Grupo {{ $group->name }}</a></h5>
                             <div class="info-ranking">
                                 <ul>
-                                    @php( $position = 1 )
-                                    @foreach($scoreboards[$category->id] as $team)
-                                        @if(! ($team->name == 'FERROCARRIL OESTE' OR $team->name == 'GAUCHITOS DE BOEDO') )
+                                    @foreach($group->scoreboard as $category)
+                                        @foreach($category as $group)
+                                            @foreach($group as $team)
                                                 <li>
-                                                    <span class="position">
-                                                        {{ $position }}
-                                                    </span>
                                                     <a>
-                                                        <img src="" alt="">
+                                                        <img style="width:20px;height:20px;" src="{{ asset('storage/'.App\Institution::where('name', $team->name)->get()[0]->image->path) }}" alt="">
                                                         {{ $team->name }}
                                                     </a>
                                                     <span class="points">
                                                         {{ $team->points }}
                                                     </span>
                                                 </li>
-                                                @php( $position++)
-                                        @endif
+                                            @endforeach
+                                        @endforeach
                                     @endforeach
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <!-- End Club Ranking -->
-    
+                @endforeach
                     <!-- Top player -->
-                    <div class="col-lg-4 {{ $category->name }}" style="display:none">
+                    <div class="col-lg-6 ST" style="display:none;">
                         <div class="player-ranking">
                             <h5><a href="group-list.html">Goleadores</a></h5>
                             <div class="info-player">
                                 <ul>
                                     @php($n = 0)
                                     @foreach($goal_makers as $goal_maker)
-                                        @if($category->name == $goal_maker->name)
-                                            @if($n < 6)
+                                            @if($n < 10)
                                                 <li>
-                                                    <span class="position">
-                                                        {{ $n+1 }}
-                                                    </span>
                                                     <a href="$">
-                                                        <img style="width:20px;height:20px;" src="{{ asset('storage/'.$goal_maker->image_id) }}" alt="">
+                                                        <img style="width:20px;height:20px;" src="{{ asset('storage/'.App\Image::find($goal_maker->image_id)->path) }}" alt="">
                                                         {{ $goal_maker->first_name.' '.$goal_maker->last_name }}
                                                     </a>
                                                     <span class="points">
@@ -69,7 +63,6 @@
                                                 </li>
                                             @endif
                                             @php($n++)
-                                        @endif
                                     @endforeach
                                 </ul>
                             </div>
@@ -77,38 +70,10 @@
                     </div>
                     <!-- End Top player -->
     
-                    <!-- Fair Play -->
-                    <div class="col-lg-4 {{ $category->name }}" style="display:none">
-                        <div class="player-ranking">
-                            <h5><a href="group-list.html">Tabla de Fair Play</a></h5>
-                            <div class="info-player">
-                                <ul>
-                                    @php( $n = 0 )
-                                    @for($i = 0; $i < sizeof($fair_play); $i++)
-                                        @if($fair_play[$i][0]['Categoria'] == $category->name)
-                                            @foreach(array_reverse($fair_play[$i]) as $row)
-                                                @if($n < 6)
-                                                    <li>
-                                                        <span class="position">
-                                                            {{ $n+1 }}
-                                                        </span>
-                                                        <a href="$">
-                                                            {{ $row['Equipo'].' (R:'.$row['Roja'].'/A:'.$row['Amarilla'].'/V:'.$row['Verde'].')' }}
-                                                        </a>
-                                                        <span class="points">
-                                                            {{ $row['Puntos']}}
-                                                    </li>
-                                                @endif
-                                                @php($n++)
-                                            @endforeach
-                                        @endif
-                                    @endfor
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="PVP" style="text-align: center !important; padding-top:-10%">
+                        <div class="tournament" style="margin: auto !important; "></div>
                     </div>
-                   <!-- end-fair play-->
-                @endforeach
+                
             </div>
         </div>
     </div>
@@ -176,14 +141,34 @@
         </div>
     </div>
     <!-- End Content Central -->
-    
+     
 </section>
 <!-- End Section Area -  Content Central -->
+
+
+
+@endsection
+
+@section('scripts')
 
 <script>
     function myFunction(e){
         var div, i;
         e.target.style.display = "";
     }
-</script>
+</script>   
+
+<script>
+        var minData = {
+            teams: {!! json_encode($teams) !!},
+            results: {!! json_encode($results) !!},
+        }
+    
+        $('.tournament').bracket({
+            teamWidth:150,
+            init: minData
+        });
+    
+    </script>
+
 @endsection

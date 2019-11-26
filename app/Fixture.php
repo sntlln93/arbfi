@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Fixture extends Model
 {
+    public function getWinnerIsAttribute(){
+        if($this->local_score > $this->visiting_score)
+            return $this->local_team_id;
+        elseif($this->visiting_score > $this->local_score)
+            return $this->visiting_team_id;
+        
+        return 0;
+    }
+
     public function tournament(){
         return $this->belongsTo('App\Tournament');
     }

@@ -17,7 +17,7 @@
                 
                     <div class="col-sm-12 col-md-6 col-md-offset-6">
                         @foreach(App\Tournament::where('active', true)->get()[0]->clubs as $club)
-                                <img src="{{ asset('storage/'.$club->image->path) }}" alt="" class="shields">
+                                <img style="width: 40px; height:auto"src="{{ asset('storage/'.$club->image->path) }}" alt="" class="shields">
                         @endforeach
                     </div>
                 </div>

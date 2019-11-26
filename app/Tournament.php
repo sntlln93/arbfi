@@ -36,12 +36,20 @@ class Tournament extends Model
     }
 
     public function getTeamsAttribute(){
+        if($this->type == "AAA") 
+            $query = "select id from teams 
+            where id in 
+                (select local_team_id from fixtures where tournament_id = ".$this->id.") 
+            or id in 
+                (select visiting_team_id from fixtures where tournament_id = ".$this->id.")";
+        elseif($this->type == "GF") 
+            $query = "select id from teams 
+            where id in 
+                (select local_team_id from fixtures where tournament_id in (select id from groups where tournament_id = ".$this->id.")) 
+            or id in 
+                (select visiting_team_id from fixtures where tournament_id in (select id from groups where tournament_id = ".$this->id."))";
         $arr = array();
-        $query = "select id from teams 
-                    where id in 
-                        (select local_team_id from fixtures where tournament_id = ".$this->id.") 
-                    or id in 
-                        (select visiting_team_id from fixtures where tournament_id = ".$this->id.")";
+        
         $teams_id = DB::select($query); 
         foreach($teams_id as $key => $value){
             array_push($arr, $value->id);
@@ -53,7 +61,7 @@ class Tournament extends Model
 
     public function getGroupsFixtureAttribute(){
         $query = "select * from fixtures where tournament_id in (select id from groups where tournament_id = ".$this->groups.")";
-        $fixture = DB::select($query); dd($fixture);
+        $fixture = DB::select($query);
         return $fixture->get(); 
     }
 
@@ -110,6 +118,8 @@ class Tournament extends Model
     }
 
     public function getGoalMakersAttribute(){
+        if($this->type == "AAA") $subquery = 'select id from fixtures where tournament_id = '.$this->id;
+        elseif($this->type == "GF") $subquery = 'select id from fixtures where tournament_id in (select id from groups where tournament_id = '.$this->id.')';
         $query =    'select
                         categories.name,
                         players.last_name,
@@ -135,7 +145,7 @@ class Tournament extends Model
                     where 
                         type = "Gol"
                     and
-                        events.fixture_id in (select id from fixtures where tournament_id = '.$this->id.')
+                        events.fixture_id in ('.$subquery.')
                     group by 
                         events.player_id
                     order by 

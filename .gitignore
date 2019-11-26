@@ -1,8 +1,8 @@
 /backups
 /node_modules
-/public/hot
-/public/storage
-/storage/*.key
+borrar/public/hot
+borrar/public/storage
+borrar/storage/*.key
 /vendor
 .env
 .phpunit.result.cache
